@@ -18,7 +18,7 @@ struct SpaceShooterGame: View {
     @State private var lives: Int = 3
     @State private var gameEnded = false
     @State private var aliensDestroyed: Int = 0
-    @State private var explosions: [Explosion] = []
+    @State private var explosions: [SpaceShooterExplosion] = []
 
     // Question state
     @State private var showQuestion = false
@@ -39,7 +39,7 @@ struct SpaceShooterGame: View {
             CinematicContainer(vignette: true, bloom: true) {
                 ZStack {
                     // Space background
-                    SpaceBackgroundView()
+                    SpaceShooterBackgroundView()
 
                     // Aliens
                     ForEach(aliens) { alien in
@@ -53,12 +53,12 @@ struct SpaceShooterGame: View {
 
                     // Explosions
                     ForEach(explosions) { explosion in
-                        ExplosionView(explosion: explosion)
+                        SpaceShooterExplosionView(explosion: explosion)
                     }
 
                     // Player ship
                     if !showQuestion {
-                        ShipView()
+                        SpaceShooterShipView()
                             .position(x: shipX, y: geometry.size.height - 120)
                     }
 
@@ -350,7 +350,7 @@ struct SpaceShooterGame: View {
 
                 if distance < aliens[i].size / 2 + 5 {
                     // Hit!
-                    let explosion = Explosion(id: UUID(), x: aliens[i].x, y: aliens[i].y, createdAt: Date())
+                    let explosion = SpaceShooterExplosion(id: UUID(), x: aliens[i].x, y: aliens[i].y, createdAt: Date())
                     explosions.append(explosion)
 
                     aliens.remove(at: i)
@@ -460,7 +460,7 @@ struct Alien: Identifiable {
     var size: CGFloat
 }
 
-struct Explosion: Identifiable {
+struct SpaceShooterExplosion: Identifiable {
     let id: UUID
     let x: CGFloat
     let y: CGFloat
@@ -469,7 +469,7 @@ struct Explosion: Identifiable {
 
 // MARK: - Views
 
-struct ShipView: View {
+struct SpaceShooterShipView: View {
     var body: some View {
         ZStack {
             // Glow
@@ -547,8 +547,8 @@ struct AlienView: View {
     }
 }
 
-struct ExplosionView: View {
-    let explosion: Explosion
+struct SpaceShooterExplosionView: View {
+    let explosion: SpaceShooterExplosion
 
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 1.0
@@ -576,7 +576,7 @@ struct ExplosionView: View {
     }
 }
 
-struct SpaceBackgroundView: View {
+struct SpaceShooterBackgroundView: View {
     var body: some View {
         ZStack {
             // Dark space gradient

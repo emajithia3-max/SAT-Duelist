@@ -13,7 +13,97 @@
       "question": "A line passes through the points (2, 5) and (6, 13). What is the equation of this line in slope-intercept form?",
       "correct_answer": "y = 2x + 1",
       "wrong_answers": ["y = 2x + 5", "y = 4x - 3", "y = x + 3"],
-      "explanation": "First find the slope: m = (13 - 5)/(6 - 2) = 8/4 = 2. Then use point-slope form with (2, 5): y - 5 = 2(x - 2), which gives y = 2x - 4 + 5 = 2x + 1."
+      "explanation": "Slope = (13 - 5)/(6 - 2) = 8/4 = 2. Using point-slope form: y - 5 = 2(x - 2), giving y = 2x + 1."
+    },
+    {
+      "id": "math_lf_002",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Evaluate a linear function",
+      "question": "If f(x) = 3x - 7, what is f(5)?",
+      "correct_answer": "8",
+      "wrong_answers": ["15", "2", "-2"],
+      "explanation": "f(5) = 3(5) - 7 = 15 - 7 = 8."
+    },
+    {
+      "id": "math_lf_003",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Identify linear functions",
+      "question": "Which of the following represents a linear function?",
+      "correct_answer": "f(x) = 4x - 9",
+      "wrong_answers": ["f(x) = x^2 + 3", "f(x) = 1/x", "f(x) = 2^x"],
+      "explanation": "A linear function has the form f(x) = mx + b. Only f(x) = 4x - 9 fits this form."
+    },
+    {
+      "id": "math_lf_004",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Interpret rate of change",
+      "question": "A taxi charges $3.50 plus $2.25 per mile. If the total fare is represented by f(m) = 2.25m + 3.50, what does f(10) represent?",
+      "correct_answer": "The fare for a 10-mile trip",
+      "wrong_answers": ["The fare after 10 minutes", "The cost per 10 miles", "The base fare times 10"],
+      "explanation": "f(10) = 2.25(10) + 3.50 = $26.00, the total fare for traveling 10 miles."
+    },
+    {
+      "id": "math_lf_005",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Find the zero of a linear function",
+      "question": "For what value of x does f(x) = 0 if f(x) = 6x - 18?",
+      "correct_answer": "3",
+      "wrong_answers": ["-3", "6", "18"],
+      "explanation": "Set f(x) = 0: 6x - 18 = 0, so 6x = 18 and x = 3."
+    },
+    {
+      "id": "math_lf_006",
+      "question_type": "student_produced_response",
+      "difficulty": "medium",
+      "skill": "Find input given output",
+      "question": "If g(x) = 4x + 5 and g(a) = 25, what is the value of a?",
+      "correct_answer": "5",
+      "wrong_answers": [],
+      "explanation": "25 = 4a + 5, so 4a = 20 and a = 5."
+    },
+    {
+      "id": "math_lf_007",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Compare linear functions",
+      "question": "Functions f and g are linear. If f(2) = 8, f(5) = 14, g(2) = 10, and g(5) = 16, which function has the greater rate of change?",
+      "correct_answer": "Both have the same rate of change",
+      "wrong_answers": ["f has a greater rate of change", "g has a greater rate of change", "Cannot be determined"],
+      "explanation": "For f: rate = (14-8)/(5-2) = 6/3 = 2. For g: rate = (16-10)/(5-2) = 6/3 = 2. Same rate."
+    },
+    {
+      "id": "math_lf_008",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Model with linear functions",
+      "question": "A pool contains 1200 gallons and drains at 15 gallons per minute. Which function gives the gallons remaining after t minutes?",
+      "correct_answer": "W(t) = 1200 - 15t",
+      "wrong_answers": ["W(t) = 1200 + 15t", "W(t) = 15t - 1200", "W(t) = 1200/15t"],
+      "explanation": "Start with 1200 gallons, subtract 15 gallons per minute: W(t) = 1200 - 15t."
+    },
+    {
+      "id": "math_lf_009",
+      "question_type": "student_produced_response",
+      "difficulty": "hard",
+      "skill": "Find when two linear functions are equal",
+      "question": "If f(x) = 2x + 8 and g(x) = 5x - 4, for what value of x is f(x) = g(x)?",
+      "correct_answer": "4",
+      "wrong_answers": [],
+      "explanation": "2x + 8 = 5x - 4, so 12 = 3x and x = 4."
+    },
+    {
+      "id": "math_lf_010",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Transform linear functions",
+      "question": "If f(x) = 3x + 2, which expression represents f(x + 1)?",
+      "correct_answer": "3x + 5",
+      "wrong_answers": ["3x + 3", "3x + 1", "4x + 2"],
+      "explanation": "f(x + 1) = 3(x + 1) + 2 = 3x + 3 + 2 = 3x + 5."
     }
   ]
 }

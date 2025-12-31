@@ -37,7 +37,7 @@ struct AsteroidDodgeGame: View {
             CinematicContainer(vignette: true, bloom: true, motionBlur: speedMultiplier > 1.5) {
                 ZStack {
                     // Space background with stars
-                    SpaceBackgroundView(speed: speedMultiplier)
+                    AsteroidDodgeBackgroundView(speed: speedMultiplier)
 
                     // Asteroids
                     ForEach(asteroids) { asteroid in
@@ -50,7 +50,7 @@ struct AsteroidDodgeGame: View {
                     }
 
                     // Ship
-                    ShipView(isInvincible: isInvincible)
+                    AsteroidDodgeShipView(isInvincible: isInvincible)
                         .position(x: shipX, y: geometry.size.height - 150)
 
                     // UI Overlay
@@ -565,7 +565,7 @@ struct PowerUpView: View {
 
 // MARK: - Ship View
 
-struct ShipView: View {
+struct AsteroidDodgeShipView: View {
     let isInvincible: Bool
 
     @State private var glow = false
@@ -603,7 +603,7 @@ struct ShipView: View {
 
 // MARK: - Space Background View
 
-struct SpaceBackgroundView: View {
+struct AsteroidDodgeBackgroundView: View {
     let speed: Double
     @State private var offset: CGFloat = 0
 

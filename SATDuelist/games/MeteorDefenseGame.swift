@@ -28,7 +28,7 @@ struct MeteorDefenseGame: View {
     // Meteor Defense specific state
     @State private var meteors: [Meteor] = []
     @State private var laserFiring = false
-    @State private var explosions: [Explosion] = []
+    @State private var explosions: [MeteorDefenseExplosion] = []
     @State private var shieldHealth: Int = 3
     @State private var score: Int = 0
     @State private var meteorsDestroyed: Int = 0
@@ -61,7 +61,7 @@ struct MeteorDefenseGame: View {
 
                     // Explosions
                     ForEach(explosions) { explosion in
-                        ExplosionView(explosion: explosion)
+                        MeteorDefenseExplosionView(explosion: explosion)
                     }
 
                     // Laser beam when firing
@@ -405,7 +405,7 @@ struct MeteorDefenseGame: View {
             let meteor = meteors[index]
 
             // Create explosion
-            let explosion = Explosion(id: UUID(), x: meteor.x, y: meteor.y, createdAt: Date())
+            let explosion = MeteorDefenseExplosion(id: UUID(), x: meteor.x, y: meteor.y, createdAt: Date())
             explosions.append(explosion)
 
             // Remove meteor
@@ -475,7 +475,7 @@ struct Meteor: Identifiable {
     var size: CGFloat
 }
 
-struct Explosion: Identifiable {
+struct MeteorDefenseExplosion: Identifiable {
     let id: UUID
     let x: CGFloat
     let y: CGFloat
@@ -563,8 +563,8 @@ struct MeteorView: View {
 
 // MARK: - Explosion View
 
-struct ExplosionView: View {
-    let explosion: Explosion
+struct MeteorDefenseExplosionView: View {
+    let explosion: MeteorDefenseExplosion
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 1.0
 

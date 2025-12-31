@@ -9,11 +9,101 @@
       "id": "math_li_001",
       "question_type": "multiple_choice",
       "difficulty": "medium",
-      "skill": "Solve linear inequalities and interpret solutions",
+      "skill": "Solve linear inequalities in context",
       "question": "A student has at most $50 to spend on books and supplies. Books cost $8 each and supplies cost $2 each. If the student buys 4 books, what is the maximum number of supplies they can buy?",
       "correct_answer": "9",
       "wrong_answers": ["10", "8", "18"],
-      "explanation": "Set up the inequality: 8(4) + 2s ≤ 50, where s is the number of supplies. This gives 32 + 2s ≤ 50, so 2s ≤ 18, meaning s ≤ 9. The maximum number of supplies is 9."
+      "explanation": "8(4) + 2s ≤ 50, so 32 + 2s ≤ 50, 2s ≤ 18, s ≤ 9."
+    },
+    {
+      "id": "math_li_002",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Solve one-step inequalities",
+      "question": "What values of x satisfy x + 5 > 12?",
+      "correct_answer": "x > 7",
+      "wrong_answers": ["x > 17", "x < 7", "x > 5"],
+      "explanation": "Subtract 5: x > 12 - 5 = 7."
+    },
+    {
+      "id": "math_li_003",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Solve inequalities with multiplication",
+      "question": "Which inequality is equivalent to 3x ≤ 18?",
+      "correct_answer": "x ≤ 6",
+      "wrong_answers": ["x ≥ 6", "x ≤ 54", "x ≥ 15"],
+      "explanation": "Divide both sides by 3: x ≤ 6."
+    },
+    {
+      "id": "math_li_004",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Solve inequalities with negatives",
+      "question": "What values of x satisfy -2x > 10?",
+      "correct_answer": "x < -5",
+      "wrong_answers": ["x > -5", "x > 5", "x < 5"],
+      "explanation": "Divide by -2 and flip the inequality: x < -5."
+    },
+    {
+      "id": "math_li_005",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Interpret inequality solutions",
+      "question": "A parking garage charges $3 plus $2 per hour. If you have $15, which inequality represents the hours h you can park?",
+      "correct_answer": "3 + 2h ≤ 15",
+      "wrong_answers": ["3 + 2h ≥ 15", "2 + 3h ≤ 15", "3h + 2 ≤ 15"],
+      "explanation": "Total cost 3 + 2h must be at most 15: 3 + 2h ≤ 15."
+    },
+    {
+      "id": "math_li_006",
+      "question_type": "student_produced_response",
+      "difficulty": "medium",
+      "skill": "Find boundary values",
+      "question": "What is the largest integer value of n that satisfies 4n - 3 < 17?",
+      "correct_answer": "4",
+      "wrong_answers": [],
+      "explanation": "4n < 20, n < 5. Largest integer less than 5 is 4."
+    },
+    {
+      "id": "math_li_007",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Solve compound inequalities",
+      "question": "Which values of x satisfy 2 < x + 3 < 8?",
+      "correct_answer": "-1 < x < 5",
+      "wrong_answers": ["5 < x < 11", "2 < x < 8", "-1 < x < 8"],
+      "explanation": "Subtract 3 from all parts: 2-3 < x < 8-3, so -1 < x < 5."
+    },
+    {
+      "id": "math_li_008",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Graph inequalities",
+      "question": "Which point lies in the region defined by y > 2x - 3?",
+      "correct_answer": "(0, 0)",
+      "wrong_answers": ["(2, 0)", "(3, 3)", "(1, -2)"],
+      "explanation": "Check (0,0): 0 > 2(0) - 3 = -3. True. (0,0) is in the region."
+    },
+    {
+      "id": "math_li_009",
+      "question_type": "student_produced_response",
+      "difficulty": "hard",
+      "skill": "Solve multi-step inequalities",
+      "question": "What is the smallest integer x such that 3(x - 2) ≥ 15?",
+      "correct_answer": "7",
+      "wrong_answers": [],
+      "explanation": "3x - 6 ≥ 15, 3x ≥ 21, x ≥ 7. Smallest integer is 7."
+    },
+    {
+      "id": "math_li_010",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "System of inequalities",
+      "question": "Which point satisfies both x + y ≤ 6 and x ≥ 2?",
+      "correct_answer": "(3, 2)",
+      "wrong_answers": ["(1, 4)", "(5, 5)", "(2, 7)"],
+      "explanation": "(3,2): 3+2=5≤6 and 3≥2. Both true."
     }
   ]
 }

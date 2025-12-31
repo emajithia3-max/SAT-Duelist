@@ -9,11 +9,101 @@
       "id": "math_sle_001",
       "question_type": "student_produced_response",
       "difficulty": "medium",
-      "skill": "Solve systems of linear equations using substitution or elimination",
+      "skill": "Solve systems using elimination",
       "question": "If 2x + y = 10 and x - y = 2, what is the value of x?",
       "correct_answer": "4",
       "wrong_answers": [],
-      "explanation": "Add the two equations to eliminate y: (2x + y) + (x - y) = 10 + 2, giving 3x = 12, so x = 4. To verify: if x = 4, then from x - y = 2, y = 2. Check: 2(4) + 2 = 10 ✓"
+      "explanation": "Add equations: 3x = 12, so x = 4."
+    },
+    {
+      "id": "math_sle_002",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Solve systems using substitution",
+      "question": "If y = 2x and x + y = 9, what is the value of x?",
+      "correct_answer": "3",
+      "wrong_answers": ["2", "6", "9"],
+      "explanation": "Substitute y = 2x into x + y = 9: x + 2x = 9, so 3x = 9 and x = 3."
+    },
+    {
+      "id": "math_sle_003",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Find y in a system",
+      "question": "If x = 4 and 2x + 3y = 17, what is the value of y?",
+      "correct_answer": "3",
+      "wrong_answers": ["5", "9", "1"],
+      "explanation": "Substitute x = 4: 8 + 3y = 17, so 3y = 9 and y = 3."
+    },
+    {
+      "id": "math_sle_004",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Determine number of solutions",
+      "question": "How many solutions does the system y = 3x + 2 and y = 3x - 4 have?",
+      "correct_answer": "No solutions",
+      "wrong_answers": ["One solution", "Two solutions", "Infinitely many"],
+      "explanation": "Parallel lines (same slope, different y-intercepts) never intersect."
+    },
+    {
+      "id": "math_sle_005",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Solve systems with coefficients",
+      "question": "If 3x + 2y = 16 and 3x - 2y = 8, what is the value of y?",
+      "correct_answer": "2",
+      "wrong_answers": ["4", "6", "8"],
+      "explanation": "Subtract equations: 4y = 8, so y = 2."
+    },
+    {
+      "id": "math_sle_006",
+      "question_type": "student_produced_response",
+      "difficulty": "medium",
+      "skill": "Find sum of variables",
+      "question": "If 4x + y = 15 and x + y = 6, what is the value of x + y?",
+      "correct_answer": "6",
+      "wrong_answers": [],
+      "explanation": "The second equation directly states x + y = 6."
+    },
+    {
+      "id": "math_sle_007",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Word problem with systems",
+      "question": "A store sells pencils for $0.50 and pens for $1.25. If 12 items cost $9.00, how many pencils were bought?",
+      "correct_answer": "8",
+      "wrong_answers": ["4", "6", "10"],
+      "explanation": "Let p = pencils, n = pens. p + n = 12 and 0.50p + 1.25n = 9. Solving: p = 8."
+    },
+    {
+      "id": "math_sle_008",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Interpret solutions in context",
+      "question": "Two lines intersect at (3, 7). If one line is y = 2x + 1, what could be the equation of the other line?",
+      "correct_answer": "y = x + 4",
+      "wrong_answers": ["y = 2x + 7", "y = x + 3", "y = 2x - 1"],
+      "explanation": "Check (3, 7): 7 = 3 + 4 = 7. True. Other options either don't pass through (3,7) or are parallel."
+    },
+    {
+      "id": "math_sle_009",
+      "question_type": "student_produced_response",
+      "difficulty": "hard",
+      "skill": "Find product of variables",
+      "question": "If x + y = 7 and x - y = 3, what is the value of xy?",
+      "correct_answer": "10",
+      "wrong_answers": [],
+      "explanation": "Add: 2x = 10, x = 5. Subtract: 2y = 4, y = 2. xy = 5(2) = 10."
+    },
+    {
+      "id": "math_sle_010",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Systems with fractions",
+      "question": "If x/2 + y/3 = 5 and x + y = 12, what is the value of x?",
+      "correct_answer": "6",
+      "wrong_answers": ["4", "8", "10"],
+      "explanation": "From x + y = 12, y = 12 - x. Substitute: x/2 + (12-x)/3 = 5. Multiply by 6: 3x + 24 - 2x = 30. x = 6."
     }
   ]
 }

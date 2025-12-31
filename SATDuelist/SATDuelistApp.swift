@@ -49,8 +49,8 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            // Play tab
-            GameSelectionView()
+            // Play tab - New Home View with START button
+            HomeView()
                 .tabItem {
                     Label("Play", systemImage: "gamecontroller.fill")
                 }
@@ -69,6 +69,13 @@ struct ContentView: View {
                     Label("Profile", systemImage: "person.fill")
                 }
                 .tag(2)
+
+            // Settings tab
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(3)
         }
         .tint(Color(hex: "#7C6CFF"))
     }

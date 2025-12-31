@@ -10,10 +10,100 @@
       "question_type": "multiple_choice",
       "difficulty": "medium",
       "skill": "Determine the meaning of a word based on context",
-      "question": "The scientist's findings were met with considerable skepticism by her peers, who found her methodology _______ at best. Which choice completes the text with the most logical and precise word?\n\nThe word that would best fit is:",
+      "question": "The scientist's findings were met with considerable skepticism by her peers, who found her methodology _______ at best. Which choice completes the text with the most logical and precise word?",
       "correct_answer": "questionable",
       "wrong_answers": ["remarkable", "conventional", "innovative"],
-      "explanation": "The context indicates skepticism toward the methodology. 'Questionable' aligns with skepticism, suggesting doubt about validity. 'Remarkable' and 'innovative' are positive, contradicting the skeptical tone. 'Conventional' doesn't explain why peers would be skeptical."
+      "explanation": "'Questionable' aligns with skepticism, suggesting doubt about validity."
+    },
+    {
+      "id": "rw_wic_002",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Select vocabulary that fits context",
+      "question": "The museum curator was known for her _______ knowledge of Renaissance art, having studied the period for over thirty years. Which choice completes the text with the most logical word?",
+      "correct_answer": "extensive",
+      "wrong_answers": ["limited", "casual", "superficial"],
+      "explanation": "Thirty years of study indicates deep knowledge. 'Extensive' means comprehensive and thorough."
+    },
+    {
+      "id": "rw_wic_003",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Choose precise vocabulary",
+      "question": "Despite the storm warnings, the captain decided to _______ with the voyage, confident in his crew's abilities. Which choice completes the text most appropriately?",
+      "correct_answer": "proceed",
+      "wrong_answers": ["retreat", "delay", "abandon"],
+      "explanation": "The captain continues despite warnings, so 'proceed' (to continue) fits."
+    },
+    {
+      "id": "rw_wic_004",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Understand nuanced vocabulary",
+      "question": "The author's writing style was notably _______; she used simple, direct language without unnecessary ornamentation. Which choice best fits?",
+      "correct_answer": "austere",
+      "wrong_answers": ["elaborate", "flowery", "ornate"],
+      "explanation": "'Austere' means plain and severe in manner. The other options describe the opposite style."
+    },
+    {
+      "id": "rw_wic_005",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Determine word meaning from context clues",
+      "question": "The negotiations had reached an _______; neither side was willing to make concessions. Which word best completes the sentence?",
+      "correct_answer": "impasse",
+      "wrong_answers": ["agreement", "resolution", "breakthrough"],
+      "explanation": "When neither side will concede, it's an 'impasse' (deadlock)."
+    },
+    {
+      "id": "rw_wic_006",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Select appropriate academic vocabulary",
+      "question": "The researcher's hypothesis was _______ by the experimental data, which showed results consistent with her predictions. Which word fits best?",
+      "correct_answer": "corroborated",
+      "wrong_answers": ["contradicted", "undermined", "refuted"],
+      "explanation": "'Corroborated' means confirmed or supported by evidence."
+    },
+    {
+      "id": "rw_wic_007",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Distinguish between similar words",
+      "question": "The politician's speech was filled with _______ promises that, while appealing, lacked any concrete plan for implementation. Which word best completes this?",
+      "correct_answer": "grandiose",
+      "wrong_answers": ["modest", "practical", "realistic"],
+      "explanation": "'Grandiose' means impressive but impractical or unrealistic."
+    },
+    {
+      "id": "rw_wic_008",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Understand connotation in context",
+      "question": "The critic described the artist's later works as _______; they seemed to lack the passion and originality of his earlier pieces. Which word fits?",
+      "correct_answer": "derivative",
+      "wrong_answers": ["groundbreaking", "visionary", "pioneering"],
+      "explanation": "'Derivative' means lacking originality, copying others' work."
+    },
+    {
+      "id": "rw_wic_009",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Identify precise vocabulary",
+      "question": "The witness provided a _______ account of the events, recalling even minor details with remarkable clarity. Which word best completes this?",
+      "correct_answer": "meticulous",
+      "wrong_answers": ["vague", "hazy", "cursory"],
+      "explanation": "'Meticulous' means showing great attention to detail."
+    },
+    {
+      "id": "rw_wic_010",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Apply vocabulary knowledge",
+      "question": "The historian argued that the empire's decline was not sudden but _______; the erosion of power occurred gradually over centuries. Which word fits?",
+      "correct_answer": "incremental",
+      "wrong_answers": ["abrupt", "swift", "instantaneous"],
+      "explanation": "'Incremental' means happening gradually in small stages."
     }
   ]
 }
