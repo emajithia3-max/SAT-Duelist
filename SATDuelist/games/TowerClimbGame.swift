@@ -235,7 +235,7 @@ struct TowerClimbGame: View {
             }
 
             // Question
-            Text(question.question.questionText)
+            Text(question.question.question)
                 .font(DesignSystem.Typography.body())
                 .foregroundColor(DesignSystem.Colors.textPrimary)
                 .multilineTextAlignment(.center)

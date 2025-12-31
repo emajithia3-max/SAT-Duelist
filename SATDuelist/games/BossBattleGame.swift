@@ -260,7 +260,7 @@ struct BossBattleGame: View {
                 .foregroundColor(DesignSystem.Colors.orange)
 
             // Question text
-            Text(question.question.questionText)
+            Text(question.question.question)
                 .font(DesignSystem.Typography.body())
                 .foregroundColor(DesignSystem.Colors.textPrimary)
                 .multilineTextAlignment(.center)
