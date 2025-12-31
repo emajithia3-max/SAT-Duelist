@@ -241,7 +241,7 @@ struct SnakeFeastGame: View {
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
                 StatRow(icon: "arrow.up.right", label: "Max Length", value: "\(snake.count)", color: DesignSystem.Colors.cyan)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.green)
+                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(

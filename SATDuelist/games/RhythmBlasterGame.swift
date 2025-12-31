@@ -259,7 +259,7 @@ struct RhythmBlasterGame: View {
                     VStack {
                         Text("\(goodCount)")
                             .font(DesignSystem.Typography.number())
-                            .foregroundColor(DesignSystem.Colors.green)
+                            .foregroundColor(Color(hex: "#51CF66"))
                         Text("Good")
                             .font(.system(size: 10))
                             .foregroundColor(DesignSystem.Colors.textMuted)
@@ -315,7 +315,7 @@ struct RhythmBlasterGame: View {
         switch calculateGrade() {
         case "S": return DesignSystem.Colors.orange
         case "A": return DesignSystem.Colors.cyan
-        case "B": return DesignSystem.Colors.green
+        case "B": return Color(hex: "#51CF66")
         case "C": return DesignSystem.Colors.primary
         default: return DesignSystem.Colors.red
         }
@@ -617,7 +617,7 @@ struct NoteHitEffectView: View {
     private var effectColor: Color {
         switch effect.type {
         case .perfect: return DesignSystem.Colors.cyan
-        case .good: return DesignSystem.Colors.green
+        case .good: return Color(hex: "#51CF66")
         case .miss: return DesignSystem.Colors.red
         }
     }
