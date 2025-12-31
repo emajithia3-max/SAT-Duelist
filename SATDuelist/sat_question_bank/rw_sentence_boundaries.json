@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Sentence Boundaries",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_sb_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Correctly punctuate to avoid run-on sentences and fragments",
+      "question": "The museum's new exhibit on ancient Egypt has attracted visitors from around the world _______ historians and archaeologists have praised its accuracy and educational value.\n\nWhich choice completes the text so that it conforms to the conventions of Standard English?",
+      "correct_answer": "; both",
+      "wrong_answers": [", both", "both", ": both"],
+      "explanation": "Two independent clauses need proper punctuation. A semicolon correctly joins them when followed by a transitional word. A comma before 'both' creates a comma splice. 'Both' alone creates a run-on. A colon is used to introduce a list or explanation, not to join independent clauses of equal weight."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Units and Conversions",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_uc_001",
+      "question_type": "student_produced_response",
+      "difficulty": "easy",
+      "skill": "Convert between units of measurement",
+      "question": "A car travels at a speed of 60 miles per hour. How many miles does the car travel in 2 hours and 30 minutes?",
+      "correct_answer": "150",
+      "wrong_answers": [],
+      "explanation": "Convert 2 hours 30 minutes to 2.5 hours. Distance = speed × time = 60 × 2.5 = 150 miles. The key step is converting 30 minutes to 0.5 hours."
+    }
+  ]
+}

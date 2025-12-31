@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Cross-Text Connections",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_ctc_001",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Analyze the relationship between two texts on a similar topic",
+      "question": "Text 1: Historian Marcus Chen argues that the Industrial Revolution fundamentally transformed social hierarchies, creating new pathways for economic mobility that had not existed in agrarian societies.\n\nText 2: Economic historian Sarah Walsh contends that while industrialization created wealth, it primarily benefited those who already possessed capital, reinforcing rather than dismantling existing class structures.\n\nBased on the texts, how would Walsh most likely respond to Chen's argument?",
+      "correct_answer": "By arguing that new economic pathways primarily served to entrench existing power dynamics",
+      "wrong_answers": ["By agreeing that industrialization created unprecedented opportunities for all classes", "By suggesting that agrarian societies offered more mobility than industrial ones", "By claiming that economic historians have ignored the Industrial Revolution"],
+      "explanation": "Walsh's position is that industrialization reinforced existing class structures by benefiting those who already had capital. She would likely counter Chen's optimistic view of mobility by emphasizing that the 'new pathways' mainly helped the already privileged."
+    }
+  ]
+}

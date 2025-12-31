@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Systems of Nonlinear Equations",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_snle_001",
+      "question_type": "student_produced_response",
+      "difficulty": "hard",
+      "skill": "Solve systems involving quadratic and linear equations",
+      "question": "The graphs of y = x² and y = x + 6 intersect at two points. What is the x-coordinate of the intersection point where x is positive?",
+      "correct_answer": "3",
+      "wrong_answers": [],
+      "explanation": "Set the equations equal: x² = x + 6. Rearrange: x² - x - 6 = 0. Factor: (x - 3)(x + 2) = 0. Solutions are x = 3 and x = -2. The positive x-coordinate is 3."
+    }
+  ]
+}

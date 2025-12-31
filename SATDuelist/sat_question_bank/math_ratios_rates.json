@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Ratios and Rates",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_rr_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Apply ratios to solve real-world problems",
+      "question": "A recipe calls for flour and sugar in a ratio of 3:2. If a baker uses 12 cups of flour, how many cups of sugar should be used?",
+      "correct_answer": "8",
+      "wrong_answers": ["6", "10", "18"],
+      "explanation": "The ratio 3:2 means for every 3 parts flour, there are 2 parts sugar. If flour = 12 cups, then 12 ÷ 3 = 4 parts. Sugar = 4 × 2 = 8 cups. Alternatively: 3/2 = 12/x, so x = 8."
+    }
+  ]
+}

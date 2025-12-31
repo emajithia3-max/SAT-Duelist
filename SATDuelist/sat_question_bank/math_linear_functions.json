@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Linear Functions",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_lf_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Determine the equation of a line given two points",
+      "question": "A line passes through the points (2, 5) and (6, 13). What is the equation of this line in slope-intercept form?",
+      "correct_answer": "y = 2x + 1",
+      "wrong_answers": ["y = 2x + 5", "y = 4x - 3", "y = x + 3"],
+      "explanation": "First find the slope: m = (13 - 5)/(6 - 2) = 8/4 = 2. Then use point-slope form with (2, 5): y - 5 = 2(x - 2), which gives y = 2x - 4 + 5 = 2x + 1."
+    }
+  ]
+}

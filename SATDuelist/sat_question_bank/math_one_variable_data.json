@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "One-Variable Data",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_ovd_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Calculate and interpret measures of center",
+      "question": "The ages of five employees are 24, 28, 31, 31, and 36. What is the mean age of these employees?",
+      "correct_answer": "30",
+      "wrong_answers": ["28", "31", "32"],
+      "explanation": "Mean = sum of values / number of values = (24 + 28 + 31 + 31 + 36) / 5 = 150 / 5 = 30. Note that the median would be 31 (the middle value), which is a common distractor."
+    }
+  ]
+}

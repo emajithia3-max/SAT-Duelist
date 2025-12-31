@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Linear Equations in Two Variables",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_le2v_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Interpret slope and y-intercept in context",
+      "question": "A phone plan charges a monthly fee plus a rate per gigabyte of data used. The equation C = 25 + 10d represents the total monthly cost C, in dollars, for using d gigabytes of data. What does the 25 represent in this equation?",
+      "correct_answer": "The fixed monthly fee in dollars",
+      "wrong_answers": ["The cost per gigabyte of data", "The total number of gigabytes included", "The maximum monthly cost"],
+      "explanation": "In the equation C = 25 + 10d, the constant 25 is the y-intercept, representing the cost when d = 0 (no data used). This is the fixed monthly fee. The 10 is the slope, representing the cost per gigabyte."
+    }
+  ]
+}

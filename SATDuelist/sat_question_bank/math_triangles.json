@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Triangles",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_tri_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Apply properties of similar triangles",
+      "question": "Two triangles are similar. The sides of the smaller triangle measure 3, 4, and 5. If the longest side of the larger triangle measures 15, what is the length of the shortest side of the larger triangle?",
+      "correct_answer": "9",
+      "wrong_answers": ["6", "10", "12"],
+      "explanation": "The scale factor is 15/5 = 3. The shortest side of the smaller triangle is 3. The shortest side of the larger triangle = 3 × 3 = 9. Similar triangles have proportional sides."
+    }
+  ]
+}

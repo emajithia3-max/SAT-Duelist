@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Two-Variable Data",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_tvd_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Interpret scatterplots and lines of best fit",
+      "question": "A scatterplot shows the relationship between hours studied (x) and test scores (y). The line of best fit is y = 5x + 60. According to this model, what is the predicted test score for a student who studies for 6 hours?",
+      "correct_answer": "90",
+      "wrong_answers": ["65", "66", "85"],
+      "explanation": "Substitute x = 6 into the equation: y = 5(6) + 60 = 30 + 60 = 90. The model predicts a test score of 90 for 6 hours of studying."
+    }
+  ]
+}

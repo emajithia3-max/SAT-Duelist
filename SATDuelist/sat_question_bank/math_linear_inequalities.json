@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Linear Inequalities",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_li_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Solve linear inequalities and interpret solutions",
+      "question": "A student has at most $50 to spend on books and supplies. Books cost $8 each and supplies cost $2 each. If the student buys 4 books, what is the maximum number of supplies they can buy?",
+      "correct_answer": "9",
+      "wrong_answers": ["10", "8", "18"],
+      "explanation": "Set up the inequality: 8(4) + 2s ≤ 50, where s is the number of supplies. This gives 32 + 2s ≤ 50, so 2s ≤ 18, meaning s ≤ 9. The maximum number of supplies is 9."
+    }
+  ]
+}

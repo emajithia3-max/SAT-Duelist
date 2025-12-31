@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Words in Context",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_wic_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Determine the meaning of a word based on context",
+      "question": "The scientist's findings were met with considerable skepticism by her peers, who found her methodology _______ at best. Which choice completes the text with the most logical and precise word?\n\nThe word that would best fit is:",
+      "correct_answer": "questionable",
+      "wrong_answers": ["remarkable", "conventional", "innovative"],
+      "explanation": "The context indicates skepticism toward the methodology. 'Questionable' aligns with skepticism, suggesting doubt about validity. 'Remarkable' and 'innovative' are positive, contradicting the skeptical tone. 'Conventional' doesn't explain why peers would be skeptical."
+    }
+  ]
+}

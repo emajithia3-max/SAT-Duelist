@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Rhetorical Synthesis",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_rs_001",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Synthesize information from notes to achieve a specific rhetorical goal",
+      "question": "A student is writing a report about renewable energy adoption. The student has taken the following notes:\n• Solar panel installation costs have decreased by 70% since 2010.\n• Wind energy now provides 9% of U.S. electricity.\n• Government incentives have accelerated renewable energy adoption.\n• Some rural communities lack infrastructure for renewable energy.\n\nThe student wants to emphasize an economic factor that has increased renewable energy adoption. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct_answer": "The 70% decrease in solar panel installation costs since 2010 has made renewable energy more accessible to homeowners",
+      "wrong_answers": ["Wind energy's contribution of 9% of U.S. electricity demonstrates significant progress", "Rural communities continue to face infrastructure challenges for renewable energy", "Multiple factors, including government policies, have influenced renewable energy adoption"],
+      "explanation": "The goal is to emphasize an economic factor. The decrease in installation costs is directly economic and explains increased adoption through affordability. Wind energy percentage is a statistic, not an economic factor. Rural infrastructure is a barrier, not a driver. Government policies are political, not purely economic."
+    }
+  ]
+}
