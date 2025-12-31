@@ -205,10 +205,28 @@ struct ScopeSelectionView: View {
             SurvivalModeGame(scope: scope, config: config)
         case .meteorDefense:
             MeteorDefenseGame(scope: scope, config: config)
-        case .bossBattle:
-            BossBattleGame(scope: scope, config: config)
         case .towerClimb:
             TowerClimbGame(scope: scope, config: config)
+        case .snakeFeast:
+            SnakeFeastGame(scope: scope, config: config)
+        case .breakoutBlitz:
+            BreakoutBlitzGame(scope: scope, config: config)
+        case .flappyScholar:
+            FlappyScholarGame(scope: scope, config: config)
+        case .asteroidDodge:
+            AsteroidDodgeGame(scope: scope, config: config)
+        case .fruitSlice:
+            FruitSliceGame(scope: scope, config: config)
+        case .gravityRunner:
+            GravityRunnerGame(scope: scope, config: config)
+        case .bubblePop:
+            BubblePopGame(scope: scope, config: config)
+        case .pinballWizard:
+            PinballWizardGame(scope: scope, config: config)
+        case .laserMaze:
+            LaserMazeGame(scope: scope, config: config)
+        case .rhythmBlaster:
+            RhythmBlasterGame(scope: scope, config: config)
         }
     }
 
@@ -265,9 +283,27 @@ struct ScopeSelectionView: View {
             return .default
         case .meteorDefense:
             return .default
-        case .bossBattle:
-            return .default
         case .towerClimb:
+            return .default
+        case .snakeFeast:
+            return .default
+        case .breakoutBlitz:
+            return .default
+        case .flappyScholar:
+            return .default
+        case .asteroidDodge:
+            return .default
+        case .fruitSlice:
+            return .default
+        case .gravityRunner:
+            return .default
+        case .bubblePop:
+            return .timed(60)
+        case .pinballWizard:
+            return .default
+        case .laserMaze:
+            return .default
+        case .rhythmBlaster:
             return .default
         }
     }
