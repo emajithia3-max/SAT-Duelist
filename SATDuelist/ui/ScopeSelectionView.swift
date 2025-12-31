@@ -227,6 +227,12 @@ struct ScopeSelectionView: View {
             LaserMazeGame(scope: scope, config: config)
         case .rhythmBlaster:
             RhythmBlasterGame(scope: scope, config: config)
+        case .spaceShooter:
+            SpaceShooterGame(scope: scope, config: config)
+        case .stackBuilder:
+            StackBuilderGame(scope: scope, config: config)
+        case .colorMatch:
+            ColorMatchGame(scope: scope, config: config)
         }
     }
 
@@ -305,6 +311,12 @@ struct ScopeSelectionView: View {
             return .default
         case .rhythmBlaster:
             return .default
+        case .spaceShooter:
+            return .default
+        case .stackBuilder:
+            return .default
+        case .colorMatch:
+            return .timed(45)
         }
     }
 

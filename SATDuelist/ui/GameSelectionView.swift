@@ -54,7 +54,7 @@ struct GameSelectionView: View {
                                     .font(DesignSystem.Typography.cardTitle())
                                     .foregroundColor(DesignSystem.Colors.textSecondary)
 
-                                Text("12 GAMES!")
+                                Text("15 GAMES!")
                                     .font(.system(size: 10, weight: .bold))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 8)
@@ -174,6 +174,9 @@ enum GameMode: String, CaseIterable, Identifiable {
     case pinballWizard = "Pinball Wizard"
     case laserMaze = "Laser Maze"
     case rhythmBlaster = "Rhythm Blaster"
+    case spaceShooter = "Space Shooter"
+    case stackBuilder = "Stack Builder"
+    case colorMatch = "Color Match"
 
     var id: String { rawValue }
 
@@ -194,6 +197,9 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .pinballWizard: return "circle.circle.fill"
         case .laserMaze: return "laser.burst"
         case .rhythmBlaster: return "music.note.list"
+        case .spaceShooter: return "airplane"
+        case .stackBuilder: return "square.stack.3d.up.fill"
+        case .colorMatch: return "paintpalette.fill"
         }
     }
 
@@ -229,6 +235,12 @@ enum GameMode: String, CaseIterable, Identifiable {
             return "Navigate lasers, solve to open gates!"
         case .rhythmBlaster:
             return "Rhythm game - tap answers to the beat!"
+        case .spaceShooter:
+            return "Blast aliens with your laser cannon!"
+        case .stackBuilder:
+            return "Stack blocks as high as you can!"
+        case .colorMatch:
+            return "Match colors fast before time runs out!"
         }
     }
 
@@ -249,6 +261,9 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .pinballWizard: return Color(hex: "#C34A36")
         case .laserMaze: return Color(hex: "#FF4757")
         case .rhythmBlaster: return Color(hex: "#A855F7")
+        case .spaceShooter: return Color(hex: "#00D9FF")
+        case .stackBuilder: return Color(hex: "#FFC107")
+        case .colorMatch: return Color(hex: "#E91E63")
         }
     }
 
