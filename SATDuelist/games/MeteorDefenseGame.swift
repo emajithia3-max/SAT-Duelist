@@ -187,7 +187,7 @@ struct MeteorDefenseGame: View {
     private func questionOverlay(_ question: LoadedQuestion, geometry: GeometryProxy) -> some View {
         VStack(spacing: 12) {
             // Compact question text
-            Text(question.question.questionText)
+            Text(question.question.question)
                 .font(DesignSystem.Typography.body())
                 .foregroundColor(DesignSystem.Colors.textPrimary)
                 .multilineTextAlignment(.center)

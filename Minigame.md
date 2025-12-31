@@ -310,6 +310,71 @@ Exit session if pool exhausted
 
  Graceful failure paths
 
+14. Arcade Minigame Design Pattern (CRITICAL)
+
+All arcade-style minigames MUST follow the "Separated Gameplay + Periodic Questions" pattern.
+
+Core Philosophy
+
+Games should be FUN first, educational second. Players should feel like they're playing a real arcade game, with questions appearing as natural "bonus rounds" or "challenge gates" rather than being the core gameplay mechanic.
+
+Required Pattern
+
+1. Pure Gameplay: The core game loop (snake movement, ball physics, fruit slicing, etc.) operates independently of questions
+2. Periodic Triggers: Questions appear after every N gameplay events (e.g., every 5 bricks, every 8 fruits, every 10 bubbles)
+3. Game Pause: When a question triggers, the gameplay PAUSES completely
+4. Question Overlay: Display a clear question overlay with all answer choices
+5. Resume/Penalty: Correct answer = resume gameplay + bonus points; Wrong answer = lose life or end game
+6. Separation: The player should NEVER have to answer questions WHILE performing gameplay actions
+
+❌ FORBIDDEN Patterns
+
+- Questions as gameplay targets (e.g., "jump through the correct answer pipe")
+- Answer choices as game objects to collect/hit
+- Requiring simultaneous gameplay + answering
+- Time pressure during question answering phase
+- Questions that must be answered in under 1 second
+
+✅ REQUIRED Patterns
+
+- Clear "BONUS ROUND!" or "QUESTION TIME!" header when questions appear
+- All 4 answer choices displayed with equal prominence
+- Feedback animation (green highlight for correct, red for incorrect)
+- 1 second delay after answering before resuming gameplay
+- Question frequency configured via `questionInterval` constant
+
+Example Implementation
+
+```swift
+let questionInterval: Int = 5 // Question every 5 events
+
+private func onGameplayEvent() {
+    eventCount += 1
+    if eventCount % questionInterval == 0 {
+        triggerQuestion()
+    }
+}
+
+private func triggerQuestion() {
+    showQuestion = true
+    showResult = false
+    selectedAnswer = nil
+    // Pause all game timers/physics
+}
+```
+
+Current Arcade Games (Reference)
+
+| Game | Gameplay | Question Trigger |
+|------|----------|-----------------|
+| Snake Feast | Eat food to grow | Every 3 food eaten |
+| Flappy Scholar | Fly through pipes | Every 4 pipes passed |
+| Breakout Blitz | Break bricks | Every 5 bricks destroyed |
+| Fruit Slice | Slice fruit | Every 8 fruits sliced |
+| Bubble Pop | Pop bubbles | Every 10 bubbles popped |
+| Pinball Wizard | Hit bumpers | Every 5 bumper hits |
+| Rhythm Blaster | Tap notes | Every 8 notes hit |
+
 FINAL AUTHORITY STATEMENT
 
 Author.md is the single source of truth for SAT content.

@@ -26,8 +26,20 @@
 		573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */; };
 		5D7B80A3967B508DAF293BF2 /* rw_text_structure_purpose.json in Resources */ = {isa = PBXBuildFile; fileRef = 7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */; };
 		5E57313E2F04EC2200ED36B1 /* TowerClimbGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */; };
-		5E57313F2F04EC2200ED36B1 /* BossBattleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */; };
 		5E5731402F04EC2200ED36B1 /* MeteorDefenseGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */; };
+		5E5731482F04F30900ED36B1 /* FlappyScholarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731442F04F30900ED36B1 /* FlappyScholarGame.swift */; };
+		5E5731492F04F30900ED36B1 /* BubblePopGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731432F04F30900ED36B1 /* BubblePopGame.swift */; };
+		5E57314A2F04F30900ED36B1 /* BreakoutBlitzGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731422F04F30900ED36B1 /* BreakoutBlitzGame.swift */; };
+		5E57314B2F04F30900ED36B1 /* FruitSliceGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731452F04F30900ED36B1 /* FruitSliceGame.swift */; };
+		5E57314C2F04F30900ED36B1 /* GravityRunnerGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731462F04F30900ED36B1 /* GravityRunnerGame.swift */; };
+		5E57314D2F04F30900ED36B1 /* AsteroidDodgeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731412F04F30900ED36B1 /* AsteroidDodgeGame.swift */; };
+		5E57314E2F04F30900ED36B1 /* LaserMazeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731472F04F30900ED36B1 /* LaserMazeGame.swift */; };
+		5E5731522F04F31100ED36B1 /* SnakeFeastGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731512F04F31100ED36B1 /* SnakeFeastGame.swift */; };
+		5E5731532F04F31100ED36B1 /* PinballWizardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57314F2F04F31100ED36B1 /* PinballWizardGame.swift */; };
+		5E5731542F04F31100ED36B1 /* RhythmBlasterGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731502F04F31100ED36B1 /* RhythmBlasterGame.swift */; };
+		5E5731582F04FA9400ED36B1 /* SpaceShooterGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731562F04FA9400ED36B1 /* SpaceShooterGame.swift */; };
+		5E5731592F04FA9400ED36B1 /* StackBuilderGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731572F04FA9400ED36B1 /* StackBuilderGame.swift */; };
+		5E57315A2F04FA9400ED36B1 /* ColorMatchGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731552F04FA9400ED36B1 /* ColorMatchGame.swift */; };
 		61E0A8B9958BEC05B8C93038 /* math_units_conversions.json in Resources */ = {isa = PBXBuildFile; fileRef = 32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */; };
 		62CEABA5348E18D2EED05098 /* rw_form_structure_sense.json in Resources */ = {isa = PBXBuildFile; fileRef = 04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */; };
 		63C51CBFAF11FA0E281D5100 /* math_systems_nonlinear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */; };
@@ -80,9 +92,21 @@
 		51A26CCE29D4632B151502B9 /* math_nonlinear_functions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_nonlinear_functions.json; sourceTree = "<group>"; };
 		547AADCFBB3F8088B5304599 /* QuestionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionLoader.swift; sourceTree = "<group>"; };
 		5E2083C094AAF7B1EA4A4687 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
-		5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossBattleGame.swift; sourceTree = "<group>"; };
 		5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorDefenseGame.swift; sourceTree = "<group>"; };
 		5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TowerClimbGame.swift; sourceTree = "<group>"; };
+		5E5731412F04F30900ED36B1 /* AsteroidDodgeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidDodgeGame.swift; sourceTree = "<group>"; };
+		5E5731422F04F30900ED36B1 /* BreakoutBlitzGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutBlitzGame.swift; sourceTree = "<group>"; };
+		5E5731432F04F30900ED36B1 /* BubblePopGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblePopGame.swift; sourceTree = "<group>"; };
+		5E5731442F04F30900ED36B1 /* FlappyScholarGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlappyScholarGame.swift; sourceTree = "<group>"; };
+		5E5731452F04F30900ED36B1 /* FruitSliceGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitSliceGame.swift; sourceTree = "<group>"; };
+		5E5731462F04F30900ED36B1 /* GravityRunnerGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityRunnerGame.swift; sourceTree = "<group>"; };
+		5E5731472F04F30900ED36B1 /* LaserMazeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaserMazeGame.swift; sourceTree = "<group>"; };
+		5E57314F2F04F31100ED36B1 /* PinballWizardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinballWizardGame.swift; sourceTree = "<group>"; };
+		5E5731502F04F31100ED36B1 /* RhythmBlasterGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RhythmBlasterGame.swift; sourceTree = "<group>"; };
+		5E5731512F04F31100ED36B1 /* SnakeFeastGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeFeastGame.swift; sourceTree = "<group>"; };
+		5E5731552F04FA9400ED36B1 /* ColorMatchGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMatchGame.swift; sourceTree = "<group>"; };
+		5E5731562F04FA9400ED36B1 /* SpaceShooterGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShooterGame.swift; sourceTree = "<group>"; };
+		5E5731572F04FA9400ED36B1 /* StackBuilderGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackBuilderGame.swift; sourceTree = "<group>"; };
 		6B5F727B8940758392EAB5C2 /* SATDuelist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SATDuelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_text_structure_purpose.json; sourceTree = "<group>"; };
 		7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_equations_one_variable.json; sourceTree = "<group>"; };
@@ -287,7 +311,19 @@
 		ED26D23F9049F75CC10B2E7B /* games */ = {
 			isa = PBXGroup;
 			children = (
-				5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */,
+				5E5731552F04FA9400ED36B1 /* ColorMatchGame.swift */,
+				5E5731562F04FA9400ED36B1 /* SpaceShooterGame.swift */,
+				5E5731572F04FA9400ED36B1 /* StackBuilderGame.swift */,
+				5E57314F2F04F31100ED36B1 /* PinballWizardGame.swift */,
+				5E5731502F04F31100ED36B1 /* RhythmBlasterGame.swift */,
+				5E5731512F04F31100ED36B1 /* SnakeFeastGame.swift */,
+				5E5731412F04F30900ED36B1 /* AsteroidDodgeGame.swift */,
+				5E5731422F04F30900ED36B1 /* BreakoutBlitzGame.swift */,
+				5E5731432F04F30900ED36B1 /* BubblePopGame.swift */,
+				5E5731442F04F30900ED36B1 /* FlappyScholarGame.swift */,
+				5E5731452F04F30900ED36B1 /* FruitSliceGame.swift */,
+				5E5731462F04F30900ED36B1 /* GravityRunnerGame.swift */,
+				5E5731472F04F30900ED36B1 /* LaserMazeGame.swift */,
 				5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */,
 				5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */,
 				2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */,
@@ -433,6 +469,19 @@
 			files = (
 				EF47A23DDB5FFFB09DAC7037 /* CardView.swift in Sources */,
 				4BD5311E449C5C5B4618FB7E /* CinematicContainer.swift in Sources */,
+				5E5731482F04F30900ED36B1 /* FlappyScholarGame.swift in Sources */,
+				5E5731492F04F30900ED36B1 /* BubblePopGame.swift in Sources */,
+				5E57314A2F04F30900ED36B1 /* BreakoutBlitzGame.swift in Sources */,
+				5E57314B2F04F30900ED36B1 /* FruitSliceGame.swift in Sources */,
+				5E57314C2F04F30900ED36B1 /* GravityRunnerGame.swift in Sources */,
+				5E57314D2F04F30900ED36B1 /* AsteroidDodgeGame.swift in Sources */,
+				5E5731522F04F31100ED36B1 /* SnakeFeastGame.swift in Sources */,
+				5E5731582F04FA9400ED36B1 /* SpaceShooterGame.swift in Sources */,
+				5E5731592F04FA9400ED36B1 /* StackBuilderGame.swift in Sources */,
+				5E57315A2F04FA9400ED36B1 /* ColorMatchGame.swift in Sources */,
+				5E5731532F04F31100ED36B1 /* PinballWizardGame.swift in Sources */,
+				5E5731542F04F31100ED36B1 /* RhythmBlasterGame.swift in Sources */,
+				5E57314E2F04F30900ED36B1 /* LaserMazeGame.swift in Sources */,
 				AEB8A7425EE0B80AF109941F /* DesignSystem.swift in Sources */,
 				573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */,
 				B28C9B6E58CDEE94B51922C9 /* GameSelectionView.swift in Sources */,
@@ -442,7 +491,6 @@
 				92A5D7F308661487CD0E7F24 /* PostProcessingPipeline.swift in Sources */,
 				0BCEBC85F09F81AED3E8E517 /* ProfileView.swift in Sources */,
 				5E57313E2F04EC2200ED36B1 /* TowerClimbGame.swift in Sources */,
-				5E57313F2F04EC2200ED36B1 /* BossBattleGame.swift in Sources */,
 				5E5731402F04EC2200ED36B1 /* MeteorDefenseGame.swift in Sources */,
 				65DBDF8205EAD8B30E3BD0CC /* QuestionEngine.swift in Sources */,
 				0398BCA2528DDD5C4CAFDA3F /* QuestionLoader.swift in Sources */,

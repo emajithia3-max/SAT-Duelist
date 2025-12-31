@@ -54,7 +54,7 @@ struct GameSelectionView: View {
                                     .font(DesignSystem.Typography.cardTitle())
                                     .foregroundColor(DesignSystem.Colors.textSecondary)
 
-                                Text("NEW")
+                                Text("15 GAMES!")
                                     .font(.system(size: 10, weight: .bold))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 8)
@@ -67,25 +67,13 @@ struct GameSelectionView: View {
                             .padding(.horizontal, 20)
 
                             VStack(spacing: 12) {
-                                GameModeCard(
-                                    mode: .meteorDefense,
-                                    isSelected: selectedGame == .meteorDefense
-                                ) {
-                                    selectGame(.meteorDefense)
-                                }
-
-                                GameModeCard(
-                                    mode: .bossBattle,
-                                    isSelected: selectedGame == .bossBattle
-                                ) {
-                                    selectGame(.bossBattle)
-                                }
-
-                                GameModeCard(
-                                    mode: .towerClimb,
-                                    isSelected: selectedGame == .towerClimb
-                                ) {
-                                    selectGame(.towerClimb)
+                                ForEach(GameMode.allCases.filter { $0.isArcadeGame }, id: \.id) { mode in
+                                    GameModeCard(
+                                        mode: mode,
+                                        isSelected: selectedGame == mode
+                                    ) {
+                                        selectGame(mode)
+                                    }
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -175,8 +163,20 @@ enum GameMode: String, CaseIterable, Identifiable {
     case speedRush = "Speed Rush"
     case survival = "Survival"
     case meteorDefense = "Meteor Defense"
-    case bossBattle = "Boss Battle"
     case towerClimb = "Tower Climb"
+    case snakeFeast = "Snake Feast"
+    case breakoutBlitz = "Breakout Blitz"
+    case flappyScholar = "Flappy Scholar"
+    case asteroidDodge = "Asteroid Dodge"
+    case fruitSlice = "Fruit Slice"
+    case gravityRunner = "Gravity Runner"
+    case bubblePop = "Bubble Pop"
+    case pinballWizard = "Pinball Wizard"
+    case laserMaze = "Laser Maze"
+    case rhythmBlaster = "Rhythm Blaster"
+    case spaceShooter = "Space Shooter"
+    case stackBuilder = "Stack Builder"
+    case colorMatch = "Color Match"
 
     var id: String { rawValue }
 
@@ -186,8 +186,20 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .speedRush: return "timer"
         case .survival: return "heart.fill"
         case .meteorDefense: return "sparkles"
-        case .bossBattle: return "shield.fill"
         case .towerClimb: return "arrow.up.circle.fill"
+        case .snakeFeast: return "circle.grid.3x3.fill"
+        case .breakoutBlitz: return "rectangle.3.group.fill"
+        case .flappyScholar: return "bird.fill"
+        case .asteroidDodge: return "staroflife.fill"
+        case .fruitSlice: return "scissors"
+        case .gravityRunner: return "figure.run"
+        case .bubblePop: return "bubble.left.and.bubble.right.fill"
+        case .pinballWizard: return "circle.circle.fill"
+        case .laserMaze: return "laser.burst"
+        case .rhythmBlaster: return "music.note.list"
+        case .spaceShooter: return "airplane"
+        case .stackBuilder: return "square.stack.3d.up.fill"
+        case .colorMatch: return "paintpalette.fill"
         }
     }
 
@@ -201,10 +213,34 @@ enum GameMode: String, CaseIterable, Identifiable {
             return "One wrong answer ends it all. How far can you go?"
         case .meteorDefense:
             return "Blast meteors by answering questions - defend your ship!"
-        case .bossBattle:
-            return "Epic RPG battle! Deal damage with correct answers"
         case .towerClimb:
             return "Climb the tower! Jump up with each correct answer"
+        case .snakeFeast:
+            return "Classic snake - eat correct answers to grow!"
+        case .breakoutBlitz:
+            return "Brick breaker madness - hit the right answer!"
+        case .flappyScholar:
+            return "Tap to fly through the correct answer gates!"
+        case .asteroidDodge:
+            return "Dodge asteroids, answer for power-ups!"
+        case .fruitSlice:
+            return "Slice the correct answers ninja style!"
+        case .gravityRunner:
+            return "Run and flip gravity - answer to unlock!"
+        case .bubblePop:
+            return "Pop the bubbles with correct answers!"
+        case .pinballWizard:
+            return "Pinball action - hit answer bumpers!"
+        case .laserMaze:
+            return "Navigate lasers, solve to open gates!"
+        case .rhythmBlaster:
+            return "Rhythm game - tap answers to the beat!"
+        case .spaceShooter:
+            return "Blast aliens with your laser cannon!"
+        case .stackBuilder:
+            return "Stack blocks as high as you can!"
+        case .colorMatch:
+            return "Match colors fast before time runs out!"
         }
     }
 
@@ -214,17 +250,29 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .speedRush: return Color(hex: "#4DA3FF")
         case .survival: return Color(hex: "#FF5D5D")
         case .meteorDefense: return Color(hex: "#FF9F43")
-        case .bossBattle: return Color(hex: "#E94560")
         case .towerClimb: return Color(hex: "#3FE0C5")
+        case .snakeFeast: return Color(hex: "#51CF66")
+        case .breakoutBlitz: return Color(hex: "#FF6B6B")
+        case .flappyScholar: return Color(hex: "#FFE66D")
+        case .asteroidDodge: return Color(hex: "#845EC2")
+        case .fruitSlice: return Color(hex: "#FF6F91")
+        case .gravityRunner: return Color(hex: "#00C9A7")
+        case .bubblePop: return Color(hex: "#4ECDC4")
+        case .pinballWizard: return Color(hex: "#C34A36")
+        case .laserMaze: return Color(hex: "#FF4757")
+        case .rhythmBlaster: return Color(hex: "#A855F7")
+        case .spaceShooter: return Color(hex: "#00D9FF")
+        case .stackBuilder: return Color(hex: "#FFC107")
+        case .colorMatch: return Color(hex: "#E91E63")
         }
     }
 
     var isArcadeGame: Bool {
         switch self {
-        case .meteorDefense, .bossBattle, .towerClimb:
-            return true
-        default:
+        case .duelClassic, .speedRush, .survival:
             return false
+        default:
+            return true
         }
     }
 }
