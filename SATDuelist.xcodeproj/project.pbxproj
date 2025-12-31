@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		011AA37DFB02E6DC42C269A6 /* math_systems_linear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = B0A99A70ED47EA2D49A9518E /* math_systems_linear_equations.json */; };
+		02960D1F833168A66678F74E /* math_linear_equations_one_variable.json in Resources */ = {isa = PBXBuildFile; fileRef = 7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */; };
+		0398BCA2528DDD5C4CAFDA3F /* QuestionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547AADCFBB3F8088B5304599 /* QuestionLoader.swift */; };
+		096C786318C10E63F402A8A6 /* math_area_volume.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D21B3658F3BD4C65877FB /* math_area_volume.json */; };
+		0BCEBC85F09F81AED3E8E517 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA339981D0FA582BDA3B3F /* ProfileView.swift */; };
+		0C127E3F8D96742880D7491E /* math_ratios_rates.json in Resources */ = {isa = PBXBuildFile; fileRef = E4C3343F9C865DC2FE159BD2 /* math_ratios_rates.json */; };
+		0DF0A978F9957D4ED1D4D33F /* SATDuelistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399503FF98098332F92064C3 /* SATDuelistApp.swift */; };
+		1514C6C59B3BFB6D7413AAD7 /* TopicPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5390E9C14915D43C7689172 /* TopicPickerView.swift */; };
+		28FD7F8093542C25377A1E5F /* math_one_variable_data.json in Resources */ = {isa = PBXBuildFile; fileRef = ECFE23D2ED7411FB8D6E1506 /* math_one_variable_data.json */; };
+		2F22CEC7F42356EFA0165A72 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2083C094AAF7B1EA4A4687 /* HapticsManager.swift */; };
+		3FA818E7B62735C2EAD0A431 /* math_percentages.json in Resources */ = {isa = PBXBuildFile; fileRef = B6BA52BF87D9CDD466BF5380 /* math_percentages.json */; };
+		40069513CE93621AC03952DB /* math_lines_angles.json in Resources */ = {isa = PBXBuildFile; fileRef = E02ACAC8669D3F24173D838A /* math_lines_angles.json */; };
+		44998EEAF19FAF024027F5FF /* rw_central_ideas_details.json in Resources */ = {isa = PBXBuildFile; fileRef = C7A42B4BF4B953485C93EB3F /* rw_central_ideas_details.json */; };
+		4BBB54DC502FD1EAB05BFFF7 /* math_statistical_inference.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C7532E09DB2624099992F /* math_statistical_inference.json */; };
+		4BD5311E449C5C5B4618FB7E /* CinematicContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E1678C50B67D7AB25FB590 /* CinematicContainer.swift */; };
+		4F49271E8FAE10BA6F19E6AD /* GlowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F2AB85607EE4779C3287F /* GlowModifier.swift */; };
+		573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */; };
+		5D7B80A3967B508DAF293BF2 /* rw_text_structure_purpose.json in Resources */ = {isa = PBXBuildFile; fileRef = 7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */; };
+		61E0A8B9958BEC05B8C93038 /* math_units_conversions.json in Resources */ = {isa = PBXBuildFile; fileRef = 32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */; };
+		62CEABA5348E18D2EED05098 /* rw_form_structure_sense.json in Resources */ = {isa = PBXBuildFile; fileRef = 04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */; };
+		63C51CBFAF11FA0E281D5100 /* math_systems_nonlinear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */; };
+		65DBDF8205EAD8B30E3BD0CC /* QuestionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A096E9F3C18FCC277748D1 /* QuestionEngine.swift */; };
+		669089163959D971D770EA28 /* rw_command_of_evidence.json in Resources */ = {isa = PBXBuildFile; fileRef = B9B26F4B58FDB65D0F53F165 /* rw_command_of_evidence.json */; };
+		7244D8281E57E5DC34A40DB9 /* math_circles.json in Resources */ = {isa = PBXBuildFile; fileRef = CDF52A818830BB865C805CA9 /* math_circles.json */; };
+		796B497308FDB3E99B4B525D /* math_right_triangle_trig.json in Resources */ = {isa = PBXBuildFile; fileRef = 997460645005EF76BC44E9C8 /* math_right_triangle_trig.json */; };
+		80D71DBD788B36401A64CAE5 /* rw_sentence_boundaries.json in Resources */ = {isa = PBXBuildFile; fileRef = E7B4DE4E346ED8B4007E4DDD /* rw_sentence_boundaries.json */; };
+		8D2C352D088D9B8B33DCAB04 /* math_linear_equations_two_variables.json in Resources */ = {isa = PBXBuildFile; fileRef = EB20A0B041783FD55A341FB7 /* math_linear_equations_two_variables.json */; };
+		900510655B09ADAD9A9FA713 /* QuestionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B56BBF33238EC273E3276 /* QuestionModels.swift */; };
+		922390EB81B24FD331064AB8 /* math_linear_inequalities.json in Resources */ = {isa = PBXBuildFile; fileRef = DCEA361DEDDB8E0AFA3C6B3C /* math_linear_inequalities.json */; };
+		92A5D7F308661487CD0E7F24 /* PostProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42F66F69CA67E6C9E70F65A /* PostProcessingPipeline.swift */; };
+		97C06E32955EF88BB2C11FD5 /* rw_cross_text_connections.json in Resources */ = {isa = PBXBuildFile; fileRef = B328608F4D6685ED426B5FA7 /* rw_cross_text_connections.json */; };
+		9947F28F6C8A3ED8D6A2BAA5 /* SurvivalModeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363779ED9A1D9A909548C3C4 /* SurvivalModeGame.swift */; };
+		AEB8A7425EE0B80AF109941F /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1CBF3D3D9DE4781FC6170 /* DesignSystem.swift */; };
+		AF62FE33EED4036E21FE3A4A /* math_nonlinear_functions.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A26CCE29D4632B151502B9 /* math_nonlinear_functions.json */; };
+		B28C9B6E58CDEE94B51922C9 /* GameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF822FDF573EB10181FF41A /* GameSelectionView.swift */; };
+		BEB868A5F336BCF19FD40D71 /* math_equivalent_expressions.json in Resources */ = {isa = PBXBuildFile; fileRef = 48DA52E34AF5128DC42312F8 /* math_equivalent_expressions.json */; };
+		CD2C289BC16D0BA6F95C04F3 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D55F7D3EFC1B899201E51 /* LeaderboardView.swift */; };
+		D301CF280745CDCD0E03657F /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1BCF883C67C0DF3B085AEE /* SessionSummaryView.swift */; };
+		D3D0D59192E283F1938AA2BA /* rw_transitions.json in Resources */ = {isa = PBXBuildFile; fileRef = 33FB92CDD5BA2BBACFBEB09E /* rw_transitions.json */; };
+		D4EEDEF19050CB0A1AC73BE1 /* ScopeResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E1E362C64CA47E1AF6274 /* ScopeResolver.swift */; };
+		D5A5D093EEB259471476556C /* math_nonlinear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = 15349F3CD8ADF799C2B82421 /* math_nonlinear_equations.json */; };
+		D699896E91CBFA2CA88A00BB /* SpeedRushGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F269FF4E2F7161612CEA94D2 /* SpeedRushGame.swift */; };
+		D9B12537A3C0B048D51927C0 /* math_triangles.json in Resources */ = {isa = PBXBuildFile; fileRef = 98A6D2060FC80B7803A814D6 /* math_triangles.json */; };
+		DECFAF3E8556678063E57BA3 /* math_linear_functions.json in Resources */ = {isa = PBXBuildFile; fileRef = CA5AF8811552ADCF2F2A428D /* math_linear_functions.json */; };
+		DF44A3852DD7B28103EAC0F5 /* math_probability.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBBAEB5A9FE09A248C459B3 /* math_probability.json */; };
+		EBCDDAA1DC250C41388570B7 /* rw_words_in_context.json in Resources */ = {isa = PBXBuildFile; fileRef = DEED2020B5CDD76659EEB73C /* rw_words_in_context.json */; };
+		EE69FDA17C630263BD1320BA /* ScopeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F93C5E008036F7D0EEB249 /* ScopeSelectionView.swift */; };
+		EF47A23DDB5FFFB09DAC7037 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BA5EA9C18B95BF636C7F38 /* CardView.swift */; };
+		F0B5F564C841AA45ABF37422 /* rw_rhetorical_synthesis.json in Resources */ = {isa = PBXBuildFile; fileRef = 87CB413828A6519958984C3C /* rw_rhetorical_synthesis.json */; };
+		F667772F6DBAF62B5D965872 /* math_evaluating_statistical_claims.json in Resources */ = {isa = PBXBuildFile; fileRef = 964316F467459A12C75C292D /* math_evaluating_statistical_claims.json */; };
+		FCC632990CE3963C72BD757D /* rw_quantitative_information.json in Resources */ = {isa = PBXBuildFile; fileRef = 917D9E24A6423ACBF28AC461 /* rw_quantitative_information.json */; };
+		FE9CD20E30FF8914E6814713 /* math_two_variable_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 152A80944DCD4575D7CC5385 /* math_two_variable_data.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_form_structure_sense.json; sourceTree = "<group>"; };
+		152A80944DCD4575D7CC5385 /* math_two_variable_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_two_variable_data.json; sourceTree = "<group>"; };
+		15349F3CD8ADF799C2B82421 /* math_nonlinear_equations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_nonlinear_equations.json; sourceTree = "<group>"; };
+		1DBBAEB5A9FE09A248C459B3 /* math_probability.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_probability.json; sourceTree = "<group>"; };
+		2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuelClassicGame.swift; sourceTree = "<group>"; };
+		2D4C7532E09DB2624099992F /* math_statistical_inference.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_statistical_inference.json; sourceTree = "<group>"; };
+		32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_units_conversions.json; sourceTree = "<group>"; };
+		33FB92CDD5BA2BBACFBEB09E /* rw_transitions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_transitions.json; sourceTree = "<group>"; };
+		363779ED9A1D9A909548C3C4 /* SurvivalModeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurvivalModeGame.swift; sourceTree = "<group>"; };
+		399503FF98098332F92064C3 /* SATDuelistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SATDuelistApp.swift; sourceTree = "<group>"; };
+		3C4D55F7D3EFC1B899201E51 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		48DA52E34AF5128DC42312F8 /* math_equivalent_expressions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_equivalent_expressions.json; sourceTree = "<group>"; };
+		51A26CCE29D4632B151502B9 /* math_nonlinear_functions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_nonlinear_functions.json; sourceTree = "<group>"; };
+		547AADCFBB3F8088B5304599 /* QuestionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionLoader.swift; sourceTree = "<group>"; };
+		5E2083C094AAF7B1EA4A4687 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		6B5F727B8940758392EAB5C2 /* SATDuelist.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SATDuelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_text_structure_purpose.json; sourceTree = "<group>"; };
+		7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_equations_one_variable.json; sourceTree = "<group>"; };
+		70BA5EA9C18B95BF636C7F38 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		74A096E9F3C18FCC277748D1 /* QuestionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEngine.swift; sourceTree = "<group>"; };
+		7E1BCF883C67C0DF3B085AEE /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
+		7E8B56BBF33238EC273E3276 /* QuestionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModels.swift; sourceTree = "<group>"; };
+		87CB413828A6519958984C3C /* rw_rhetorical_synthesis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_rhetorical_synthesis.json; sourceTree = "<group>"; };
+		896F2AB85607EE4779C3287F /* GlowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowModifier.swift; sourceTree = "<group>"; };
+		90F93C5E008036F7D0EEB249 /* ScopeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScopeSelectionView.swift; sourceTree = "<group>"; };
+		917D9E24A6423ACBF28AC461 /* rw_quantitative_information.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_quantitative_information.json; sourceTree = "<group>"; };
+		964316F467459A12C75C292D /* math_evaluating_statistical_claims.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_evaluating_statistical_claims.json; sourceTree = "<group>"; };
+		98A6D2060FC80B7803A814D6 /* math_triangles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_triangles.json; sourceTree = "<group>"; };
+		997460645005EF76BC44E9C8 /* math_right_triangle_trig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_right_triangle_trig.json; sourceTree = "<group>"; };
+		99BA339981D0FA582BDA3B3F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		9B7D21B3658F3BD4C65877FB /* math_area_volume.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_area_volume.json; sourceTree = "<group>"; };
+		9BF822FDF573EB10181FF41A /* GameSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionView.swift; sourceTree = "<group>"; };
+		9DC1CBF3D3D9DE4781FC6170 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		B0A99A70ED47EA2D49A9518E /* math_systems_linear_equations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_systems_linear_equations.json; sourceTree = "<group>"; };
+		B328608F4D6685ED426B5FA7 /* rw_cross_text_connections.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_cross_text_connections.json; sourceTree = "<group>"; };
+		B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_systems_nonlinear_equations.json; sourceTree = "<group>"; };
+		B3E1678C50B67D7AB25FB590 /* CinematicContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinematicContainer.swift; sourceTree = "<group>"; };
+		B42F66F69CA67E6C9E70F65A /* PostProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessingPipeline.swift; sourceTree = "<group>"; };
+		B56E1E362C64CA47E1AF6274 /* ScopeResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScopeResolver.swift; sourceTree = "<group>"; };
+		B6BA52BF87D9CDD466BF5380 /* math_percentages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_percentages.json; sourceTree = "<group>"; };
+		B9B26F4B58FDB65D0F53F165 /* rw_command_of_evidence.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_command_of_evidence.json; sourceTree = "<group>"; };
+		C5390E9C14915D43C7689172 /* TopicPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicPickerView.swift; sourceTree = "<group>"; };
+		C7A42B4BF4B953485C93EB3F /* rw_central_ideas_details.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_central_ideas_details.json; sourceTree = "<group>"; };
+		CA5AF8811552ADCF2F2A428D /* math_linear_functions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_functions.json; sourceTree = "<group>"; };
+		CDF52A818830BB865C805CA9 /* math_circles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_circles.json; sourceTree = "<group>"; };
+		DCEA361DEDDB8E0AFA3C6B3C /* math_linear_inequalities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_inequalities.json; sourceTree = "<group>"; };
+		DEED2020B5CDD76659EEB73C /* rw_words_in_context.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_words_in_context.json; sourceTree = "<group>"; };
+		E02ACAC8669D3F24173D838A /* math_lines_angles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_lines_angles.json; sourceTree = "<group>"; };
+		E4C3343F9C865DC2FE159BD2 /* math_ratios_rates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_ratios_rates.json; sourceTree = "<group>"; };
+		E7B4DE4E346ED8B4007E4DDD /* rw_sentence_boundaries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_sentence_boundaries.json; sourceTree = "<group>"; };
+		EB20A0B041783FD55A341FB7 /* math_linear_equations_two_variables.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_equations_two_variables.json; sourceTree = "<group>"; };
+		ECFE23D2ED7411FB8D6E1506 /* math_one_variable_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_one_variable_data.json; sourceTree = "<group>"; };
+		F269FF4E2F7161612CEA94D2 /* SpeedRushGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedRushGame.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		07DEE3FBFC1C22DBF112D3E2 /* SATDuelist */ = {
+			isa = PBXGroup;
+			children = (
+				399503FF98098332F92064C3 /* SATDuelistApp.swift */,
+				91AD348D26ED82ACE06A00C4 /* engine */,
+				ED26D23F9049F75CC10B2E7B /* games */,
+				998192F6DA3A078917A769C0 /* haptics */,
+				19628C7ED0AF6B05DA278384 /* rendering */,
+				F136A8B4AFEB26481A252D71 /* sat_question_bank */,
+				D68D0784431A9D54083B9B73 /* ui */,
+			);
+			path = SATDuelist;
+			sourceTree = "<group>";
+		};
+		113920405BAE5AB5E5B1817A = {
+			isa = PBXGroup;
+			children = (
+				07DEE3FBFC1C22DBF112D3E2 /* SATDuelist */,
+				5164714CE71C9BFCA8FD929F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		19628C7ED0AF6B05DA278384 /* rendering */ = {
+			isa = PBXGroup;
+			children = (
+				70BA5EA9C18B95BF636C7F38 /* CardView.swift */,
+				B3E1678C50B67D7AB25FB590 /* CinematicContainer.swift */,
+				9DC1CBF3D3D9DE4781FC6170 /* DesignSystem.swift */,
+				896F2AB85607EE4779C3287F /* GlowModifier.swift */,
+				B42F66F69CA67E6C9E70F65A /* PostProcessingPipeline.swift */,
+			);
+			path = rendering;
+			sourceTree = "<group>";
+		};
+		5164714CE71C9BFCA8FD929F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B5F727B8940758392EAB5C2 /* SATDuelist.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91AD348D26ED82ACE06A00C4 /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				74A096E9F3C18FCC277748D1 /* QuestionEngine.swift */,
+				547AADCFBB3F8088B5304599 /* QuestionLoader.swift */,
+				7E8B56BBF33238EC273E3276 /* QuestionModels.swift */,
+				B56E1E362C64CA47E1AF6274 /* ScopeResolver.swift */,
+			);
+			path = engine;
+			sourceTree = "<group>";
+		};
+		998192F6DA3A078917A769C0 /* haptics */ = {
+			isa = PBXGroup;
+			children = (
+				5E2083C094AAF7B1EA4A4687 /* HapticsManager.swift */,
+			);
+			path = haptics;
+			sourceTree = "<group>";
+		};
+		D68D0784431A9D54083B9B73 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				9BF822FDF573EB10181FF41A /* GameSelectionView.swift */,
+				3C4D55F7D3EFC1B899201E51 /* LeaderboardView.swift */,
+				99BA339981D0FA582BDA3B3F /* ProfileView.swift */,
+				90F93C5E008036F7D0EEB249 /* ScopeSelectionView.swift */,
+				7E1BCF883C67C0DF3B085AEE /* SessionSummaryView.swift */,
+				C5390E9C14915D43C7689172 /* TopicPickerView.swift */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		ED26D23F9049F75CC10B2E7B /* games */ = {
+			isa = PBXGroup;
+			children = (
+				2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */,
+				F269FF4E2F7161612CEA94D2 /* SpeedRushGame.swift */,
+				363779ED9A1D9A909548C3C4 /* SurvivalModeGame.swift */,
+			);
+			path = games;
+			sourceTree = "<group>";
+		};
+		F136A8B4AFEB26481A252D71 /* sat_question_bank */ = {
+			isa = PBXGroup;
+			children = (
+				9B7D21B3658F3BD4C65877FB /* math_area_volume.json */,
+				CDF52A818830BB865C805CA9 /* math_circles.json */,
+				48DA52E34AF5128DC42312F8 /* math_equivalent_expressions.json */,
+				964316F467459A12C75C292D /* math_evaluating_statistical_claims.json */,
+				7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */,
+				EB20A0B041783FD55A341FB7 /* math_linear_equations_two_variables.json */,
+				CA5AF8811552ADCF2F2A428D /* math_linear_functions.json */,
+				DCEA361DEDDB8E0AFA3C6B3C /* math_linear_inequalities.json */,
+				E02ACAC8669D3F24173D838A /* math_lines_angles.json */,
+				15349F3CD8ADF799C2B82421 /* math_nonlinear_equations.json */,
+				51A26CCE29D4632B151502B9 /* math_nonlinear_functions.json */,
+				ECFE23D2ED7411FB8D6E1506 /* math_one_variable_data.json */,
+				B6BA52BF87D9CDD466BF5380 /* math_percentages.json */,
+				1DBBAEB5A9FE09A248C459B3 /* math_probability.json */,
+				E4C3343F9C865DC2FE159BD2 /* math_ratios_rates.json */,
+				997460645005EF76BC44E9C8 /* math_right_triangle_trig.json */,
+				2D4C7532E09DB2624099992F /* math_statistical_inference.json */,
+				B0A99A70ED47EA2D49A9518E /* math_systems_linear_equations.json */,
+				B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */,
+				98A6D2060FC80B7803A814D6 /* math_triangles.json */,
+				152A80944DCD4575D7CC5385 /* math_two_variable_data.json */,
+				32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */,
+				C7A42B4BF4B953485C93EB3F /* rw_central_ideas_details.json */,
+				B9B26F4B58FDB65D0F53F165 /* rw_command_of_evidence.json */,
+				B328608F4D6685ED426B5FA7 /* rw_cross_text_connections.json */,
+				04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */,
+				917D9E24A6423ACBF28AC461 /* rw_quantitative_information.json */,
+				87CB413828A6519958984C3C /* rw_rhetorical_synthesis.json */,
+				E7B4DE4E346ED8B4007E4DDD /* rw_sentence_boundaries.json */,
+				7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */,
+				33FB92CDD5BA2BBACFBEB09E /* rw_transitions.json */,
+				DEED2020B5CDD76659EEB73C /* rw_words_in_context.json */,
+			);
+			path = sat_question_bank;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00AAF88A745383F3BA5F0F3E /* SATDuelist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 679C3BD3C8EFCC5DD4E7151C /* Build configuration list for PBXNativeTarget "SATDuelist" */;
+			buildPhases = (
+				8C4C5C82C686490E4E0BF5DD /* Sources */,
+				E7AB88379E3E3C77874C8C8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SATDuelist;
+			packageProductDependencies = (
+			);
+			productName = SATDuelist;
+			productReference = 6B5F727B8940758392EAB5C2 /* SATDuelist.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3161B526B8044AAB2EB2A857 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 12DE4B68EFF705078DEC96C7 /* Build configuration list for PBXProject "SATDuelist" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 113920405BAE5AB5E5B1817A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00AAF88A745383F3BA5F0F3E /* SATDuelist */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E7AB88379E3E3C77874C8C8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				096C786318C10E63F402A8A6 /* math_area_volume.json in Resources */,
+				7244D8281E57E5DC34A40DB9 /* math_circles.json in Resources */,
+				BEB868A5F336BCF19FD40D71 /* math_equivalent_expressions.json in Resources */,
+				F667772F6DBAF62B5D965872 /* math_evaluating_statistical_claims.json in Resources */,
+				02960D1F833168A66678F74E /* math_linear_equations_one_variable.json in Resources */,
+				8D2C352D088D9B8B33DCAB04 /* math_linear_equations_two_variables.json in Resources */,
+				DECFAF3E8556678063E57BA3 /* math_linear_functions.json in Resources */,
+				922390EB81B24FD331064AB8 /* math_linear_inequalities.json in Resources */,
+				40069513CE93621AC03952DB /* math_lines_angles.json in Resources */,
+				D5A5D093EEB259471476556C /* math_nonlinear_equations.json in Resources */,
+				AF62FE33EED4036E21FE3A4A /* math_nonlinear_functions.json in Resources */,
+				28FD7F8093542C25377A1E5F /* math_one_variable_data.json in Resources */,
+				3FA818E7B62735C2EAD0A431 /* math_percentages.json in Resources */,
+				DF44A3852DD7B28103EAC0F5 /* math_probability.json in Resources */,
+				0C127E3F8D96742880D7491E /* math_ratios_rates.json in Resources */,
+				796B497308FDB3E99B4B525D /* math_right_triangle_trig.json in Resources */,
+				4BBB54DC502FD1EAB05BFFF7 /* math_statistical_inference.json in Resources */,
+				011AA37DFB02E6DC42C269A6 /* math_systems_linear_equations.json in Resources */,
+				63C51CBFAF11FA0E281D5100 /* math_systems_nonlinear_equations.json in Resources */,
+				D9B12537A3C0B048D51927C0 /* math_triangles.json in Resources */,
+				FE9CD20E30FF8914E6814713 /* math_two_variable_data.json in Resources */,
+				61E0A8B9958BEC05B8C93038 /* math_units_conversions.json in Resources */,
+				44998EEAF19FAF024027F5FF /* rw_central_ideas_details.json in Resources */,
+				669089163959D971D770EA28 /* rw_command_of_evidence.json in Resources */,
+				97C06E32955EF88BB2C11FD5 /* rw_cross_text_connections.json in Resources */,
+				62CEABA5348E18D2EED05098 /* rw_form_structure_sense.json in Resources */,
+				FCC632990CE3963C72BD757D /* rw_quantitative_information.json in Resources */,
+				F0B5F564C841AA45ABF37422 /* rw_rhetorical_synthesis.json in Resources */,
+				80D71DBD788B36401A64CAE5 /* rw_sentence_boundaries.json in Resources */,
+				5D7B80A3967B508DAF293BF2 /* rw_text_structure_purpose.json in Resources */,
+				D3D0D59192E283F1938AA2BA /* rw_transitions.json in Resources */,
+				EBCDDAA1DC250C41388570B7 /* rw_words_in_context.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8C4C5C82C686490E4E0BF5DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF47A23DDB5FFFB09DAC7037 /* CardView.swift in Sources */,
+				4BD5311E449C5C5B4618FB7E /* CinematicContainer.swift in Sources */,
+				AEB8A7425EE0B80AF109941F /* DesignSystem.swift in Sources */,
+				573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */,
+				B28C9B6E58CDEE94B51922C9 /* GameSelectionView.swift in Sources */,
+				4F49271E8FAE10BA6F19E6AD /* GlowModifier.swift in Sources */,
+				2F22CEC7F42356EFA0165A72 /* HapticsManager.swift in Sources */,
+				CD2C289BC16D0BA6F95C04F3 /* LeaderboardView.swift in Sources */,
+				92A5D7F308661487CD0E7F24 /* PostProcessingPipeline.swift in Sources */,
+				0BCEBC85F09F81AED3E8E517 /* ProfileView.swift in Sources */,
+				65DBDF8205EAD8B30E3BD0CC /* QuestionEngine.swift in Sources */,
+				0398BCA2528DDD5C4CAFDA3F /* QuestionLoader.swift in Sources */,
+				900510655B09ADAD9A9FA713 /* QuestionModels.swift in Sources */,
+				0DF0A978F9957D4ED1D4D33F /* SATDuelistApp.swift in Sources */,
+				D4EEDEF19050CB0A1AC73BE1 /* ScopeResolver.swift in Sources */,
+				EE69FDA17C630263BD1320BA /* ScopeSelectionView.swift in Sources */,
+				D301CF280745CDCD0E03657F /* SessionSummaryView.swift in Sources */,
+				D699896E91CBFA2CA88A00BB /* SpeedRushGame.swift in Sources */,
+				9947F28F6C8A3ED8D6A2BAA5 /* SurvivalModeGame.swift in Sources */,
+				1514C6C59B3BFB6D7413AAD7 /* TopicPickerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		071F80AA9CC54426B4E58051 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eeshmajithia.satduelist;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D860D55FBE443B7E1F55207 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B060567928FE5BE443A69D39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E9FAF67D6D06D217D80E0585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eeshmajithia.satduelist;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		12DE4B68EFF705078DEC96C7 /* Build configuration list for PBXProject "SATDuelist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D860D55FBE443B7E1F55207 /* Debug */,
+				B060567928FE5BE443A69D39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		679C3BD3C8EFCC5DD4E7151C /* Build configuration list for PBXNativeTarget "SATDuelist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				071F80AA9CC54426B4E58051 /* Debug */,
+				E9FAF67D6D06D217D80E0585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3161B526B8044AAB2EB2A857 /* Project object */;
+}
