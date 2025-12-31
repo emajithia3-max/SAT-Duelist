@@ -107,8 +107,7 @@ class GameSettingsManager: ObservableObject {
 
 struct HomeView: View {
     @ObservedObject private var settings = GameSettingsManager.shared
-    @State private var showGame = false
-    @State private var currentGame: GameMode?
+    @State private var selectedGame: GameMode?
     @State private var pulseAnimation = false
 
     var body: some View {
@@ -137,12 +136,8 @@ struct HomeView: View {
             }
             .padding(.horizontal, 20)
         }
-        .fullScreenCover(isPresented: $showGame) {
-            if let game = currentGame {
-                GameSessionView(gameMode: game, onDismiss: {
-                    showGame = false
-                })
-            }
+        .fullScreenCover(item: $selectedGame) { game in
+            ScopeSelectionView(gameMode: game)
         }
     }
 
@@ -278,8 +273,7 @@ struct HomeView: View {
                 ForEach(settings.recentlyPlayedGames.prefix(4), id: \.self) { gameId in
                     if let game = GameMode.allCases.first(where: { $0.id == gameId }) {
                         RecentGameBadge(game: game) {
-                            currentGame = game
-                            showGame = true
+                            selectedGame = game
                         }
                     }
                 }
@@ -291,10 +285,7 @@ struct HomeView: View {
 
     private func startRandomGame() {
         HapticsManager.shared.gameTransition()
-        if let game = settings.getRandomGame() {
-            currentGame = game
-            showGame = true
-        }
+        selectedGame = settings.getRandomGame()
     }
 }
 
@@ -362,103 +353,6 @@ struct RecentGameBadge: View {
             }
         }
         .buttonStyle(CardButtonStyle())
-    }
-}
-
-// MARK: - Game Session View
-// Shows the game with hide option and handles game flow
-
-struct GameSessionView: View {
-    @ObservedObject private var settings = GameSettingsManager.shared
-
-    let gameMode: GameMode
-    let onDismiss: () -> Void
-
-    @State private var showHidePopup = false
-    @State private var shouldPlayNext = false
-
-    var body: some View {
-        ZStack {
-            // The actual game
-            gameContent
-
-            // Hide game popup overlay
-            if showHidePopup {
-                hideGamePopup
-            }
-        }
-        .onChange(of: shouldPlayNext) { _, newValue in
-            if newValue {
-                // This would require more complex state management
-                // For now, just dismiss
-                onDismiss()
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var gameContent: some View {
-        // Using ScopeSelectionView which already handles the game presentation
-        ScopeSelectionView(gameMode: gameMode)
-    }
-
-    private var hideGamePopup: some View {
-        ZStack {
-            Color.black.opacity(0.7)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    showHidePopup = false
-                }
-
-            VStack(spacing: 20) {
-                Text("Hide \(gameMode.rawValue)?")
-                    .font(DesignSystem.Typography.cardTitle())
-                    .foregroundColor(DesignSystem.Colors.textPrimary)
-
-                Text("This game won't appear in random selection. You can unhide it in Settings.")
-                    .font(DesignSystem.Typography.body())
-                    .foregroundColor(DesignSystem.Colors.textMuted)
-                    .multilineTextAlignment(.center)
-
-                HStack(spacing: 16) {
-                    Button {
-                        showHidePopup = false
-                    } label: {
-                        Text("Cancel")
-                            .font(DesignSystem.Typography.button())
-                            .foregroundColor(DesignSystem.Colors.textSecondary)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(
-                                Capsule()
-                                    .fill(DesignSystem.Colors.elevated)
-                            )
-                    }
-
-                    Button {
-                        settings.hideGame(gameMode.id)
-                        showHidePopup = false
-                        onDismiss()
-                    } label: {
-                        Text("Hide Game")
-                            .font(DesignSystem.Typography.button())
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(
-                                Capsule()
-                                    .fill(DesignSystem.Colors.red)
-                            )
-                    }
-                }
-            }
-            .padding(24)
-            .background(
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(DesignSystem.Colors.cardBackground)
-            )
-            .padding(.horizontal, 32)
-        }
     }
 }
 
