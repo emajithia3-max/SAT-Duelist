@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Snake Feast Game
-// Classic snake game - eat correct answers to grow, wrong answers shrink you!
+// Classic snake game - eat food to grow, periodic questions pause the game
 
 struct SnakeFeastGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -11,51 +11,48 @@ struct SnakeFeastGame: View {
     let config: SessionConfig
 
     // Game state
-    @State private var snake: [CGPoint] = [CGPoint(x: 5, y: 10)]
+    @State private var snake: [GridPosition] = []
     @State private var direction: Direction = .right
     @State private var nextDirection: Direction = .right
-    @State private var foodItems: [FoodItem] = []
-    @State private var currentQuestion: LoadedQuestion?
+    @State private var food: GridPosition = GridPosition(x: 10, y: 10)
     @State private var score: Int = 0
+    @State private var foodEaten: Int = 0
     @State private var gameEnded = false
     @State private var isPaused = false
-    @State private var gridSize: CGSize = .zero
-    @State private var lastMoveTime: Date = Date()
 
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
+
+    let gridWidth: Int = 15
+    let gridHeight: Int = 20
     let cellSize: CGFloat = 20
-    let gridWidth: Int = 17
-    let gridHeight: Int = 25
-    let moveInterval: TimeInterval = 0.15
+    let questionInterval: Int = 3 // Question every 3 food eaten
 
-    let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
+    let gameLoop = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
 
     var body: some View {
         GeometryReader { geometry in
             CinematicContainer(vignette: true, bloom: true) {
                 ZStack {
-                    // Game grid background
-                    gameBackground
+                    // Background
+                    Color(hex: "#0a0a15")
 
-                    // Snake
-                    ForEach(Array(snake.enumerated()), id: \.offset) { index, segment in
-                        SnakeSegmentView(
-                            position: segment,
-                            cellSize: cellSize,
-                            isHead: index == 0,
-                            color: DesignSystem.Colors.cyan
-                        )
-                    }
-
-                    // Food items (answers)
-                    ForEach(foodItems) { food in
-                        FoodItemView(food: food, cellSize: cellSize)
-                    }
+                    // Game grid
+                    gameGrid
+                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2 - 50)
 
                     // UI Overlay
                     VStack {
                         // Top bar
                         HStack {
                             scoreDisplay
+                            Spacer()
+                            lengthDisplay
                             Spacer()
                             closeButton
                         }
@@ -64,14 +61,16 @@ struct SnakeFeastGame: View {
 
                         Spacer()
 
-                        // Question display at bottom
-                        if let question = currentQuestion {
-                            questionDisplay(question)
+                        // Control pad
+                        if !showQuestion && !gameEnded {
+                            controlPad
+                                .padding(.bottom, 30)
                         }
+                    }
 
-                        // Control buttons
-                        controlPad
-                            .padding(.bottom, 30)
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
                     }
 
                     // Game over
@@ -80,42 +79,67 @@ struct SnakeFeastGame: View {
                     }
                 }
             }
-            .onAppear {
-                gridSize = CGSize(width: CGFloat(gridWidth) * cellSize, height: CGFloat(gridHeight) * cellSize)
-            }
         }
         .ignoresSafeArea()
         .task {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded && !isPaused else { return }
+            guard !gameEnded && !showQuestion && !isPaused else { return }
             updateGame()
         }
     }
 
-    // MARK: - Game Background
+    // MARK: - Game Grid
 
-    private var gameBackground: some View {
+    private var gameGrid: some View {
         VStack(spacing: 0) {
             ForEach(0..<gridHeight, id: \.self) { row in
                 HStack(spacing: 0) {
                     ForEach(0..<gridWidth, id: \.self) { col in
-                        Rectangle()
-                            .fill((row + col) % 2 == 0 ?
-                                  DesignSystem.Colors.elevated.opacity(0.3) :
-                                  DesignSystem.Colors.cardBackground.opacity(0.3))
-                            .frame(width: cellSize, height: cellSize)
+                        cellView(row: row, col: col)
                     }
                 }
             }
         }
-        .cornerRadius(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(DesignSystem.Colors.elevated.opacity(0.3))
+        )
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 8)
                 .stroke(DesignSystem.Colors.cardBorder, lineWidth: 2)
         )
-        .position(x: UIScreen.main.bounds.width / 2, y: 280)
+    }
+
+    private func cellView(row: Int, col: Int) -> some View {
+        let pos = GridPosition(x: col, y: row)
+        let isSnakeHead = snake.first == pos
+        let isSnakeBody = snake.dropFirst().contains(pos)
+        let isFood = food == pos
+
+        return Rectangle()
+            .fill(cellColor(isHead: isSnakeHead, isBody: isSnakeBody, isFood: isFood))
+            .frame(width: cellSize, height: cellSize)
+            .overlay(
+                Group {
+                    if isFood {
+                        Circle()
+                            .fill(DesignSystem.Colors.orange)
+                            .padding(3)
+                    }
+                }
+            )
+    }
+
+    private func cellColor(isHead: Bool, isBody: Bool, isFood: Bool) -> Color {
+        if isHead {
+            return DesignSystem.Colors.cyan
+        } else if isBody {
+            return DesignSystem.Colors.cyan.opacity(0.6)
+        } else {
+            return Color.clear
+        }
     }
 
     // MARK: - Score Display
@@ -127,13 +151,24 @@ struct SnakeFeastGame: View {
             Text("\(score)")
                 .font(DesignSystem.Typography.number())
                 .foregroundColor(DesignSystem.Colors.textPrimary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(
+            Capsule()
+                .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
+        )
+    }
 
-            Divider()
-                .frame(height: 20)
+    // MARK: - Length Display
 
-            Text("Length: \(snake.count)")
-                .font(DesignSystem.Typography.caption())
-                .foregroundColor(DesignSystem.Colors.textSecondary)
+    private var lengthDisplay: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "arrow.up.right")
+                .foregroundColor(DesignSystem.Colors.cyan)
+            Text("\(snake.count)")
+                .font(DesignSystem.Typography.number())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
@@ -161,73 +196,101 @@ struct SnakeFeastGame: View {
         }
     }
 
-    // MARK: - Question Display
-
-    private func questionDisplay(_ question: LoadedQuestion) -> some View {
-        VStack(spacing: 8) {
-            Text(question.question.question)
-                .font(DesignSystem.Typography.caption())
-                .foregroundColor(DesignSystem.Colors.textPrimary)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .padding(.horizontal, 16)
-
-            Text("Eat the correct answer!")
-                .font(.system(size: 11, weight: .medium))
-                .foregroundColor(DesignSystem.Colors.cyan)
-        }
-        .padding(12)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(DesignSystem.Colors.cardBackground.opacity(0.95))
-        )
-        .padding(.horizontal, 20)
-    }
-
     // MARK: - Control Pad
 
     private var controlPad: some View {
         VStack(spacing: 8) {
-            // Up button
             Button { changeDirection(.up) } label: {
                 Image(systemName: "chevron.up")
                     .font(.system(size: 24, weight: .bold))
-                    .frame(width: 60, height: 50)
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
+                    .frame(width: 70, height: 55)
                     .background(DesignSystem.Colors.elevated)
                     .cornerRadius(12)
             }
 
-            HStack(spacing: 60) {
-                // Left button
+            HStack(spacing: 70) {
                 Button { changeDirection(.left) } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 24, weight: .bold))
-                        .frame(width: 60, height: 50)
+                        .foregroundColor(DesignSystem.Colors.textPrimary)
+                        .frame(width: 70, height: 55)
                         .background(DesignSystem.Colors.elevated)
                         .cornerRadius(12)
                 }
 
-                // Right button
                 Button { changeDirection(.right) } label: {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 24, weight: .bold))
-                        .frame(width: 60, height: 50)
+                        .foregroundColor(DesignSystem.Colors.textPrimary)
+                        .frame(width: 70, height: 55)
                         .background(DesignSystem.Colors.elevated)
                         .cornerRadius(12)
                 }
             }
 
-            // Down button
             Button { changeDirection(.down) } label: {
                 Image(systemName: "chevron.down")
                     .font(.system(size: 24, weight: .bold))
-                    .frame(width: 60, height: 50)
+                    .foregroundColor(DesignSystem.Colors.textPrimary)
+                    .frame(width: 70, height: 55)
                     .background(DesignSystem.Colors.elevated)
                     .cornerRadius(12)
             }
         }
-        .foregroundColor(DesignSystem.Colors.textPrimary)
+    }
+
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            Text("QUESTION TIME!")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.orange)
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
     }
 
     // MARK: - Game Over Overlay
@@ -241,7 +304,7 @@ struct SnakeFeastGame: View {
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
                 StatRow(icon: "arrow.up.right", label: "Max Length", value: "\(snake.count)", color: DesignSystem.Colors.cyan)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(
@@ -272,59 +335,35 @@ struct SnakeFeastGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
-
-        if let question = engine.startSession() {
-            currentQuestion = question
-            spawnFood(for: question)
-        }
+        currentQuestion = engine.startSession()
 
         // Initialize snake in center
+        let startX = gridWidth / 2
+        let startY = gridHeight / 2
         snake = [
-            CGPoint(x: 8, y: 12),
-            CGPoint(x: 7, y: 12),
-            CGPoint(x: 6, y: 12)
+            GridPosition(x: startX, y: startY),
+            GridPosition(x: startX - 1, y: startY),
+            GridPosition(x: startX - 2, y: startY)
         ]
         direction = .right
         nextDirection = .right
+        spawnFood()
     }
 
-    private func spawnFood(for question: LoadedQuestion) {
-        foodItems.removeAll()
-
-        let answers = question.question.allAnswers
-        var usedPositions: Set<String> = Set(snake.map { "\(Int($0.x)),\(Int($0.y))" })
-
-        for answer in answers {
-            var position: CGPoint
-            repeat {
-                position = CGPoint(
-                    x: CGFloat(Int.random(in: 1..<gridWidth-1)),
-                    y: CGFloat(Int.random(in: 1..<gridHeight-1))
-                )
-            } while usedPositions.contains("\(Int(position.x)),\(Int(position.y))")
-
-            usedPositions.insert("\(Int(position.x)),\(Int(position.y))")
-
-            let isCorrect = answer == question.question.correctAnswer
-            foodItems.append(FoodItem(
-                id: UUID(),
-                position: position,
-                answer: answer,
-                isCorrect: isCorrect
-            ))
-        }
+    private func spawnFood() {
+        var newFood: GridPosition
+        repeat {
+            newFood = GridPosition(
+                x: Int.random(in: 1..<gridWidth-1),
+                y: Int.random(in: 1..<gridHeight-1)
+            )
+        } while snake.contains(newFood)
+        food = newFood
     }
 
     private func updateGame() {
-        let now = Date()
-        guard now.timeIntervalSince(lastMoveTime) >= moveInterval else { return }
-        lastMoveTime = now
-
         direction = nextDirection
-        moveSnake()
-    }
 
-    private func moveSnake() {
         guard let head = snake.first else { return }
 
         var newHead = head
@@ -335,66 +374,35 @@ struct SnakeFeastGame: View {
         case .right: newHead.x += 1
         }
 
-        // Check wall collision
-        if newHead.x < 0 || newHead.x >= CGFloat(gridWidth) ||
-           newHead.y < 0 || newHead.y >= CGFloat(gridHeight) {
+        // Wall collision
+        if newHead.x < 0 || newHead.x >= gridWidth ||
+           newHead.y < 0 || newHead.y >= gridHeight {
             endGame()
             return
         }
 
-        // Check self collision
-        if snake.dropFirst().contains(where: { $0.x == newHead.x && $0.y == newHead.y }) {
+        // Self collision
+        if snake.contains(newHead) {
             endGame()
             return
         }
 
-        // Check food collision
-        if let foodIndex = foodItems.firstIndex(where: {
-            Int($0.position.x) == Int(newHead.x) && Int($0.position.y) == Int(newHead.y)
-        }) {
-            let food = foodItems[foodIndex]
-            eatFood(food)
-            foodItems.remove(at: foodIndex)
+        // Move snake
+        snake.insert(newHead, at: 0)
 
-            // Add new head (snake grows)
-            snake.insert(newHead, at: 0)
+        // Check food
+        if newHead == food {
+            HapticsManager.shared.selectionChanged()
+            score += 10
+            foodEaten += 1
+            spawnFood()
+
+            // Trigger question every few food
+            if foodEaten % questionInterval == 0 {
+                triggerQuestion()
+            }
         } else {
-            // Move snake (remove tail)
-            snake.insert(newHead, at: 0)
             snake.removeLast()
-        }
-    }
-
-    private func eatFood(_ food: FoodItem) {
-        if food.isCorrect {
-            HapticsManager.shared.correctAnswer()
-            score += 100 * snake.count
-            // Snake grows automatically by not removing tail
-            advanceQuestion()
-        } else {
-            HapticsManager.shared.incorrectAnswer()
-            // Shrink snake
-            if snake.count > 2 {
-                snake.removeLast()
-                snake.removeLast()
-            } else {
-                endGame()
-            }
-            // Respawn food for same question
-            if let question = currentQuestion {
-                spawnFood(for: question)
-            }
-        }
-    }
-
-    private func advanceQuestion() {
-        if engine.hasMoreQuestions {
-            if let question = engine.nextQuestion() {
-                currentQuestion = question
-                spawnFood(for: question)
-            }
-        } else {
-            endGame()
         }
     }
 
@@ -409,6 +417,43 @@ struct SnakeFeastGame: View {
         }
     }
 
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+    }
+
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
+            HapticsManager.shared.correctAnswer()
+            questionsCorrect += 1
+            score += 50 // Bonus for correct answer
+        } else {
+            HapticsManager.shared.incorrectAnswer()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if !isCorrect {
+                // Wrong answer ends game
+                endGame()
+                return
+            }
+
+            // Get next question
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
+            }
+        }
+    }
+
     private func endGame() {
         gameEnded = true
         HapticsManager.shared.gameTransition()
@@ -416,88 +461,26 @@ struct SnakeFeastGame: View {
 
     private func resetGame() {
         gameEnded = false
+        showQuestion = false
         score = 0
-        foodItems.removeAll()
+        foodEaten = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
         Task {
             await startGame()
         }
     }
 }
 
-// MARK: - Direction Enum
+// MARK: - Grid Position
+
+struct GridPosition: Equatable, Hashable {
+    var x: Int
+    var y: Int
+}
+
+// MARK: - Direction
 
 enum Direction {
     case up, down, left, right
-}
-
-// MARK: - Food Item
-
-struct FoodItem: Identifiable {
-    let id: UUID
-    let position: CGPoint
-    let answer: String
-    let isCorrect: Bool
-}
-
-// MARK: - Snake Segment View
-
-struct SnakeSegmentView: View {
-    let position: CGPoint
-    let cellSize: CGFloat
-    let isHead: Bool
-    let color: Color
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: isHead ? 6 : 4)
-            .fill(isHead ? color : color.opacity(0.7))
-            .frame(width: cellSize - 2, height: cellSize - 2)
-            .overlay(
-                isHead ?
-                RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color.white.opacity(0.5), lineWidth: 1)
-                : nil
-            )
-            .position(
-                x: (UIScreen.main.bounds.width - CGFloat(17) * cellSize) / 2 + position.x * cellSize + cellSize / 2,
-                y: 280 - CGFloat(25) * cellSize / 2 + position.y * cellSize + cellSize / 2
-            )
-    }
-}
-
-// MARK: - Food Item View
-
-struct FoodItemView: View {
-    let food: FoodItem
-    let cellSize: CGFloat
-
-    @State private var pulse = false
-
-    var body: some View {
-        ZStack {
-            // Glow
-            Circle()
-                .fill(DesignSystem.Colors.orange.opacity(0.3))
-                .frame(width: cellSize + 8, height: cellSize + 8)
-                .scaleEffect(pulse ? 1.2 : 1.0)
-
-            // Food circle
-            Circle()
-                .fill(DesignSystem.Colors.orange)
-                .frame(width: cellSize - 4, height: cellSize - 4)
-
-            // Answer text
-            Text(String(food.answer.prefix(2)))
-                .font(.system(size: 8, weight: .bold))
-                .foregroundColor(.white)
-        }
-        .position(
-            x: (UIScreen.main.bounds.width - CGFloat(17) * cellSize) / 2 + food.position.x * cellSize + cellSize / 2,
-            y: 280 - CGFloat(25) * cellSize / 2 + food.position.y * cellSize + cellSize / 2
-        )
-        .onAppear {
-            withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
-                pulse = true
-            }
-        }
-    }
 }

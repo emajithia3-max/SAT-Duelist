@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Breakout Blitz Game
-// Classic brick breaker - hit the correct answer brick to score!
+// Classic brick breaker - destroy bricks, periodic questions for power-ups
 
 struct BreakoutBlitzGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -14,20 +14,25 @@ struct BreakoutBlitzGame: View {
     @State private var ballPosition: CGPoint = CGPoint(x: 200, y: 500)
     @State private var ballVelocity: CGPoint = CGPoint(x: 4, y: -4)
     @State private var paddleX: CGFloat = 200
-    @State private var bricks: [Brick] = []
-    @State private var currentQuestion: LoadedQuestion?
+    @State private var bricks: [GameBrick] = []
     @State private var score: Int = 0
     @State private var lives: Int = 3
     @State private var gameEnded = false
     @State private var ballLaunched = false
-    @State private var combo: Int = 0
-    @State private var showCombo = false
+    @State private var bricksDestroyed: Int = 0
+
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
 
     let paddleWidth: CGFloat = 100
     let paddleHeight: CGFloat = 16
     let ballRadius: CGFloat = 10
-    let brickWidth: CGFloat = 80
-    let brickHeight: CGFloat = 40
+    let questionInterval: Int = 5 // Question every 5 bricks
 
     let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
 
@@ -44,7 +49,7 @@ struct BreakoutBlitzGame: View {
 
                     // Bricks
                     ForEach(bricks) { brick in
-                        BrickView(brick: brick, width: brickWidth, height: brickHeight)
+                        BrickGameView(brick: brick)
                     }
 
                     // Ball
@@ -76,7 +81,6 @@ struct BreakoutBlitzGame: View {
 
                     // UI Overlay
                     VStack {
-                        // Top bar
                         HStack {
                             livesDisplay
                             Spacer()
@@ -87,21 +91,9 @@ struct BreakoutBlitzGame: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 60)
 
-                        // Question
-                        if let question = currentQuestion {
-                            Text(question.question.question)
-                                .font(DesignSystem.Typography.caption())
-                                .foregroundColor(DesignSystem.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .padding(.horizontal, 20)
-                                .padding(.top, 10)
-                        }
-
                         Spacer()
 
-                        // Tap to launch
-                        if !ballLaunched && !gameEnded {
+                        if !ballLaunched && !gameEnded && !showQuestion {
                             Text("TAP TO LAUNCH")
                                 .font(DesignSystem.Typography.button())
                                 .foregroundColor(DesignSystem.Colors.cyan)
@@ -109,13 +101,9 @@ struct BreakoutBlitzGame: View {
                         }
                     }
 
-                    // Combo display
-                    if showCombo && combo > 1 {
-                        Text("\(combo)x COMBO!")
-                            .font(.system(size: 36, weight: .black))
-                            .foregroundColor(DesignSystem.Colors.orange)
-                            .shadow(color: DesignSystem.Colors.orange, radius: 10)
-                            .transition(.scale.combined(with: .opacity))
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
                     }
 
                     // Game over
@@ -126,11 +114,12 @@ struct BreakoutBlitzGame: View {
                 .gesture(
                     DragGesture()
                         .onChanged { value in
+                            guard !showQuestion else { return }
                             paddleX = min(max(paddleWidth/2, value.location.x), geometry.size.width - paddleWidth/2)
                         }
                 )
                 .onTapGesture {
-                    if !ballLaunched && !gameEnded {
+                    if !ballLaunched && !gameEnded && !showQuestion {
                         launchBall()
                     }
                 }
@@ -141,7 +130,7 @@ struct BreakoutBlitzGame: View {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded && ballLaunched else { return }
+            guard !gameEnded && ballLaunched && !showQuestion else { return }
             updateGame()
         }
     }
@@ -199,18 +188,71 @@ struct BreakoutBlitzGame: View {
         }
     }
 
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            Text("BONUS ROUND!")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.orange)
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
+    }
+
     // MARK: - Game Over Overlay
 
     private var gameOverOverlay: some View {
         VStack(spacing: 24) {
-            Text(lives > 0 ? "LEVEL COMPLETE!" : "GAME OVER")
+            Text(bricks.isEmpty ? "LEVEL COMPLETE!" : "GAME OVER")
                 .font(DesignSystem.Typography.screenTitle())
-                .foregroundColor(lives > 0 ? DesignSystem.Colors.cyan : DesignSystem.Colors.red)
+                .foregroundColor(bricks.isEmpty ? DesignSystem.Colors.cyan : DesignSystem.Colors.red)
 
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
-                StatRow(icon: "flame.fill", label: "Max Combo", value: "\(combo)x", color: DesignSystem.Colors.orange)
+                StatRow(icon: "square.fill", label: "Bricks", value: "\(bricksDestroyed)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(
@@ -241,47 +283,41 @@ struct BreakoutBlitzGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
+        currentQuestion = engine.startSession()
 
-        if let question = engine.startSession() {
-            currentQuestion = question
-            setupBricks(for: question)
-        }
-
+        setupBricks()
         resetBallPosition()
     }
 
-    private func setupBricks(for question: LoadedQuestion) {
+    private func setupBricks() {
         bricks.removeAll()
-
-        let answers = question.question.allAnswers
         let screenWidth = UIScreen.main.bounds.width
-        let startY: CGFloat = 180
-        let spacing: CGFloat = 10
+        let brickWidth: CGFloat = 50
+        let brickHeight: CGFloat = 25
+        let cols = Int((screenWidth - 40) / (brickWidth + 5))
+        let rows = 5
 
-        let totalWidth = CGFloat(answers.count) * brickWidth + CGFloat(answers.count - 1) * spacing
-        let startX = (screenWidth - totalWidth) / 2 + brickWidth / 2
-
-        for (index, answer) in answers.enumerated() {
-            let brick = Brick(
-                id: UUID(),
-                position: CGPoint(x: startX + CGFloat(index) * (brickWidth + spacing), y: startY),
-                answer: answer,
-                isCorrect: answer == question.question.correctAnswer,
-                color: randomBrickColor()
-            )
-            bricks.append(brick)
-        }
-    }
-
-    private func randomBrickColor() -> Color {
         let colors: [Color] = [
-            DesignSystem.Colors.primary,
-            DesignSystem.Colors.cyan,
+            DesignSystem.Colors.red,
             DesignSystem.Colors.orange,
-            Color(hex: "#E94560"),
-            Color(hex: "#3FE0C5")
+            Color(hex: "#FFE66D"),
+            Color(hex: "#51CF66"),
+            DesignSystem.Colors.cyan
         ]
-        return colors.randomElement() ?? DesignSystem.Colors.primary
+
+        for row in 0..<rows {
+            for col in 0..<cols {
+                let brick = GameBrick(
+                    id: UUID(),
+                    x: 25 + CGFloat(col) * (brickWidth + 5) + brickWidth/2,
+                    y: 150 + CGFloat(row) * (brickHeight + 5),
+                    width: brickWidth,
+                    height: brickHeight,
+                    color: colors[row]
+                )
+                bricks.append(brick)
+            }
+        }
     }
 
     private func resetBallPosition() {
@@ -299,12 +335,12 @@ struct BreakoutBlitzGame: View {
     }
 
     private func updateGame() {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+
         // Move ball
         ballPosition.x += ballVelocity.x
         ballPosition.y += ballVelocity.y
-
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
 
         // Wall collisions
         if ballPosition.x <= ballRadius || ballPosition.x >= screenWidth - ballRadius {
@@ -317,7 +353,7 @@ struct BreakoutBlitzGame: View {
             ballPosition.y = ballRadius + 50
         }
 
-        // Ball fell below paddle
+        // Ball fell
         if ballPosition.y >= screenHeight - 80 {
             loseLife()
             return
@@ -332,55 +368,35 @@ struct BreakoutBlitzGame: View {
            ballVelocity.y > 0 {
 
             HapticsManager.shared.selectionChanged()
-
-            // Reflect and add spin based on hit position
             let hitPos = (ballPosition.x - paddleX) / (paddleWidth / 2)
-            ballVelocity.x = hitPos * 6
-            ballVelocity.y = -abs(ballVelocity.y) * 1.02 // Slight speed increase
-            ballVelocity.y = max(ballVelocity.y, -12) // Cap speed
+            ballVelocity.x = hitPos * 5
+            ballVelocity.y = -abs(ballVelocity.y)
         }
 
         // Brick collisions
-        for (index, brick) in bricks.enumerated().reversed() {
-            if ballPosition.x >= brick.position.x - brickWidth/2 &&
-               ballPosition.x <= brick.position.x + brickWidth/2 &&
-               ballPosition.y >= brick.position.y - brickHeight/2 &&
-               ballPosition.y <= brick.position.y + brickHeight/2 {
+        for i in bricks.indices.reversed() {
+            let brick = bricks[i]
+            if ballPosition.x >= brick.x - brick.width/2 &&
+               ballPosition.x <= brick.x + brick.width/2 &&
+               ballPosition.y >= brick.y - brick.height/2 &&
+               ballPosition.y <= brick.y + brick.height/2 {
 
-                hitBrick(at: index)
+                bricks.remove(at: i)
                 ballVelocity.y *= -1
+                bricksDestroyed += 1
+                score += 10
+                HapticsManager.shared.selectionChanged()
+
+                // Trigger question periodically
+                if bricksDestroyed % questionInterval == 0 {
+                    triggerQuestion()
+                }
+
+                // Check win
+                if bricks.isEmpty {
+                    endGame()
+                }
                 break
-            }
-        }
-    }
-
-    private func hitBrick(at index: Int) {
-        let brick = bricks[index]
-        bricks.remove(at: index)
-
-        if brick.isCorrect {
-            HapticsManager.shared.correctAnswer()
-            combo += 1
-            score += 100 * combo
-            showComboAnimation()
-            advanceQuestion()
-        } else {
-            HapticsManager.shared.incorrectAnswer()
-            combo = 0
-            // Respawn bricks for same question
-            if let question = currentQuestion {
-                setupBricks(for: question)
-            }
-        }
-    }
-
-    private func showComboAnimation() {
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-            showCombo = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-            withAnimation {
-                showCombo = false
             }
         }
     }
@@ -396,14 +412,42 @@ struct BreakoutBlitzGame: View {
         }
     }
 
-    private func advanceQuestion() {
-        if engine.hasMoreQuestions {
-            if let question = engine.nextQuestion() {
-                currentQuestion = question
-                setupBricks(for: question)
-            }
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+        ballLaunched = false
+    }
+
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
+            HapticsManager.shared.correctAnswer()
+            questionsCorrect += 1
+            score += 50
         } else {
-            endGame()
+            HapticsManager.shared.incorrectAnswer()
+            lives -= 1
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if lives <= 0 {
+                endGame()
+                return
+            }
+
+            resetBallPosition()
+
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
+            }
         }
     }
 
@@ -416,51 +460,42 @@ struct BreakoutBlitzGame: View {
         gameEnded = false
         lives = 3
         score = 0
-        combo = 0
-        bricks.removeAll()
+        bricksDestroyed = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
         Task {
             await startGame()
         }
     }
 }
 
-// MARK: - Brick Model
+// MARK: - Game Brick
 
-struct Brick: Identifiable {
+struct GameBrick: Identifiable {
     let id: UUID
-    let position: CGPoint
-    let answer: String
-    let isCorrect: Bool
+    let x: CGFloat
+    let y: CGFloat
+    let width: CGFloat
+    let height: CGFloat
     let color: Color
 }
 
-// MARK: - Brick View
+// MARK: - Brick Game View
 
-struct BrickView: View {
-    let brick: Brick
-    let width: CGFloat
-    let height: CGFloat
+struct BrickGameView: View {
+    let brick: GameBrick
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 6)
-                .fill(
-                    LinearGradient(
-                        colors: [brick.color, brick.color.opacity(0.7)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+        RoundedRectangle(cornerRadius: 4)
+            .fill(
+                LinearGradient(
+                    colors: [brick.color, brick.color.opacity(0.7)],
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
-                .frame(width: width, height: height)
-                .shadow(color: brick.color.opacity(0.5), radius: 4)
-
-            Text(brick.answer)
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(.white)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-                .padding(4)
-        }
-        .position(brick.position)
+            )
+            .frame(width: brick.width, height: brick.height)
+            .shadow(color: brick.color.opacity(0.5), radius: 3)
+            .position(x: brick.x, y: brick.y)
     }
 }

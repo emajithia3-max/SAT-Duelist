@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Flappy Scholar Game
-// Tap to fly, choose the correct answer gate to pass through!
+// Classic flappy bird - fly through gaps, question gates appear every few obstacles
 
 struct FlappyScholarGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -13,21 +13,30 @@ struct FlappyScholarGame: View {
     // Game state
     @State private var birdY: CGFloat = 400
     @State private var birdVelocity: CGFloat = 0
-    @State private var gates: [AnswerGate] = []
-    @State private var currentQuestion: LoadedQuestion?
+    @State private var pipes: [FlappyPipe] = []
     @State private var score: Int = 0
+    @State private var pipesPassed: Int = 0
     @State private var gameEnded = false
     @State private var gameStarted = false
     @State private var birdRotation: Double = 0
-    @State private var scrollOffset: CGFloat = 0
+
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
 
     let gravity: CGFloat = 0.6
-    let jumpVelocity: CGFloat = -12
-    let scrollSpeed: CGFloat = 3
-    let gateSpacing: CGFloat = 400
-    let gateWidth: CGFloat = 100
+    let jumpVelocity: CGFloat = -10
+    let pipeSpeed: CGFloat = 3
+    let pipeSpacing: CGFloat = 280
+    let gapHeight: CGFloat = 180
+    let questionInterval: Int = 4 // Question every 4 pipes
 
     let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
+    let pipeSpawner = Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,17 +44,13 @@ struct FlappyScholarGame: View {
                 ZStack {
                     // Sky background
                     LinearGradient(
-                        colors: [
-                            Color(hex: "#1a1a2e"),
-                            Color(hex: "#16213e"),
-                            Color(hex: "#0f3460")
-                        ],
+                        colors: [Color(hex: "#1a1a2e"), Color(hex: "#16213e"), Color(hex: "#0f3460")],
                         startPoint: .top,
                         endPoint: .bottom
                     )
 
                     // Stars
-                    StarsBackgroundView()
+                    StarsView()
 
                     // Ground
                     VStack {
@@ -61,18 +66,17 @@ struct FlappyScholarGame: View {
                             )
                     }
 
-                    // Gates
-                    ForEach(gates) { gate in
-                        GateView(gate: gate, scrollOffset: scrollOffset, screenHeight: geometry.size.height)
+                    // Pipes
+                    ForEach(pipes) { pipe in
+                        PipeView(pipe: pipe, gapHeight: gapHeight, screenHeight: geometry.size.height)
                     }
 
                     // Bird
-                    BirdView(rotation: birdRotation)
+                    FlappyBirdView(rotation: birdRotation)
                         .position(x: 100, y: birdY)
 
                     // UI Overlay
                     VStack {
-                        // Top bar
                         HStack {
                             scoreDisplay
                             Spacer()
@@ -81,27 +85,10 @@ struct FlappyScholarGame: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 60)
 
-                        // Question
-                        if let question = currentQuestion, gameStarted {
-                            Text(question.question.question)
-                                .font(DesignSystem.Typography.caption())
-                                .foregroundColor(DesignSystem.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .padding(.horizontal, 20)
-                                .padding(12)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
-                                )
-                                .padding(.top, 10)
-                        }
-
                         Spacer()
 
-                        // Tap to start
                         if !gameStarted && !gameEnded {
-                            VStack(spacing: 12) {
+                            VStack(spacing: 16) {
                                 Image(systemName: "hand.tap.fill")
                                     .font(.system(size: 48))
                                     .foregroundColor(DesignSystem.Colors.cyan)
@@ -109,13 +96,14 @@ struct FlappyScholarGame: View {
                                 Text("TAP TO FLY")
                                     .font(DesignSystem.Typography.button())
                                     .foregroundColor(DesignSystem.Colors.textPrimary)
-
-                                Text("Fly through the correct answer!")
-                                    .font(DesignSystem.Typography.caption())
-                                    .foregroundColor(DesignSystem.Colors.textMuted)
                             }
                             .padding(.bottom, 200)
                         }
+                    }
+
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
                     }
 
                     // Game over
@@ -125,7 +113,7 @@ struct FlappyScholarGame: View {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    if !gameEnded {
+                    if !gameEnded && !showQuestion {
                         flap()
                     }
                 }
@@ -136,8 +124,12 @@ struct FlappyScholarGame: View {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded && gameStarted else { return }
+            guard !gameEnded && gameStarted && !showQuestion else { return }
             updateGame()
+        }
+        .onReceive(pipeSpawner) { _ in
+            guard !gameEnded && gameStarted && !showQuestion else { return }
+            spawnPipe()
         }
     }
 
@@ -177,6 +169,63 @@ struct FlappyScholarGame: View {
         }
     }
 
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            HStack {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(DesignSystem.Colors.orange)
+                Text("QUESTION GATE!")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(DesignSystem.Colors.orange)
+            }
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
+    }
+
     // MARK: - Game Over Overlay
 
     private var gameOverOverlay: some View {
@@ -187,8 +236,8 @@ struct FlappyScholarGame: View {
 
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
-                StatRow(icon: "percent", label: "Accuracy", value: "\(Int(engine.accuracy))%", color: DesignSystem.Colors.blue)
+                StatRow(icon: "arrow.right", label: "Pipes Passed", value: "\(pipesPassed)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(
@@ -219,36 +268,10 @@ struct FlappyScholarGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
-
-        if let question = engine.startSession() {
-            currentQuestion = question
-            spawnGate(for: question, atX: 500)
-        }
+        currentQuestion = engine.startSession()
 
         birdY = UIScreen.main.bounds.height / 2
         birdVelocity = 0
-    }
-
-    private func spawnGate(for question: LoadedQuestion, atX x: CGFloat) {
-        let answers = question.question.allAnswers
-        let screenHeight = UIScreen.main.bounds.height
-
-        // Create vertical slots for answers
-        let slotHeight: CGFloat = 100
-        let totalHeight = CGFloat(answers.count) * slotHeight
-        let startY = (screenHeight - 80 - totalHeight) / 2
-
-        for (index, answer) in answers.enumerated() {
-            let gate = AnswerGate(
-                id: UUID(),
-                x: x,
-                y: startY + CGFloat(index) * slotHeight + slotHeight / 2,
-                answer: answer,
-                isCorrect: answer == question.question.correctAnswer,
-                slotHeight: slotHeight
-            )
-            gates.append(gate)
-        }
     }
 
     private func flap() {
@@ -259,84 +282,111 @@ struct FlappyScholarGame: View {
         birdVelocity = jumpVelocity
     }
 
+    private func spawnPipe() {
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
+
+        let minGapY = gapHeight / 2 + 100
+        let maxGapY = screenHeight - 80 - gapHeight / 2 - 50
+        let gapY = CGFloat.random(in: minGapY...maxGapY)
+
+        let pipe = FlappyPipe(
+            id: UUID(),
+            x: screenWidth + 50,
+            gapY: gapY,
+            passed: false
+        )
+        pipes.append(pipe)
+    }
+
     private func updateGame() {
         let screenHeight = UIScreen.main.bounds.height
 
-        // Apply gravity
+        // Apply physics
         birdVelocity += gravity
         birdY += birdVelocity
 
-        // Update bird rotation based on velocity
+        // Bird rotation
         birdRotation = Double(birdVelocity * 3)
         birdRotation = max(-30, min(90, birdRotation))
 
-        // Scroll gates
-        scrollOffset += scrollSpeed
-
         // Check bounds
-        if birdY < 50 || birdY > screenHeight - 100 {
+        if birdY < 30 || birdY > screenHeight - 100 {
             endGame()
             return
         }
 
-        // Check gate collisions
-        checkGateCollisions()
+        // Move pipes and check collisions
+        for i in pipes.indices.reversed() {
+            pipes[i].x -= pipeSpeed
 
-        // Remove passed gates and spawn new ones
-        gates.removeAll { gate in
-            gate.x - scrollOffset < -gateWidth
-        }
+            // Check if passed
+            if !pipes[i].passed && pipes[i].x < 100 - 30 {
+                pipes[i].passed = true
+                pipesPassed += 1
+                score += 10
+                HapticsManager.shared.selectionChanged()
 
-        // Spawn new gate when needed
-        if let lastGate = gates.last {
-            if lastGate.x - scrollOffset < UIScreen.main.bounds.width {
-                advanceQuestion()
-            }
-        }
-    }
-
-    private func checkGateCollisions() {
-        let birdX: CGFloat = 100
-        let birdRadius: CGFloat = 20
-
-        for gate in gates {
-            let gateScreenX = gate.x - scrollOffset
-
-            // Check if bird is passing through gate area
-            if gateScreenX > birdX - birdRadius && gateScreenX < birdX + birdRadius + gateWidth {
-                let inSlot = birdY > gate.y - gate.slotHeight/2 && birdY < gate.y + gate.slotHeight/2
-
-                if inSlot {
-                    if gate.isCorrect && !gate.passed {
-                        // Mark as passed
-                        if let index = gates.firstIndex(where: { $0.id == gate.id }) {
-                            gates[index].passed = true
-                            HapticsManager.shared.correctAnswer()
-                            score += 100
-                        }
-                    } else if !gate.isCorrect {
-                        HapticsManager.shared.incorrectAnswer()
-                        endGame()
-                        return
-                    }
+                // Trigger question every few pipes
+                if pipesPassed % questionInterval == 0 {
+                    triggerQuestion()
                 }
             }
+
+            // Check collision
+            let pipeWidth: CGFloat = 60
+            let birdRadius: CGFloat = 15
+
+            if pipes[i].x > 100 - pipeWidth/2 - birdRadius &&
+               pipes[i].x < 100 + pipeWidth/2 + birdRadius {
+
+                let gapTop = pipes[i].gapY - gapHeight/2
+                let gapBottom = pipes[i].gapY + gapHeight/2
+
+                if birdY - birdRadius < gapTop || birdY + birdRadius > gapBottom {
+                    endGame()
+                    return
+                }
+            }
+
+            // Remove off-screen pipes
+            if pipes[i].x < -100 {
+                pipes.remove(at: i)
+            }
         }
     }
 
-    private func advanceQuestion() {
-        // Remove current gates
-        let rightmostX = gates.map { $0.x }.max() ?? scrollOffset
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+    }
 
-        if engine.hasMoreQuestions {
-            if let question = engine.nextQuestion() {
-                currentQuestion = question
-                spawnGate(for: question, atX: rightmostX + gateSpacing)
-            }
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
+            HapticsManager.shared.correctAnswer()
+            questionsCorrect += 1
+            score += 50
         } else {
-            // Keep spawning with old questions or end
-            if let question = currentQuestion {
-                spawnGate(for: question, atX: rightmostX + gateSpacing)
+            HapticsManager.shared.incorrectAnswer()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if !isCorrect {
+                endGame()
+                return
+            }
+
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
             }
         }
     }
@@ -349,9 +399,12 @@ struct FlappyScholarGame: View {
     private func resetGame() {
         gameEnded = false
         gameStarted = false
+        showQuestion = false
         score = 0
-        scrollOffset = 0
-        gates.removeAll()
+        pipesPassed = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
+        pipes.removeAll()
         birdVelocity = 0
         birdRotation = 0
         Task {
@@ -360,59 +413,71 @@ struct FlappyScholarGame: View {
     }
 }
 
-// MARK: - Answer Gate Model
+// MARK: - Flappy Pipe
 
-struct AnswerGate: Identifiable {
+struct FlappyPipe: Identifiable {
     let id: UUID
-    let x: CGFloat
-    let y: CGFloat
-    let answer: String
-    let isCorrect: Bool
-    let slotHeight: CGFloat
-    var passed: Bool = false
+    var x: CGFloat
+    let gapY: CGFloat
+    var passed: Bool
 }
 
-// MARK: - Gate View
+// MARK: - Pipe View
 
-struct GateView: View {
-    let gate: AnswerGate
-    let scrollOffset: CGFloat
+struct PipeView: View {
+    let pipe: FlappyPipe
+    let gapHeight: CGFloat
     let screenHeight: CGFloat
 
     var body: some View {
-        let screenX = gate.x - scrollOffset
+        let pipeWidth: CGFloat = 60
+        let topPipeHeight = pipe.gapY - gapHeight / 2
+        let bottomPipeY = pipe.gapY + gapHeight / 2
 
         ZStack {
-            // Gate frame
-            RoundedRectangle(cornerRadius: 12)
-                .fill(gate.passed ? DesignSystem.Colors.cyan.opacity(0.3) : DesignSystem.Colors.cardBackground)
-                .frame(width: 90, height: gate.slotHeight - 10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(
-                            gate.passed ? DesignSystem.Colors.cyan : DesignSystem.Colors.primary,
-                            lineWidth: 3
+            // Top pipe
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(hex: "#2ECC71"), Color(hex: "#27AE60")],
+                            startPoint: .leading,
+                            endPoint: .trailing
                         )
-                )
+                    )
+                    .frame(width: pipeWidth, height: topPipeHeight)
 
-            // Answer text
-            Text(gate.answer)
-                .font(.system(size: 12, weight: .bold))
-                .foregroundColor(gate.passed ? DesignSystem.Colors.cyan : DesignSystem.Colors.textPrimary)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .padding(8)
+                Rectangle()
+                    .fill(Color(hex: "#27AE60"))
+                    .frame(width: pipeWidth + 10, height: 30)
+            }
+            .position(x: pipe.x, y: topPipeHeight / 2)
+
+            // Bottom pipe
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color(hex: "#27AE60"))
+                    .frame(width: pipeWidth + 10, height: 30)
+
+                Rectangle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(hex: "#2ECC71"), Color(hex: "#27AE60")],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .frame(width: pipeWidth, height: screenHeight - bottomPipeY - 80)
+            }
+            .position(x: pipe.x, y: bottomPipeY + (screenHeight - bottomPipeY - 80) / 2 + 15)
         }
-        .position(x: screenX + 45, y: gate.y)
-        .opacity(screenX > -100 && screenX < UIScreen.main.bounds.width + 100 ? 1 : 0)
     }
 }
 
-// MARK: - Bird View
+// MARK: - Flappy Bird View
 
-struct BirdView: View {
+struct FlappyBirdView: View {
     let rotation: Double
-
     @State private var wingUp = false
 
     var body: some View {
@@ -426,35 +491,53 @@ struct BirdView: View {
             // Body
             Ellipse()
                 .fill(DesignSystem.Colors.orange)
-                .frame(width: 40, height: 35)
+                .frame(width: 40, height: 32)
 
             // Wing
             Ellipse()
                 .fill(DesignSystem.Colors.orange.opacity(0.8))
-                .frame(width: 20, height: 12)
-                .offset(x: -5, y: wingUp ? -10 : 5)
+                .frame(width: 18, height: 10)
+                .offset(x: -5, y: wingUp ? -8 : 4)
 
             // Eye
             Circle()
                 .fill(.white)
                 .frame(width: 12, height: 12)
-                .offset(x: 10, y: -5)
+                .offset(x: 10, y: -4)
 
             Circle()
                 .fill(.black)
                 .frame(width: 6, height: 6)
-                .offset(x: 12, y: -5)
+                .offset(x: 12, y: -4)
 
             // Beak
             Triangle()
                 .fill(Color.yellow)
-                .frame(width: 15, height: 10)
-                .offset(x: 25, y: 2)
+                .frame(width: 14, height: 10)
+                .offset(x: 24, y: 2)
         }
         .rotationEffect(.degrees(rotation))
         .onAppear {
-            withAnimation(.easeInOut(duration: 0.15).repeatForever(autoreverses: true)) {
+            withAnimation(.easeInOut(duration: 0.12).repeatForever(autoreverses: true)) {
                 wingUp = true
+            }
+        }
+    }
+}
+
+// MARK: - Stars View
+
+struct StarsView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ForEach(0..<50, id: \.self) { i in
+                Circle()
+                    .fill(.white.opacity(Double.random(in: 0.3...0.8)))
+                    .frame(width: CGFloat.random(in: 1...2))
+                    .position(
+                        x: CGFloat(i * 8 % Int(geometry.size.width)),
+                        y: CGFloat(i * 17 % Int(geometry.size.height * 0.7))
+                    )
             }
         }
     }
@@ -470,30 +553,5 @@ struct Triangle: Shape {
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.closeSubpath()
         return path
-    }
-}
-
-// MARK: - Stars Background
-
-struct StarsBackgroundView: View {
-    @State private var stars: [(x: CGFloat, y: CGFloat, size: CGFloat)] = []
-
-    var body: some View {
-        Canvas { context, size in
-            for star in stars {
-                let rect = CGRect(x: star.x, y: star.y, width: star.size, height: star.size)
-                context.fill(Circle().path(in: rect), with: .color(.white.opacity(0.7)))
-            }
-        }
-        .onAppear {
-            let bounds = UIScreen.main.bounds
-            stars = (0..<60).map { _ in
-                (
-                    x: CGFloat.random(in: 0...bounds.width),
-                    y: CGFloat.random(in: 0...bounds.height * 0.7),
-                    size: CGFloat.random(in: 1...2)
-                )
-            }
-        }
     }
 }
