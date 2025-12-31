@@ -203,6 +203,12 @@ struct ScopeSelectionView: View {
             SpeedRushGame(scope: scope, config: config)
         case .survival:
             SurvivalModeGame(scope: scope, config: config)
+        case .meteorDefense:
+            MeteorDefenseGame(scope: scope, config: config)
+        case .bossBattle:
+            BossBattleGame(scope: scope, config: config)
+        case .towerClimb:
+            TowerClimbGame(scope: scope, config: config)
         }
     }
 
