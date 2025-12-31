@@ -29,7 +29,7 @@ struct DuelClassicGame: View {
     @State private var answerOptions: [String] = []
 
     var body: some View {
-        CinematicContainer.duelClassic {
+        CinematicDuelClassic {
             VStack(spacing: 0) {
                 // Header
                 gameHeader

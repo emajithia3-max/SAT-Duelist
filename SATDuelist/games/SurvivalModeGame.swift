@@ -36,7 +36,7 @@ struct SurvivalModeGame: View {
     }
 
     var body: some View {
-        CinematicContainer.survival {
+        CinematicSurvival {
             ZStack {
                 VStack(spacing: 0) {
                     // Header

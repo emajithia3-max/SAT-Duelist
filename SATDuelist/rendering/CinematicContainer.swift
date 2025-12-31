@@ -49,43 +49,41 @@ struct CinematicContainer<Content: View>: View {
     }
 }
 
-// MARK: - Game Mode Cinematic Container
+// MARK: - Game Mode Cinematic Container Factory
 // Pre-configured containers for specific game modes
 
-extension CinematicContainer {
-    /// Standard container for Duel Classic
-    static func duelClassic<C: View>(@ViewBuilder content: () -> C) -> CinematicContainer<C> {
-        CinematicContainer<C>(
-            vignette: true,
-            bloom: true,
-            motionBlur: false,
-            grain: false,
-            content: content
-        )
-    }
+/// Standard container for Duel Classic
+func CinematicDuelClassic<Content: View>(@ViewBuilder content: () -> Content) -> CinematicContainer<Content> {
+    CinematicContainer(
+        vignette: true,
+        bloom: true,
+        motionBlur: false,
+        grain: false,
+        content: content
+    )
+}
 
-    /// High-speed container for Speed Rush (emphasizes motion blur)
-    static func speedRush<C: View>(@ViewBuilder content: () -> C) -> CinematicContainer<C> {
-        CinematicContainer<C>(
-            vignette: true,
-            bloom: true,
-            motionBlur: true,
-            grain: false,
-            motionBlurIntensity: 0.5,
-            content: content
-        )
-    }
+/// High-speed container for Speed Rush (emphasizes motion blur)
+func CinematicSpeedRush<Content: View>(@ViewBuilder content: () -> Content) -> CinematicContainer<Content> {
+    CinematicContainer(
+        vignette: true,
+        bloom: true,
+        motionBlur: true,
+        grain: false,
+        motionBlurIntensity: 0.5,
+        content: content
+    )
+}
 
-    /// Tense container for Survival Mode
-    static func survival<C: View>(@ViewBuilder content: () -> C) -> CinematicContainer<C> {
-        CinematicContainer<C>(
-            vignette: true,
-            bloom: true,
-            motionBlur: false,
-            grain: true,
-            content: content
-        )
-    }
+/// Tense container for Survival Mode
+func CinematicSurvival<Content: View>(@ViewBuilder content: () -> Content) -> CinematicContainer<Content> {
+    CinematicContainer(
+        vignette: true,
+        bloom: true,
+        motionBlur: false,
+        grain: true,
+        content: content
+    )
 }
 
 // MARK: - Animated Card Transition
