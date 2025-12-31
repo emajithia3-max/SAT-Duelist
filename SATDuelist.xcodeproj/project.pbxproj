@@ -40,6 +40,8 @@
 		5E5731582F04FA9400ED36B1 /* SpaceShooterGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731562F04FA9400ED36B1 /* SpaceShooterGame.swift */; };
 		5E5731592F04FA9400ED36B1 /* StackBuilderGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731572F04FA9400ED36B1 /* StackBuilderGame.swift */; };
 		5E57315A2F04FA9400ED36B1 /* ColorMatchGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5731552F04FA9400ED36B1 /* ColorMatchGame.swift */; };
+		5E57315E2F050E2700ED36B1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57315C2F050E2700ED36B1 /* HomeView.swift */; };
+		5E57315F2F050E2700ED36B1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57315D2F050E2700ED36B1 /* SettingsView.swift */; };
 		61E0A8B9958BEC05B8C93038 /* math_units_conversions.json in Resources */ = {isa = PBXBuildFile; fileRef = 32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */; };
 		62CEABA5348E18D2EED05098 /* rw_form_structure_sense.json in Resources */ = {isa = PBXBuildFile; fileRef = 04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */; };
 		63C51CBFAF11FA0E281D5100 /* math_systems_nonlinear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */; };
@@ -107,6 +109,8 @@
 		5E5731552F04FA9400ED36B1 /* ColorMatchGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMatchGame.swift; sourceTree = "<group>"; };
 		5E5731562F04FA9400ED36B1 /* SpaceShooterGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShooterGame.swift; sourceTree = "<group>"; };
 		5E5731572F04FA9400ED36B1 /* StackBuilderGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackBuilderGame.swift; sourceTree = "<group>"; };
+		5E57315C2F050E2700ED36B1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5E57315D2F050E2700ED36B1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6B5F727B8940758392EAB5C2 /* SATDuelist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SATDuelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_text_structure_purpose.json; sourceTree = "<group>"; };
 		7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_equations_one_variable.json; sourceTree = "<group>"; };
@@ -298,6 +302,8 @@
 		D68D0784431A9D54083B9B73 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				5E57315C2F050E2700ED36B1 /* HomeView.swift */,
+				5E57315D2F050E2700ED36B1 /* SettingsView.swift */,
 				9BF822FDF573EB10181FF41A /* GameSelectionView.swift */,
 				3C4D55F7D3EFC1B899201E51 /* LeaderboardView.swift */,
 				99BA339981D0FA582BDA3B3F /* ProfileView.swift */,
@@ -481,6 +487,8 @@
 				5E57315A2F04FA9400ED36B1 /* ColorMatchGame.swift in Sources */,
 				5E5731532F04F31100ED36B1 /* PinballWizardGame.swift in Sources */,
 				5E5731542F04F31100ED36B1 /* RhythmBlasterGame.swift in Sources */,
+				5E57315E2F050E2700ED36B1 /* HomeView.swift in Sources */,
+				5E57315F2F050E2700ED36B1 /* SettingsView.swift in Sources */,
 				5E57314E2F04F30900ED36B1 /* LaserMazeGame.swift in Sources */,
 				AEB8A7425EE0B80AF109941F /* DesignSystem.swift in Sources */,
 				573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */,
