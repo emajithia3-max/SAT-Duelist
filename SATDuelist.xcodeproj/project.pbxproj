@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -117,6 +117,91 @@
 		F269FF4E2F7161612CEA94D2 /* SpeedRushGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedRushGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5E572E3B2F04E46D00ED36B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Fonts/Inter_18pt-Black.ttf",
+				"Fonts/Inter_18pt-BlackItalic.ttf",
+				"Fonts/Inter_18pt-Bold.ttf",
+				"Fonts/Inter_18pt-BoldItalic.ttf",
+				"Fonts/Inter_18pt-ExtraBold.ttf",
+				"Fonts/Inter_18pt-ExtraBoldItalic.ttf",
+				"Fonts/Inter_18pt-ExtraLight.ttf",
+				"Fonts/Inter_18pt-ExtraLightItalic.ttf",
+				"Fonts/Inter_18pt-Italic.ttf",
+				"Fonts/Inter_18pt-Light.ttf",
+				"Fonts/Inter_18pt-LightItalic.ttf",
+				"Fonts/Inter_18pt-Medium.ttf",
+				"Fonts/Inter_18pt-MediumItalic.ttf",
+				"Fonts/Inter_18pt-Regular.ttf",
+				"Fonts/Inter_18pt-SemiBold.ttf",
+				"Fonts/Inter_18pt-SemiBoldItalic.ttf",
+				"Fonts/Inter_18pt-Thin.ttf",
+				"Fonts/Inter_18pt-ThinItalic.ttf",
+				"Fonts/Inter_24pt-Black.ttf",
+				"Fonts/Inter_24pt-BlackItalic.ttf",
+				"Fonts/Inter_24pt-Bold.ttf",
+				"Fonts/Inter_24pt-BoldItalic.ttf",
+				"Fonts/Inter_24pt-ExtraBold.ttf",
+				"Fonts/Inter_24pt-ExtraBoldItalic.ttf",
+				"Fonts/Inter_24pt-ExtraLight.ttf",
+				"Fonts/Inter_24pt-ExtraLightItalic.ttf",
+				"Fonts/Inter_24pt-Italic.ttf",
+				"Fonts/Inter_24pt-Light.ttf",
+				"Fonts/Inter_24pt-LightItalic.ttf",
+				"Fonts/Inter_24pt-Medium.ttf",
+				"Fonts/Inter_24pt-MediumItalic.ttf",
+				"Fonts/Inter_24pt-Regular.ttf",
+				"Fonts/Inter_24pt-SemiBold.ttf",
+				"Fonts/Inter_24pt-SemiBoldItalic.ttf",
+				"Fonts/Inter_24pt-Thin.ttf",
+				"Fonts/Inter_24pt-ThinItalic.ttf",
+				"Fonts/Inter_28pt-Black.ttf",
+				"Fonts/Inter_28pt-BlackItalic.ttf",
+				"Fonts/Inter_28pt-Bold.ttf",
+				"Fonts/Inter_28pt-BoldItalic.ttf",
+				"Fonts/Inter_28pt-ExtraBold.ttf",
+				"Fonts/Inter_28pt-ExtraBoldItalic.ttf",
+				"Fonts/Inter_28pt-ExtraLight.ttf",
+				"Fonts/Inter_28pt-ExtraLightItalic.ttf",
+				"Fonts/Inter_28pt-Italic.ttf",
+				"Fonts/Inter_28pt-Light.ttf",
+				"Fonts/Inter_28pt-LightItalic.ttf",
+				"Fonts/Inter_28pt-Medium.ttf",
+				"Fonts/Inter_28pt-MediumItalic.ttf",
+				"Fonts/Inter_28pt-Regular.ttf",
+				"Fonts/Inter_28pt-SemiBold.ttf",
+				"Fonts/Inter_28pt-SemiBoldItalic.ttf",
+				"Fonts/Inter_28pt-Thin.ttf",
+				"Fonts/Inter_28pt-ThinItalic.ttf",
+				"Fonts/Poppins-Black.ttf",
+				"Fonts/Poppins-BlackItalic.ttf",
+				"Fonts/Poppins-Bold.ttf",
+				"Fonts/Poppins-BoldItalic.ttf",
+				"Fonts/Poppins-ExtraBold.ttf",
+				"Fonts/Poppins-ExtraBoldItalic.ttf",
+				"Fonts/Poppins-ExtraLight.ttf",
+				"Fonts/Poppins-ExtraLightItalic.ttf",
+				"Fonts/Poppins-Italic.ttf",
+				"Fonts/Poppins-Light.ttf",
+				"Fonts/Poppins-LightItalic.ttf",
+				"Fonts/Poppins-Medium.ttf",
+				"Fonts/Poppins-MediumItalic.ttf",
+				"Fonts/Poppins-Regular.ttf",
+				"Fonts/Poppins-SemiBold.ttf",
+				"Fonts/Poppins-SemiBoldItalic.ttf",
+				"Fonts/Poppins-Thin.ttf",
+				"Fonts/Poppins-ThinItalic.ttf",
+			);
+			target = 00AAF88A745383F3BA5F0F3E /* SATDuelist */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5E572DCD2F04E43F00ED36B1 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (5E572E3B2F04E46D00ED36B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXGroup section */
 		07DEE3FBFC1C22DBF112D3E2 /* SATDuelist */ = {
 			isa = PBXGroup;
@@ -135,6 +220,7 @@
 		113920405BAE5AB5E5B1817A = {
 			isa = PBXGroup;
 			children = (
+				5E572DCD2F04E43F00ED36B1 /* Resources */,
 				07DEE3FBFC1C22DBF112D3E2 /* SATDuelist */,
 				5164714CE71C9BFCA8FD929F /* Products */,
 			);
@@ -281,7 +367,6 @@
 			);
 			mainGroup = 113920405BAE5AB5E5B1817A;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
