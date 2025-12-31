@@ -263,6 +263,12 @@ struct ScopeSelectionView: View {
             return .timed(60)
         case .survival:
             return .default
+        case .meteorDefense:
+            return .default
+        case .bossBattle:
+            return .default
+        case .towerClimb:
+            return .default
         }
     }
 
