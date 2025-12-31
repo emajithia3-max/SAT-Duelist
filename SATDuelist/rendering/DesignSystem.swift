@@ -40,38 +40,45 @@ enum DesignSystem {
 
     // MARK: - Typography
 
-    // Note: Actual font registration happens after font files are added
-    // These are placeholder names that will be replaced
+    // Custom font names (PostScript names from font files)
+    enum FontName {
+        static let interRegular = "Inter18pt-Regular"
+        static let interMedium = "Inter18pt-Medium"
+        static let interSemiBold = "Inter18pt-SemiBold"
+        static let interBold = "Inter18pt-Bold"
+        static let poppinsSemiBold = "Poppins-SemiBold"
+        static let poppinsBold = "Poppins-Bold"
+    }
 
     enum Typography {
         // Screen titles → Poppins Bold 26-28
         static func screenTitle() -> Font {
-            .system(size: 27, weight: .bold, design: .rounded)
+            .custom(FontName.poppinsBold, size: 27)
         }
 
         // Card titles → Poppins Semibold 18-20
         static func cardTitle() -> Font {
-            .system(size: 19, weight: .semibold, design: .rounded)
+            .custom(FontName.poppinsSemiBold, size: 19)
         }
 
         // Body → Inter Regular 14-15
         static func body() -> Font {
-            .system(size: 15, weight: .regular)
+            .custom(FontName.interRegular, size: 15)
         }
 
         // Buttons → Inter Semibold 15
         static func button() -> Font {
-            .system(size: 15, weight: .semibold)
+            .custom(FontName.interSemiBold, size: 15)
         }
 
         // XP / streak numbers → Poppins Bold 22-26
         static func number() -> Font {
-            .system(size: 24, weight: .bold, design: .rounded)
+            .custom(FontName.poppinsBold, size: 24)
         }
 
         // Small labels
         static func caption() -> Font {
-            .system(size: 12, weight: .medium)
+            .custom(FontName.interMedium, size: 12)
         }
     }
 

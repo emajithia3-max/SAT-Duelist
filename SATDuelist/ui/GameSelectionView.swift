@@ -15,30 +15,81 @@ struct GameSelectionView: View {
                         // Header
                         headerSection
 
-                        // Game mode cards
-                        VStack(spacing: 16) {
-                            GameModeCard(
-                                mode: .duelClassic,
-                                isSelected: selectedGame == .duelClassic
-                            ) {
-                                selectGame(.duelClassic)
-                            }
+                        // Study Mode Games
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Study Modes")
+                                .font(DesignSystem.Typography.cardTitle())
+                                .foregroundColor(DesignSystem.Colors.textSecondary)
+                                .padding(.horizontal, 20)
 
-                            GameModeCard(
-                                mode: .speedRush,
-                                isSelected: selectedGame == .speedRush
-                            ) {
-                                selectGame(.speedRush)
-                            }
+                            VStack(spacing: 12) {
+                                GameModeCard(
+                                    mode: .duelClassic,
+                                    isSelected: selectedGame == .duelClassic
+                                ) {
+                                    selectGame(.duelClassic)
+                                }
 
-                            GameModeCard(
-                                mode: .survival,
-                                isSelected: selectedGame == .survival
-                            ) {
-                                selectGame(.survival)
+                                GameModeCard(
+                                    mode: .speedRush,
+                                    isSelected: selectedGame == .speedRush
+                                ) {
+                                    selectGame(.speedRush)
+                                }
+
+                                GameModeCard(
+                                    mode: .survival,
+                                    isSelected: selectedGame == .survival
+                                ) {
+                                    selectGame(.survival)
+                                }
                             }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
+
+                        // Arcade Games section
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text("Arcade Games")
+                                    .font(DesignSystem.Typography.cardTitle())
+                                    .foregroundColor(DesignSystem.Colors.textSecondary)
+
+                                Text("NEW")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        Capsule()
+                                            .fill(DesignSystem.Colors.orange)
+                                    )
+                            }
+                            .padding(.horizontal, 20)
+
+                            VStack(spacing: 12) {
+                                GameModeCard(
+                                    mode: .meteorDefense,
+                                    isSelected: selectedGame == .meteorDefense
+                                ) {
+                                    selectGame(.meteorDefense)
+                                }
+
+                                GameModeCard(
+                                    mode: .bossBattle,
+                                    isSelected: selectedGame == .bossBattle
+                                ) {
+                                    selectGame(.bossBattle)
+                                }
+
+                                GameModeCard(
+                                    mode: .towerClimb,
+                                    isSelected: selectedGame == .towerClimb
+                                ) {
+                                    selectGame(.towerClimb)
+                                }
+                            }
+                            .padding(.horizontal, 20)
+                        }
 
                         // Quick stats section
                         quickStatsSection
@@ -123,6 +174,9 @@ enum GameMode: String, CaseIterable, Identifiable {
     case duelClassic = "Duel Classic"
     case speedRush = "Speed Rush"
     case survival = "Survival"
+    case meteorDefense = "Meteor Defense"
+    case bossBattle = "Boss Battle"
+    case towerClimb = "Tower Climb"
 
     var id: String { rawValue }
 
@@ -131,6 +185,9 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .duelClassic: return "bolt.fill"
         case .speedRush: return "timer"
         case .survival: return "heart.fill"
+        case .meteorDefense: return "sparkles"
+        case .bossBattle: return "shield.fill"
+        case .towerClimb: return "arrow.up.circle.fill"
         }
     }
 
@@ -142,6 +199,12 @@ enum GameMode: String, CaseIterable, Identifiable {
             return "Race against the clock - how many can you answer?"
         case .survival:
             return "One wrong answer ends it all. How far can you go?"
+        case .meteorDefense:
+            return "Blast meteors by answering questions - defend your ship!"
+        case .bossBattle:
+            return "Epic RPG battle! Deal damage with correct answers"
+        case .towerClimb:
+            return "Climb the tower! Jump up with each correct answer"
         }
     }
 
@@ -150,6 +213,18 @@ enum GameMode: String, CaseIterable, Identifiable {
         case .duelClassic: return Color(hex: "#7C6CFF")
         case .speedRush: return Color(hex: "#4DA3FF")
         case .survival: return Color(hex: "#FF5D5D")
+        case .meteorDefense: return Color(hex: "#FF9F43")
+        case .bossBattle: return Color(hex: "#E94560")
+        case .towerClimb: return Color(hex: "#3FE0C5")
+        }
+    }
+
+    var isArcadeGame: Bool {
+        switch self {
+        case .meteorDefense, .bossBattle, .towerClimb:
+            return true
+        default:
+            return false
         }
     }
 }
