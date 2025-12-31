@@ -25,6 +25,9 @@
 		4F49271E8FAE10BA6F19E6AD /* GlowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896F2AB85607EE4779C3287F /* GlowModifier.swift */; };
 		573294237FA6892F25C4859A /* DuelClassicGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */; };
 		5D7B80A3967B508DAF293BF2 /* rw_text_structure_purpose.json in Resources */ = {isa = PBXBuildFile; fileRef = 7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */; };
+		5E57313E2F04EC2200ED36B1 /* TowerClimbGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */; };
+		5E57313F2F04EC2200ED36B1 /* BossBattleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */; };
+		5E5731402F04EC2200ED36B1 /* MeteorDefenseGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */; };
 		61E0A8B9958BEC05B8C93038 /* math_units_conversions.json in Resources */ = {isa = PBXBuildFile; fileRef = 32711D84BFDCFE302ADF25F3 /* math_units_conversions.json */; };
 		62CEABA5348E18D2EED05098 /* rw_form_structure_sense.json in Resources */ = {isa = PBXBuildFile; fileRef = 04640CBB2EFEA6F346B1ED6C /* rw_form_structure_sense.json */; };
 		63C51CBFAF11FA0E281D5100 /* math_systems_nonlinear_equations.json in Resources */ = {isa = PBXBuildFile; fileRef = B33F7D11C1FC8627CAD93074 /* math_systems_nonlinear_equations.json */; };
@@ -77,7 +80,10 @@
 		51A26CCE29D4632B151502B9 /* math_nonlinear_functions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_nonlinear_functions.json; sourceTree = "<group>"; };
 		547AADCFBB3F8088B5304599 /* QuestionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionLoader.swift; sourceTree = "<group>"; };
 		5E2083C094AAF7B1EA4A4687 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
-		6B5F727B8940758392EAB5C2 /* SATDuelist.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SATDuelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossBattleGame.swift; sourceTree = "<group>"; };
+		5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorDefenseGame.swift; sourceTree = "<group>"; };
+		5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TowerClimbGame.swift; sourceTree = "<group>"; };
+		6B5F727B8940758392EAB5C2 /* SATDuelist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SATDuelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7030AECAAAF0FD870FBF7CA1 /* rw_text_structure_purpose.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rw_text_structure_purpose.json; sourceTree = "<group>"; };
 		7093E075980675F4F3BD6028 /* math_linear_equations_one_variable.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = math_linear_equations_one_variable.json; sourceTree = "<group>"; };
 		70BA5EA9C18B95BF636C7F38 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -281,6 +287,9 @@
 		ED26D23F9049F75CC10B2E7B /* games */ = {
 			isa = PBXGroup;
 			children = (
+				5E57313B2F04EC2200ED36B1 /* BossBattleGame.swift */,
+				5E57313C2F04EC2200ED36B1 /* MeteorDefenseGame.swift */,
+				5E57313D2F04EC2200ED36B1 /* TowerClimbGame.swift */,
 				2901003B386A3DCC7CD88425 /* DuelClassicGame.swift */,
 				F269FF4E2F7161612CEA94D2 /* SpeedRushGame.swift */,
 				363779ED9A1D9A909548C3C4 /* SurvivalModeGame.swift */,
@@ -432,6 +441,9 @@
 				CD2C289BC16D0BA6F95C04F3 /* LeaderboardView.swift in Sources */,
 				92A5D7F308661487CD0E7F24 /* PostProcessingPipeline.swift in Sources */,
 				0BCEBC85F09F81AED3E8E517 /* ProfileView.swift in Sources */,
+				5E57313E2F04EC2200ED36B1 /* TowerClimbGame.swift in Sources */,
+				5E57313F2F04EC2200ED36B1 /* BossBattleGame.swift in Sources */,
+				5E5731402F04EC2200ED36B1 /* MeteorDefenseGame.swift in Sources */,
 				65DBDF8205EAD8B30E3BD0CC /* QuestionEngine.swift in Sources */,
 				0398BCA2528DDD5C4CAFDA3F /* QuestionLoader.swift in Sources */,
 				900510655B09ADAD9A9FA713 /* QuestionModels.swift in Sources */,
@@ -453,6 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZT56M637KS;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -593,6 +606,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZT56M637KS;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
