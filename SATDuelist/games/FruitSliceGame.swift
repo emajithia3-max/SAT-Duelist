@@ -250,7 +250,7 @@ struct FruitSliceGame: View {
                 x: startX,
                 y: screenHeight + 50,
                 velocityX: CGFloat.random(in: -2...2),
-                velocityY: CGFloat.random(in: -18...-14),
+                velocityY: CGFloat.random(in: -18 ... -14),
                 answer: answer,
                 isCorrect: isCorrect,
                 fruitType: FruitType.allCases.randomElement() ?? .apple,
