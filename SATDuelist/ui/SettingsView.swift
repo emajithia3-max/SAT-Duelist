@@ -4,12 +4,14 @@ import SwiftUI
 // Manage hidden games and app preferences
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
-    @StateObject private var settings = GameSettingsManager.shared
+    @ObservedObject private var settings = GameSettingsManager.shared
     @State private var showResetConfirmation = false
 
     var body: some View {
-        CinematicContainer {
+        ZStack {
+            DesignSystem.Colors.primaryBackground
+                .ignoresSafeArea()
+
             VStack(spacing: 0) {
                 // Header
                 headerSection
@@ -45,34 +47,11 @@ struct SettingsView: View {
     // MARK: - Header Section
 
     private var headerSection: some View {
-        HStack {
-            Button {
-                HapticsManager.shared.buttonPress()
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(DesignSystem.Colors.textSecondary)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        Circle()
-                            .fill(DesignSystem.Colors.elevated)
-                    )
-            }
-
-            Spacer()
-
-            Text("Settings")
-                .font(DesignSystem.Typography.screenTitle())
-                .foregroundColor(DesignSystem.Colors.textPrimary)
-
-            Spacer()
-
-            Color.clear
-                .frame(width: 44, height: 44)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
+        Text("Settings")
+            .font(DesignSystem.Typography.screenTitle())
+            .foregroundColor(DesignSystem.Colors.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
     }
 
     // MARK: - Hidden Games Section

@@ -4,18 +4,18 @@ import SwiftUI
 // User stats and achievements (placeholder for future implementation)
 
 struct ProfileView: View {
-    @Environment(\.dismiss) private var dismiss
+    // Mock user data - will be replaced with real data from GameSettingsManager
+    @ObservedObject private var settings = GameSettingsManager.shared
 
-    // Mock user data
-    private let totalXP = 5420
     private let currentLevel = 12
-    private let questionsAnswered = 347
-    private let accuracy = 78.5
     private let maxStreak = 23
     private let dayStreak = 7
 
     var body: some View {
-        CinematicContainer {
+        ZStack {
+            DesignSystem.Colors.primaryBackground
+                .ignoresSafeArea()
+
             VStack(spacing: 0) {
                 // Header
                 headerSection
@@ -46,45 +46,11 @@ struct ProfileView: View {
     // MARK: - Header Section
 
     private var headerSection: some View {
-        HStack {
-            Button {
-                HapticsManager.shared.buttonPress()
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(DesignSystem.Colors.textSecondary)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        Circle()
-                            .fill(DesignSystem.Colors.elevated)
-                    )
-            }
-
-            Spacer()
-
-            Text("Profile")
-                .font(DesignSystem.Typography.screenTitle())
-                .foregroundColor(DesignSystem.Colors.textPrimary)
-
-            Spacer()
-
-            // Settings button
-            Button {
-                HapticsManager.shared.buttonPress()
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(DesignSystem.Colors.textSecondary)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        Circle()
-                            .fill(DesignSystem.Colors.elevated)
-                    )
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
+        Text("Profile")
+            .font(DesignSystem.Typography.screenTitle())
+            .foregroundColor(DesignSystem.Colors.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
     }
 
     // MARK: - Profile Header
@@ -112,7 +78,7 @@ struct ProfileView: View {
                 Text("•")
                     .foregroundColor(DesignSystem.Colors.textMuted)
 
-                Text("\(totalXP) XP")
+                Text("\(settings.totalScore) XP")
                     .font(DesignSystem.Typography.body())
                     .foregroundColor(DesignSystem.Colors.primary)
             }
@@ -120,12 +86,12 @@ struct ProfileView: View {
             // XP progress to next level
             VStack(spacing: 8) {
                 ProgressBar(
-                    progress: 0.65,
+                    progress: Double(settings.totalScore % 1000) / 1000.0,
                     color: DesignSystem.Colors.primary
                 )
                 .frame(width: 200)
 
-                Text("650 / 1000 XP to Level \(currentLevel + 1)")
+                Text("\(settings.totalScore % 1000) / 1000 XP to Level \(currentLevel + 1)")
                     .font(DesignSystem.Typography.caption())
                     .foregroundColor(DesignSystem.Colors.textMuted)
             }
@@ -142,14 +108,14 @@ struct ProfileView: View {
             ], spacing: 20) {
                 ProfileStatItem(
                     icon: "checkmark.circle.fill",
-                    value: "\(questionsAnswered)",
+                    value: "\(settings.questionsAnswered)",
                     label: "Questions",
                     color: DesignSystem.Colors.cyan
                 )
 
                 ProfileStatItem(
                     icon: "percent",
-                    value: String(format: "%.1f%%", accuracy),
+                    value: String(format: "%.1f%%", settings.accuracy),
                     label: "Accuracy",
                     color: DesignSystem.Colors.blue
                 )
@@ -163,7 +129,7 @@ struct ProfileView: View {
 
                 ProfileStatItem(
                     icon: "star.fill",
-                    value: "\(totalXP)",
+                    value: "\(settings.totalScore)",
                     label: "Total XP",
                     color: DesignSystem.Colors.primary
                 )
