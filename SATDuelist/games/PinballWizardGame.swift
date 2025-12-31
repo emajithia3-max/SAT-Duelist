@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Pinball Wizard Game
-// Pinball with answer bumpers - hit the right answers to score!
+// Classic pinball - hit bumpers to score! Periodic questions pause the game.
 
 struct PinballWizardGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -14,7 +14,6 @@ struct PinballWizardGame: View {
     @State private var ballPosition: CGPoint = CGPoint(x: 350, y: 600)
     @State private var ballVelocity: CGPoint = CGPoint(x: 0, y: 0)
     @State private var bumpers: [PinballBumper] = []
-    @State private var currentQuestion: LoadedQuestion?
     @State private var score: Int = 0
     @State private var ballsRemaining: Int = 3
     @State private var gameEnded = false
@@ -24,11 +23,21 @@ struct PinballWizardGame: View {
     @State private var leftFlipperUp = false
     @State private var rightFlipperUp = false
     @State private var hitEffects: [HitEffect] = []
+    @State private var bumperHits: Int = 0
+
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
 
     let ballRadius: CGFloat = 12
     let gravity: CGFloat = 0.15
     let friction: CGFloat = 0.995
     let bumperBounciness: CGFloat = 8
+    let questionInterval: Int = 5 // Question every 5 bumper hits
 
     let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
 
@@ -39,7 +48,7 @@ struct PinballWizardGame: View {
                     // Pinball table background
                     PinballTableView()
 
-                    // Bumpers (answers)
+                    // Bumpers
                     ForEach(bumpers) { bumper in
                         PinballBumperView(bumper: bumper)
                     }
@@ -50,7 +59,7 @@ struct PinballWizardGame: View {
                     }
 
                     // Ball
-                    if ballLaunched {
+                    if ballLaunched && !showQuestion {
                         Circle()
                             .fill(
                                 RadialGradient(
@@ -73,7 +82,7 @@ struct PinballWizardGame: View {
                         .position(x: geometry.size.width - 120, y: geometry.size.height - 140)
 
                     // Launch lane
-                    if !ballLaunched {
+                    if !ballLaunched && !showQuestion {
                         LaunchLaneView(power: launchPower, isCharging: isCharging)
                             .position(x: geometry.size.width - 30, y: geometry.size.height - 200)
                     }
@@ -84,84 +93,75 @@ struct PinballWizardGame: View {
                         HStack {
                             ballsDisplay
                             Spacer()
+                            hitsDisplay
+                            Spacer()
                             scoreDisplay
                             Spacer()
                             closeButton
                         }
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, 16)
                         .padding(.top, 60)
-
-                        // Question
-                        if let question = currentQuestion {
-                            Text(question.question.question)
-                                .font(DesignSystem.Typography.caption())
-                                .foregroundColor(DesignSystem.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .padding(10)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
-                                )
-                                .padding(.horizontal, 20)
-                        }
 
                         Spacer()
 
                         // Controls hint
-                        if !ballLaunched {
-                            Text("HOLD & RELEASE TO LAUNCH")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(DesignSystem.Colors.orange)
-                                .padding(.bottom, 20)
-                        } else {
-                            Text("TAP SIDES TO FLIP")
-                                .font(.system(size: 12, weight: .medium))
-                                .foregroundColor(DesignSystem.Colors.textMuted)
-                                .padding(.bottom, 20)
+                        if !showQuestion && !gameEnded {
+                            if !ballLaunched {
+                                Text("HOLD & RELEASE TO LAUNCH")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(DesignSystem.Colors.orange)
+                                    .padding(.bottom, 20)
+                            } else {
+                                Text("TAP SIDES TO FLIP")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(DesignSystem.Colors.textMuted)
+                                    .padding(.bottom, 20)
+                            }
                         }
                     }
 
                     // Flipper touch areas
-                    HStack(spacing: 0) {
-                        // Left flipper area
-                        Rectangle()
-                            .fill(Color.clear)
-                            .contentShape(Rectangle())
-                            .gesture(
-                                DragGesture(minimumDistance: 0)
-                                    .onChanged { _ in
-                                        if ballLaunched {
-                                            leftFlipperUp = true
-                                            HapticsManager.shared.selectionChanged()
+                    if !showQuestion {
+                        HStack(spacing: 0) {
+                            // Left flipper area
+                            Rectangle()
+                                .fill(Color.clear)
+                                .contentShape(Rectangle())
+                                .gesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged { _ in
+                                            if ballLaunched {
+                                                leftFlipperUp = true
+                                                HapticsManager.shared.selectionChanged()
+                                            }
                                         }
-                                    }
-                                    .onEnded { _ in
-                                        leftFlipperUp = false
-                                    }
-                            )
+                                        .onEnded { _ in
+                                            leftFlipperUp = false
+                                        }
+                                )
 
-                        // Right flipper area
-                        Rectangle()
-                            .fill(Color.clear)
-                            .contentShape(Rectangle())
-                            .gesture(
-                                DragGesture(minimumDistance: 0)
-                                    .onChanged { _ in
-                                        if ballLaunched {
-                                            rightFlipperUp = true
-                                            HapticsManager.shared.selectionChanged()
+                            // Right flipper area
+                            Rectangle()
+                                .fill(Color.clear)
+                                .contentShape(Rectangle())
+                                .gesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged { _ in
+                                            if ballLaunched {
+                                                rightFlipperUp = true
+                                                HapticsManager.shared.selectionChanged()
+                                            }
                                         }
-                                    }
-                                    .onEnded { _ in
-                                        rightFlipperUp = false
-                                    }
-                            )
+                                        .onEnded { _ in
+                                            rightFlipperUp = false
+                                        }
+                                )
+                        }
+                        .opacity(0.01)
                     }
-                    .opacity(0.01)
 
                     // Launch gesture area
-                    if !ballLaunched {
+                    if !ballLaunched && !showQuestion && !gameEnded {
                         Rectangle()
                             .fill(Color.clear)
                             .contentShape(Rectangle())
@@ -185,6 +185,11 @@ struct PinballWizardGame: View {
                             )
                     }
 
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
+                    }
+
                     // Game over
                     if gameEnded {
                         gameOverOverlay
@@ -197,7 +202,7 @@ struct PinballWizardGame: View {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded else { return }
+            guard !gameEnded && !showQuestion else { return }
             updateGame()
         }
     }
@@ -211,6 +216,25 @@ struct PinballWizardGame: View {
                     .fill(index < ballsRemaining ? Color(hex: "#C0C0C0") : DesignSystem.Colors.textMuted)
                     .frame(width: 16, height: 16)
             }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            Capsule()
+                .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
+        )
+    }
+
+    // MARK: - Hits Display
+
+    private var hitsDisplay: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "circle.circle.fill")
+                .font(.system(size: 12))
+                .foregroundColor(DesignSystem.Colors.cyan)
+            Text("\(bumperHits)")
+                .font(DesignSystem.Typography.number())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -256,6 +280,59 @@ struct PinballWizardGame: View {
         }
     }
 
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            Text("BONUS ROUND!")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.orange)
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
+    }
+
     // MARK: - Game Over Overlay
 
     private var gameOverOverlay: some View {
@@ -266,7 +343,8 @@ struct PinballWizardGame: View {
 
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "circle.circle.fill", label: "Bumper Hits", value: "\(bumperHits)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(
@@ -297,37 +375,40 @@ struct PinballWizardGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
-
-        if let question = engine.startSession() {
-            currentQuestion = question
-            setupBumpers(for: question)
-        }
+        currentQuestion = engine.startSession()
+        setupBumpers()
     }
 
-    private func setupBumpers(for question: LoadedQuestion) {
+    private func setupBumpers() {
         bumpers.removeAll()
 
-        let answers = question.question.allAnswers
         let screenWidth = UIScreen.main.bounds.width
 
         let positions: [(x: CGFloat, y: CGFloat)] = [
-            (screenWidth * 0.3, 250),
-            (screenWidth * 0.7, 250),
+            (screenWidth * 0.3, 220),
+            (screenWidth * 0.7, 220),
+            (screenWidth * 0.5, 280),
             (screenWidth * 0.2, 350),
-            (screenWidth * 0.5, 320),
+            (screenWidth * 0.5, 380),
             (screenWidth * 0.8, 350)
         ]
 
-        for (index, answer) in answers.enumerated() {
-            guard index < positions.count else { break }
+        let colors: [Color] = [
+            DesignSystem.Colors.cyan,
+            DesignSystem.Colors.orange,
+            DesignSystem.Colors.primary,
+            Color(hex: "#FF6B6B"),
+            Color(hex: "#51CF66"),
+            Color(hex: "#9775FA")
+        ]
 
+        for (index, position) in positions.enumerated() {
             let bumper = PinballBumper(
                 id: UUID(),
-                x: positions[index].x,
-                y: positions[index].y,
-                radius: 35,
-                answer: answer,
-                isCorrect: answer == question.question.correctAnswer,
+                x: position.x,
+                y: position.y,
+                radius: 30,
+                color: colors[index % colors.count],
                 isLit: false
             )
             bumpers.append(bumper)
@@ -340,7 +421,7 @@ struct PinballWizardGame: View {
         let screenWidth = UIScreen.main.bounds.width
 
         ballPosition = CGPoint(x: screenWidth - 30, y: 500)
-        ballVelocity = CGPoint(x: CGFloat.random(in: -3...(-1)), y: -15 - launchPower * 0.1)
+        ballVelocity = CGPoint(x: CGFloat.random(in: -3 ... -1), y: -15 - launchPower * 0.1)
         launchPower = 0
 
         HapticsManager.shared.buttonPress()
@@ -455,14 +536,51 @@ struct PinballWizardGame: View {
             }
         }
 
-        if bumper.isCorrect {
+        HapticsManager.shared.selectionChanged()
+        score += 100
+        bumperHits += 1
+
+        // Trigger question periodically
+        if bumperHits % questionInterval == 0 {
+            triggerQuestion()
+        }
+    }
+
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+        ballLaunched = false // Pause ball
+    }
+
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
             HapticsManager.shared.correctAnswer()
-            score += 500
-            _ = engine.submitAnswer(bumper.answer)
-            advanceQuestion()
+            questionsCorrect += 1
+            score += 500 // Big bonus!
         } else {
             HapticsManager.shared.incorrectAnswer()
-            score += 50 // Small score for hitting any bumper
+            ballsRemaining -= 1
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if ballsRemaining <= 0 {
+                endGame()
+                return
+            }
+
+            // Resume play - need to relaunch ball
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
+            }
         }
     }
 
@@ -476,15 +594,6 @@ struct PinballWizardGame: View {
         }
     }
 
-    private func advanceQuestion() {
-        if engine.hasMoreQuestions {
-            if let question = engine.nextQuestion() {
-                currentQuestion = question
-                setupBumpers(for: question)
-            }
-        }
-    }
-
     private func endGame() {
         gameEnded = true
         HapticsManager.shared.gameTransition()
@@ -492,11 +601,14 @@ struct PinballWizardGame: View {
 
     private func resetGame() {
         gameEnded = false
+        showQuestion = false
         ballLaunched = false
         ballsRemaining = 3
         score = 0
+        bumperHits = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
         launchPower = 0
-        bumpers.removeAll()
         hitEffects.removeAll()
         Task {
             await startGame()
@@ -511,8 +623,7 @@ struct PinballBumper: Identifiable {
     let x: CGFloat
     let y: CGFloat
     let radius: CGFloat
-    let answer: String
-    let isCorrect: Bool
+    let color: Color
     var isLit: Bool
 }
 
@@ -574,7 +685,7 @@ struct PinballBumperView: View {
             // Outer ring
             Circle()
                 .stroke(
-                    bumper.isLit ? DesignSystem.Colors.orange : DesignSystem.Colors.primary,
+                    bumper.isLit ? DesignSystem.Colors.orange : bumper.color,
                     lineWidth: 4
                 )
                 .frame(width: bumper.radius * 2 + 10, height: bumper.radius * 2 + 10)
@@ -584,8 +695,8 @@ struct PinballBumperView: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            bumper.isLit ? DesignSystem.Colors.orange : DesignSystem.Colors.cyan,
-                            bumper.isLit ? DesignSystem.Colors.red : DesignSystem.Colors.primary
+                            bumper.isLit ? DesignSystem.Colors.orange : bumper.color,
+                            bumper.isLit ? DesignSystem.Colors.red : bumper.color.opacity(0.7)
                         ],
                         center: .topLeading,
                         startRadius: 0,
@@ -593,15 +704,7 @@ struct PinballBumperView: View {
                     )
                 )
                 .frame(width: bumper.radius * 2, height: bumper.radius * 2)
-                .shadow(color: bumper.isLit ? DesignSystem.Colors.orange : DesignSystem.Colors.cyan, radius: bumper.isLit ? 15 : 5)
-
-            // Answer text
-            Text(bumper.answer)
-                .font(.system(size: 10, weight: .bold))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .frame(width: bumper.radius * 1.5)
+                .shadow(color: bumper.isLit ? DesignSystem.Colors.orange : bumper.color, radius: bumper.isLit ? 15 : 5)
         }
         .position(x: bumper.x, y: bumper.y)
     }

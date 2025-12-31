@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Rhythm Blaster Game
-// Guitar Hero style - tap answers in rhythm as they scroll down!
+// Tap notes in rhythm as they scroll down! Periodic questions pause the game.
 
 struct RhythmBlasterGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -12,7 +12,6 @@ struct RhythmBlasterGame: View {
 
     // Game state
     @State private var notes: [RhythmNote] = []
-    @State private var currentQuestion: LoadedQuestion?
     @State private var score: Int = 0
     @State private var combo: Int = 0
     @State private var maxCombo: Int = 0
@@ -22,15 +21,25 @@ struct RhythmBlasterGame: View {
     @State private var missCount: Int = 0
     @State private var perfectCount: Int = 0
     @State private var goodCount: Int = 0
+    @State private var notesHit: Int = 0
+
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
 
     let laneCount = 4
     let hitLineY: CGFloat = 650
     let noteSpeed: CGFloat = 4
     let perfectWindow: CGFloat = 20
     let goodWindow: CGFloat = 40
+    let questionInterval: Int = 8 // Question every 8 notes hit
 
     let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
-    let noteSpawner = Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()
+    let noteSpawner = Timer.publish(every: 0.8, on: .main, in: .common).autoconnect()
 
     var body: some View {
         GeometryReader { geometry in
@@ -87,15 +96,17 @@ struct RhythmBlasterGame: View {
                     }
 
                     // Lane tap buttons
-                    HStack(spacing: 0) {
-                        ForEach(0..<laneCount, id: \.self) { lane in
-                            LaneTapButton(lane: lane, laneWidth: laneWidth, color: laneColor(lane)) {
-                                tapLane(lane, geometry: geometry)
+                    if !showQuestion {
+                        HStack(spacing: 0) {
+                            ForEach(0..<laneCount, id: \.self) { lane in
+                                LaneTapButton(lane: lane, laneWidth: laneWidth, color: laneColor(lane)) {
+                                    tapLane(lane, geometry: geometry)
+                                }
                             }
                         }
+                        .padding(.horizontal, 20)
+                        .position(x: geometry.size.width / 2, y: hitLineY)
                     }
-                    .padding(.horizontal, 20)
-                    .position(x: geometry.size.width / 2, y: hitLineY)
 
                     // UI Overlay
                     VStack {
@@ -112,22 +123,19 @@ struct RhythmBlasterGame: View {
                         .padding(.horizontal, 16)
                         .padding(.top, 60)
 
-                        // Question
-                        if let question = currentQuestion {
-                            Text(question.question.question)
-                                .font(DesignSystem.Typography.caption())
-                                .foregroundColor(DesignSystem.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .padding(10)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
-                                )
-                                .padding(.horizontal, 20)
-                        }
-
                         Spacer()
+
+                        if !showQuestion && !gameEnded {
+                            Text("TAP THE NOTES!")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(DesignSystem.Colors.cyan.opacity(0.8))
+                                .padding(.bottom, 40)
+                        }
+                    }
+
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
                     }
 
                     // Game over
@@ -142,12 +150,12 @@ struct RhythmBlasterGame: View {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded else { return }
+            guard !gameEnded && !showQuestion else { return }
             updateGame()
         }
         .onReceive(noteSpawner) { _ in
-            guard !gameEnded else { return }
-            spawnNotes()
+            guard !gameEnded && !showQuestion else { return }
+            spawnNote()
         }
     }
 
@@ -231,6 +239,59 @@ struct RhythmBlasterGame: View {
         }
     }
 
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            Text("BONUS BEAT!")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.orange)
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
+    }
+
     // MARK: - Game Over Overlay
 
     private var gameOverOverlay: some View {
@@ -247,6 +308,7 @@ struct RhythmBlasterGame: View {
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
                 StatRow(icon: "flame.fill", label: "Max Combo", value: "\(maxCombo)", color: DesignSystem.Colors.red)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
                 HStack(spacing: 20) {
                     VStack {
                         Text("\(perfectCount)")
@@ -326,34 +388,19 @@ struct RhythmBlasterGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
-
-        if let question = engine.startSession() {
-            currentQuestion = question
-        }
+        currentQuestion = engine.startSession()
     }
 
-    private func spawnNotes() {
-        guard let question = currentQuestion else { return }
+    private func spawnNote() {
+        // Spawn a note in a random lane
+        let lane = Int.random(in: 0..<laneCount)
 
-        let answers = question.question.allAnswers
-        var availableLanes = Array(0..<laneCount)
-
-        // Spawn notes for each answer
-        for (index, answer) in answers.enumerated() {
-            guard index < laneCount && !availableLanes.isEmpty else { break }
-
-            let lane = availableLanes.removeFirst()
-            let isCorrect = answer == question.question.correctAnswer
-
-            let note = RhythmNote(
-                id: UUID(),
-                lane: lane,
-                y: -50,
-                answer: answer,
-                isCorrect: isCorrect
-            )
-            notes.append(note)
-        }
+        let note = RhythmNote(
+            id: UUID(),
+            lane: lane,
+            y: -50
+        )
+        notes.append(note)
     }
 
     private func updateGame() {
@@ -363,19 +410,9 @@ struct RhythmBlasterGame: View {
 
             // Remove missed notes
             if notes[i].y > hitLineY + 100 {
-                let note = notes[i]
                 notes.remove(at: i)
-
-                if note.isCorrect {
-                    // Missed correct answer
-                    missNote()
-                }
+                missNote()
             }
-        }
-
-        // Check if song complete (no more questions and no notes)
-        if !engine.hasMoreQuestions && notes.isEmpty {
-            endGame()
         }
 
         // Clean up effects
@@ -383,37 +420,41 @@ struct RhythmBlasterGame: View {
 
         // Update multiplier based on combo
         multiplier = min(8, 1 + combo / 10)
+
+        // End game after enough notes (simulating song end)
+        if notesHit + missCount >= 50 && notes.isEmpty {
+            endGame()
+        }
     }
 
     private func tapLane(_ lane: Int, geometry: GeometryProxy) {
-        // Find closest note in this lane near the hit line
         let laneWidth = (geometry.size.width - 40) / CGFloat(laneCount)
         let hitX = 20 + laneWidth / 2 + CGFloat(lane) * laneWidth
 
+        // Find closest note in this lane near the hit line
         if let noteIndex = notes.firstIndex(where: {
             $0.lane == lane && abs($0.y - hitLineY) < goodWindow
         }) {
             let note = notes[noteIndex]
             let distance = abs(note.y - hitLineY)
 
-            if note.isCorrect {
-                if distance <= perfectWindow {
-                    hitPerfect(at: noteIndex, x: hitX)
-                } else {
-                    hitGood(at: noteIndex, x: hitX)
-                }
-                _ = engine.submitAnswer(note.answer)
-                advanceQuestion()
+            if distance <= perfectWindow {
+                hitPerfect(x: hitX)
             } else {
-                hitWrong(at: noteIndex, x: hitX)
-                _ = engine.submitAnswer(note.answer)
+                hitGood(x: hitX)
             }
 
             notes.remove(at: noteIndex)
+            notesHit += 1
+
+            // Trigger question periodically
+            if notesHit % questionInterval == 0 {
+                triggerQuestion()
+            }
         }
     }
 
-    private func hitPerfect(at index: Int, x: CGFloat) {
+    private func hitPerfect(x: CGFloat) {
         HapticsManager.shared.correctAnswer()
         perfectCount += 1
         combo += 1
@@ -424,7 +465,7 @@ struct RhythmBlasterGame: View {
         hitEffects.append(effect)
     }
 
-    private func hitGood(at index: Int, x: CGFloat) {
+    private func hitGood(x: CGFloat) {
         HapticsManager.shared.selectionChanged()
         goodCount += 1
         combo += 1
@@ -435,24 +476,41 @@ struct RhythmBlasterGame: View {
         hitEffects.append(effect)
     }
 
-    private func hitWrong(at index: Int, x: CGFloat) {
-        HapticsManager.shared.incorrectAnswer()
-        missCount += 1
-        combo = 0
-
-        let effect = NoteHitEffect(id: UUID(), x: x, y: hitLineY, type: .miss, createdAt: Date())
-        hitEffects.append(effect)
-    }
-
     private func missNote() {
         missCount += 1
         combo = 0
         HapticsManager.shared.incorrectAnswer()
     }
 
-    private func advanceQuestion() {
-        if engine.hasMoreQuestions {
-            currentQuestion = engine.nextQuestion()
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+        notes.removeAll() // Clear notes for question
+    }
+
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
+            HapticsManager.shared.correctAnswer()
+            questionsCorrect += 1
+            score += 200 * multiplier // Big bonus!
+        } else {
+            HapticsManager.shared.incorrectAnswer()
+            combo = 0 // Break combo on wrong answer
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
+            }
         }
     }
 
@@ -463,6 +521,7 @@ struct RhythmBlasterGame: View {
 
     private func resetGame() {
         gameEnded = false
+        showQuestion = false
         score = 0
         combo = 0
         maxCombo = 0
@@ -470,6 +529,9 @@ struct RhythmBlasterGame: View {
         perfectCount = 0
         goodCount = 0
         missCount = 0
+        notesHit = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
         notes.removeAll()
         hitEffects.removeAll()
         Task {
@@ -484,8 +546,6 @@ struct RhythmNote: Identifiable {
     let id: UUID
     let lane: Int
     var y: CGFloat
-    let answer: String
-    let isCorrect: Bool
 }
 
 // MARK: - Note Hit Effect Model
@@ -520,16 +580,8 @@ struct NoteView: View {
                         endPoint: .bottom
                     )
                 )
-                .frame(width: laneWidth - 10, height: 50)
+                .frame(width: laneWidth - 10, height: 30)
                 .shadow(color: laneColor, radius: 5)
-
-            // Answer text
-            Text(note.answer)
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .frame(width: laneWidth - 20)
         }
     }
 }

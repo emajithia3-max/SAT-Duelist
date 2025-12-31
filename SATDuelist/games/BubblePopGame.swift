@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Bubble Pop Game
-// Tap bubbles with answers - pop correct ones before they float away!
+// Pop all bubbles that appear! Periodic questions pause the game.
 
 struct BubblePopGame: View {
     @StateObject private var engine = QuestionEngine()
@@ -11,18 +11,27 @@ struct BubblePopGame: View {
     let config: SessionConfig
 
     // Game state
-    @State private var bubbles: [AnswerBubble] = []
-    @State private var currentQuestion: LoadedQuestion?
+    @State private var bubbles: [GameBubble] = []
     @State private var score: Int = 0
     @State private var lives: Int = 3
     @State private var gameEnded = false
     @State private var combo: Int = 0
+    @State private var bubblesPopped: Int = 0
     @State private var popEffects: [PopEffect] = []
     @State private var timeRemaining: Double = 60
-    @State private var isPaused = false
+
+    // Question state
+    @State private var showQuestion = false
+    @State private var currentQuestion: LoadedQuestion?
+    @State private var selectedAnswer: String?
+    @State private var showResult = false
+    @State private var questionsAnswered: Int = 0
+    @State private var questionsCorrect: Int = 0
+
+    let questionInterval: Int = 10 // Question every 10 bubbles popped
 
     let gameLoop = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
-    let bubbleSpawner = Timer.publish(every: 2.5, on: .main, in: .common).autoconnect()
+    let bubbleSpawner = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -34,7 +43,7 @@ struct BubblePopGame: View {
 
                     // Bubbles
                     ForEach(bubbles) { bubble in
-                        BubbleView(bubble: bubble) {
+                        GameBubbleView(bubble: bubble) {
                             popBubble(bubble)
                         }
                     }
@@ -52,43 +61,28 @@ struct BubblePopGame: View {
                             Spacer()
                             timerDisplay
                             Spacer()
+                            comboDisplay
+                            Spacer()
                             scoreDisplay
                             Spacer()
                             closeButton
                         }
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, 12)
                         .padding(.top, 60)
-
-                        // Question
-                        if let question = currentQuestion {
-                            Text(question.question.question)
-                                .font(DesignSystem.Typography.body())
-                                .foregroundColor(DesignSystem.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(3)
-                                .padding(16)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
-                                )
-                                .padding(.horizontal, 20)
-                                .padding(.top, 8)
-                        }
-
-                        // Combo display
-                        if combo > 1 {
-                            Text("\(combo)x COMBO!")
-                                .font(.system(size: 32, weight: .black))
-                                .foregroundColor(DesignSystem.Colors.orange)
-                                .shadow(color: DesignSystem.Colors.orange, radius: 10)
-                        }
 
                         Spacer()
 
-                        Text("POP THE CORRECT ANSWER!")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(DesignSystem.Colors.cyan.opacity(0.8))
-                            .padding(.bottom, 40)
+                        if !showQuestion && !gameEnded {
+                            Text("POP ALL THE BUBBLES!")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(DesignSystem.Colors.cyan.opacity(0.8))
+                                .padding(.bottom, 40)
+                        }
+                    }
+
+                    // Question overlay
+                    if showQuestion, let question = currentQuestion {
+                        questionOverlay(question)
                     }
 
                     // Game over
@@ -103,15 +97,15 @@ struct BubblePopGame: View {
             await startGame()
         }
         .onReceive(gameLoop) { _ in
-            guard !gameEnded && !isPaused else { return }
+            guard !gameEnded && !showQuestion else { return }
             updateGame()
         }
         .onReceive(bubbleSpawner) { _ in
-            guard !gameEnded && !isPaused else { return }
-            spawnBubbles()
+            guard !gameEnded && !showQuestion else { return }
+            spawnBubble()
         }
         .onReceive(timer) { _ in
-            guard !gameEnded && !isPaused else { return }
+            guard !gameEnded && !showQuestion else { return }
             timeRemaining -= 0.1
             if timeRemaining <= 0 {
                 endGame()
@@ -125,11 +119,11 @@ struct BubblePopGame: View {
         HStack(spacing: 4) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < lives ? "heart.fill" : "heart")
-                    .font(.system(size: 16))
+                    .font(.system(size: 14))
                     .foregroundColor(index < lives ? DesignSystem.Colors.red : DesignSystem.Colors.textMuted)
             }
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 8)
         .padding(.vertical, 6)
         .background(
             Capsule()
@@ -140,15 +134,35 @@ struct BubblePopGame: View {
     // MARK: - Timer Display
 
     private var timerDisplay: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             Image(systemName: "clock.fill")
+                .font(.system(size: 12))
                 .foregroundColor(timeRemaining < 10 ? DesignSystem.Colors.red : DesignSystem.Colors.cyan)
             Text(String(format: "%.0f", max(0, timeRemaining)))
                 .font(DesignSystem.Typography.number())
                 .foregroundColor(timeRemaining < 10 ? DesignSystem.Colors.red : DesignSystem.Colors.textPrimary)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(
+            Capsule()
+                .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
+        )
+    }
+
+    // MARK: - Combo Display
+
+    private var comboDisplay: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 12))
+                .foregroundColor(combo > 0 ? DesignSystem.Colors.orange : DesignSystem.Colors.textMuted)
+            Text("\(combo)x")
+                .font(DesignSystem.Typography.caption())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
         .background(
             Capsule()
                 .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
@@ -158,16 +172,16 @@ struct BubblePopGame: View {
     // MARK: - Score Display
 
     private var scoreDisplay: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             Image(systemName: "star.fill")
-                .font(.system(size: 14))
+                .font(.system(size: 12))
                 .foregroundColor(DesignSystem.Colors.orange)
             Text("\(score)")
                 .font(DesignSystem.Typography.number())
                 .foregroundColor(DesignSystem.Colors.textPrimary)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
         .background(
             Capsule()
                 .fill(DesignSystem.Colors.cardBackground.opacity(0.9))
@@ -182,14 +196,67 @@ struct BubblePopGame: View {
             dismiss()
         } label: {
             Image(systemName: "xmark")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(DesignSystem.Colors.textSecondary)
-                .frame(width: 36, height: 36)
+                .frame(width: 32, height: 32)
                 .background(
                     Circle()
                         .fill(DesignSystem.Colors.elevated.opacity(0.9))
                 )
         }
+    }
+
+    // MARK: - Question Overlay
+
+    private func questionOverlay(_ question: LoadedQuestion) -> some View {
+        VStack(spacing: 20) {
+            Text("BONUS CHALLENGE!")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(DesignSystem.Colors.orange)
+
+            Text(question.question.question)
+                .font(DesignSystem.Typography.body())
+                .foregroundColor(DesignSystem.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 12) {
+                ForEach(question.question.allAnswers, id: \.self) { answer in
+                    Button {
+                        selectAnswer(answer)
+                    } label: {
+                        Text(answer)
+                            .font(DesignSystem.Typography.body())
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(buttonColor(for: answer, question: question))
+                            )
+                    }
+                    .disabled(showResult)
+                }
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(DesignSystem.Colors.primaryBackground.opacity(0.98))
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func buttonColor(for answer: String, question: LoadedQuestion) -> Color {
+        if showResult {
+            if answer == question.question.correctAnswer {
+                return DesignSystem.Colors.cyan
+            } else if answer == selectedAnswer {
+                return DesignSystem.Colors.red
+            }
+        }
+        return DesignSystem.Colors.primary
     }
 
     // MARK: - Game Over Overlay
@@ -202,8 +269,8 @@ struct BubblePopGame: View {
 
             VStack(spacing: 16) {
                 StatRow(icon: "star.fill", label: "Score", value: "\(score)", color: DesignSystem.Colors.orange)
-                StatRow(icon: "checkmark.circle.fill", label: "Correct", value: "\(engine.correctAnswers)", color: DesignSystem.Colors.cyan)
-                StatRow(icon: "flame.fill", label: "Max Combo", value: "\(combo)x", color: DesignSystem.Colors.orange)
+                StatRow(icon: "bubble.left.fill", label: "Popped", value: "\(bubblesPopped)", color: DesignSystem.Colors.cyan)
+                StatRow(icon: "checkmark.circle.fill", label: "Questions", value: "\(questionsCorrect)/\(questionsAnswered)", color: DesignSystem.Colors.cyan)
             }
             .padding(20)
             .background(
@@ -234,41 +301,26 @@ struct BubblePopGame: View {
     private func startGame() async {
         await engine.loadQuestions()
         engine.configureSession(scope: scope, config: config)
-
-        if let question = engine.startSession() {
-            currentQuestion = question
-            spawnBubbles()
-        }
+        currentQuestion = engine.startSession()
     }
 
-    private func spawnBubbles() {
-        guard let question = currentQuestion else { return }
-
-        let answers = question.question.allAnswers
+    private func spawnBubble() {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
 
-        for answer in answers {
-            let isCorrect = answer == question.question.correctAnswer
-
-            let bubble = AnswerBubble(
-                id: UUID(),
-                x: CGFloat.random(in: 60...(screenWidth - 60)),
-                y: screenHeight + 50,
-                size: CGFloat.random(in: 70...90),
-                speed: CGFloat.random(in: 1.5...3.0),
-                wobbleOffset: CGFloat.random(in: 0...(.pi * 2)),
-                answer: answer,
-                isCorrect: isCorrect,
-                hue: Double.random(in: 0...1)
-            )
-            bubbles.append(bubble)
-        }
+        let bubble = GameBubble(
+            id: UUID(),
+            x: CGFloat.random(in: 60...(screenWidth - 60)),
+            y: screenHeight + 50,
+            size: CGFloat.random(in: 50...80),
+            speed: CGFloat.random(in: 1.5...3.0),
+            wobbleOffset: CGFloat.random(in: 0...(.pi * 2)),
+            hue: Double.random(in: 0...1)
+        )
+        bubbles.append(bubble)
     }
 
     private func updateGame() {
-        let screenHeight = UIScreen.main.bounds.height
-
         for i in bubbles.indices.reversed() {
             // Float up
             bubbles[i].y -= bubbles[i].speed
@@ -279,20 +331,9 @@ struct BubblePopGame: View {
 
             // Remove bubbles that floated off screen
             if bubbles[i].y < -100 {
-                let bubble = bubbles[i]
                 bubbles.remove(at: i)
-
-                // Lose life if correct answer floated away
-                if bubble.isCorrect {
-                    lives -= 1
-                    combo = 0
-                    HapticsManager.shared.incorrectAnswer()
-
-                    if lives <= 0 {
-                        endGame()
-                        return
-                    }
-                }
+                // Missed a bubble - lose combo
+                combo = 0
             }
         }
 
@@ -300,7 +341,7 @@ struct BubblePopGame: View {
         popEffects.removeAll { Date().timeIntervalSince($0.createdAt) > 0.5 }
     }
 
-    private func popBubble(_ bubble: AnswerBubble) {
+    private func popBubble(_ bubble: GameBubble) {
         guard let index = bubbles.firstIndex(where: { $0.id == bubble.id }) else { return }
 
         // Add pop effect
@@ -308,36 +349,53 @@ struct BubblePopGame: View {
         popEffects.append(effect)
 
         bubbles.remove(at: index)
+        HapticsManager.shared.selectionChanged()
 
-        if bubble.isCorrect {
-            HapticsManager.shared.correctAnswer()
-            combo += 1
-            score += 100 * combo
-            _ = engine.submitAnswer(bubble.answer)
+        combo += 1
+        bubblesPopped += 1
+        score += 10 * combo
 
-            // Clear remaining bubbles and advance
-            bubbles.removeAll()
-            advanceQuestion()
-        } else {
-            HapticsManager.shared.incorrectAnswer()
-            combo = 0
-            lives -= 1
-            _ = engine.submitAnswer(bubble.answer)
-
-            if lives <= 0 {
-                endGame()
-            }
+        // Trigger question periodically
+        if bubblesPopped % questionInterval == 0 {
+            triggerQuestion()
         }
     }
 
-    private func advanceQuestion() {
-        if engine.hasMoreQuestions {
-            currentQuestion = engine.nextQuestion()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                spawnBubbles()
-            }
+    private func triggerQuestion() {
+        showQuestion = true
+        showResult = false
+        selectedAnswer = nil
+        bubbles.removeAll() // Clear screen for question
+    }
+
+    private func selectAnswer(_ answer: String) {
+        selectedAnswer = answer
+        showResult = true
+        questionsAnswered += 1
+
+        let isCorrect = answer == currentQuestion?.question.correctAnswer
+
+        if isCorrect {
+            HapticsManager.shared.correctAnswer()
+            questionsCorrect += 1
+            score += 100
+            timeRemaining += 5 // Bonus time!
         } else {
-            endGame()
+            HapticsManager.shared.incorrectAnswer()
+            lives -= 1
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            showQuestion = false
+
+            if lives <= 0 {
+                endGame()
+                return
+            }
+
+            if engine.hasMoreQuestions {
+                currentQuestion = engine.nextQuestion()
+            }
         }
     }
 
@@ -348,9 +406,13 @@ struct BubblePopGame: View {
 
     private func resetGame() {
         gameEnded = false
+        showQuestion = false
         lives = 3
         score = 0
         combo = 0
+        bubblesPopped = 0
+        questionsAnswered = 0
+        questionsCorrect = 0
         timeRemaining = 60
         bubbles.removeAll()
         popEffects.removeAll()
@@ -360,17 +422,15 @@ struct BubblePopGame: View {
     }
 }
 
-// MARK: - Answer Bubble Model
+// MARK: - Game Bubble Model
 
-struct AnswerBubble: Identifiable {
+struct GameBubble: Identifiable {
     let id: UUID
     var x: CGFloat
     var y: CGFloat
     var size: CGFloat
     var speed: CGFloat
     var wobbleOffset: CGFloat
-    let answer: String
-    let isCorrect: Bool
     let hue: Double
 }
 
@@ -383,13 +443,11 @@ struct PopEffect: Identifiable {
     let createdAt: Date
 }
 
-// MARK: - Bubble View
+// MARK: - Game Bubble View
 
-struct BubbleView: View {
-    let bubble: AnswerBubble
+struct GameBubbleView: View {
+    let bubble: GameBubble
     let onTap: () -> Void
-
-    @State private var shimmer = false
 
     var body: some View {
         Button(action: onTap) {
@@ -440,14 +498,6 @@ struct BubbleView: View {
                     .fill(.white.opacity(0.4))
                     .frame(width: bubble.size * 0.2, height: bubble.size * 0.2)
                     .offset(x: -bubble.size * 0.2, y: -bubble.size * 0.2)
-
-                // Answer text
-                Text(bubble.answer)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(3)
-                    .frame(width: bubble.size * 0.8)
             }
         }
         .buttonStyle(BubbleButtonStyle())
