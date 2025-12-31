@@ -170,7 +170,11 @@ explanation	✅	Clear SAT-style rationale
 
 If question_type = "multiple_choice":
 
-wrong_answers.length === 3
+⚠️ MANDATORY: wrong_answers.length === 3 (EXACTLY THREE)
+
+This is a HARD REQUIREMENT. Every multiple choice question MUST have exactly 3 wrong answers.
+No exceptions. Empty wrong answers arrays are NOT allowed for MCQ.
+Validators MUST reject any MCQ with fewer or more than 3 wrong answers.
 
 All answer choices must:
 
@@ -178,11 +182,15 @@ Be plausible
 
 Match in grammar, units, and format
 
-❌ No “All of the above”
+Be non-empty strings (no empty string "" answers allowed)
 
-❌ No “None of the above”
+❌ No "All of the above"
+
+❌ No "None of the above"
 
 ❌ No trick wording or giveaways
+
+❌ No empty wrong answers for MCQ
 
 9. Student-Produced Response (SPR) Rules
 
