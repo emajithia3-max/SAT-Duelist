@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Area and Volume",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_av_001",
+      "question_type": "student_produced_response",
+      "difficulty": "medium",
+      "skill": "Calculate the volume of geometric solids",
+      "question": "A rectangular box has a length of 8 inches, a width of 6 inches, and a height of 5 inches. What is the volume, in cubic inches, of the box?",
+      "correct_answer": "240",
+      "wrong_answers": [],
+      "explanation": "Volume of a rectangular box = length × width × height = 8 × 6 × 5 = 240 cubic inches."
+    }
+  ]
+}

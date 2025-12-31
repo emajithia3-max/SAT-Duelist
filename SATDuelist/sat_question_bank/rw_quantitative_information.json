@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Quantitative Information",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_qi_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Interpret data presented in charts or graphs within a text",
+      "question": "A study tracked the reading habits of 500 adults over five years. In Year 1, participants read an average of 8 books. By Year 3, the average had risen to 12 books, and by Year 5, it reached 15 books. The researchers attributed this increase to the growing availability of e-books and audiobooks.\n\nBased on the data, which statement is most accurate?",
+      "correct_answer": "The average number of books read increased by approximately 88% from Year 1 to Year 5",
+      "wrong_answers": ["Reading rates doubled between Year 1 and Year 5", "The increase in reading was greatest between Year 3 and Year 5", "Participants read fewer physical books each year of the study"],
+      "explanation": "From 8 to 15 books is an increase of 7 books, which is 7/8 = 87.5%, approximately 88%. Reading did not double (would need to reach 16). The increase from Y1-Y3 was 4 books while Y3-Y5 was 3 books, so the greatest increase was early. The passage doesn't specify physical vs. digital formats."
+    }
+  ]
+}

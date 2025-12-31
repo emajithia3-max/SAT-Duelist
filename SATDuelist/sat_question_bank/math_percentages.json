@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Percentages",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_pct_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Calculate percent increase or decrease",
+      "question": "A store reduces the price of a jacket from $80 to $60. What is the percent decrease in the price?",
+      "correct_answer": "25%",
+      "wrong_answers": ["20%", "33.3%", "75%"],
+      "explanation": "Percent decrease = (original - new)/original × 100 = (80 - 60)/80 × 100 = 20/80 × 100 = 25%. A common error is calculating 20/60 = 33.3%, which uses the wrong base."
+    }
+  ]
+}

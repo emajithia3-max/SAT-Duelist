@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Command of Evidence",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_coe_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Select evidence that best supports a claim",
+      "question": "A researcher claims that employee productivity increases when workers are given more autonomy over their schedules. Which finding, if true, would most directly support this claim?",
+      "correct_answer": "Companies that implemented flexible scheduling saw a 23% increase in output per employee",
+      "wrong_answers": ["Most employees prefer to work from home rather than in an office", "Productivity studies are often conducted in controlled laboratory settings", "Employee satisfaction surveys show workers value competitive salaries"],
+      "explanation": "The claim is specifically about autonomy over schedules increasing productivity. The correct answer directly links flexible scheduling (autonomy) to increased output (productivity). Work-from-home preferences, study methodology, and salary preferences don't directly address schedule autonomy and productivity."
+    }
+  ]
+}

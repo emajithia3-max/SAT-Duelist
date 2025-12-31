@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Text Structure and Purpose",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_tsp_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Identify the primary purpose of a text",
+      "question": "Marine biologist Dr. Elena Vasquez has spent fifteen years studying coral reef ecosystems in the Caribbean. Her latest research reveals that certain coral species can adapt to rising ocean temperatures more effectively than previously thought, offering a glimmer of hope for conservation efforts.\n\nWhich choice best describes the function of the underlined sentence in the text as a whole?",
+      "correct_answer": "It introduces the subject of the passage and establishes her expertise",
+      "wrong_answers": ["It provides a counterargument to the main claim", "It offers statistical evidence supporting the conclusion", "It summarizes the findings of previous researchers"],
+      "explanation": "The first sentence introduces Dr. Vasquez and establishes her credentials (fifteen years of research), setting up her authority before presenting her findings. It does not counter any claim, provide statistics, or summarize others' work."
+    }
+  ]
+}

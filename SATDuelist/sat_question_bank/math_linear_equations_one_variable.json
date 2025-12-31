@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Linear Equations in One Variable",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_le1v_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Solve linear equations in one variable",
+      "question": "If 3x + 7 = 22, what is the value of x?",
+      "correct_answer": "5",
+      "wrong_answers": ["3", "7", "15"],
+      "explanation": "Subtract 7 from both sides: 3x = 15. Divide both sides by 3: x = 5. Common errors include dividing 22 by 3 or forgetting to subtract 7."
+    }
+  ]
+}

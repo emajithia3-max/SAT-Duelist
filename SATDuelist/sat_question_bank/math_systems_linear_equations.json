@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Systems of Linear Equations",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_sle_001",
+      "question_type": "student_produced_response",
+      "difficulty": "medium",
+      "skill": "Solve systems of linear equations using substitution or elimination",
+      "question": "If 2x + y = 10 and x - y = 2, what is the value of x?",
+      "correct_answer": "4",
+      "wrong_answers": [],
+      "explanation": "Add the two equations to eliminate y: (2x + y) + (x - y) = 10 + 2, giving 3x = 12, so x = 4. To verify: if x = 4, then from x - y = 2, y = 2. Check: 2(4) + 2 = 10 ✓"
+    }
+  ]
+}

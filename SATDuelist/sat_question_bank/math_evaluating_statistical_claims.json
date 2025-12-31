@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Evaluating Statistical Claims",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_esc_001",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Identify limitations of statistical studies",
+      "question": "A company surveys its own employees about job satisfaction and reports that 90% are satisfied. What is the main limitation of using this result to claim that most workers in the industry are satisfied?",
+      "correct_answer": "The sample only includes employees from one company and may not represent the industry",
+      "wrong_answers": ["The sample size is too small to draw any conclusions", "Job satisfaction cannot be measured accurately through surveys", "The percentage should have been higher to make a valid claim"],
+      "explanation": "The main issue is sampling bias. Surveying only one company's employees does not provide a representative sample of the entire industry. Different companies may have different satisfaction levels."
+    }
+  ]
+}

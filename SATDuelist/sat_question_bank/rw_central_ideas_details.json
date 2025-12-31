@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Central Ideas and Details",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_cid_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Identify the central idea of a passage",
+      "question": "Urban gardens have become increasingly popular in metropolitan areas. These community spaces not only provide fresh produce to local residents but also create opportunities for social interaction among neighbors who might otherwise never meet. Studies show that neighborhoods with community gardens report higher levels of civic engagement and lower crime rates.\n\nWhich choice best states the main idea of the text?",
+      "correct_answer": "Urban gardens provide both nutritional and social benefits to communities",
+      "wrong_answers": ["Urban gardens are the most effective way to reduce crime", "Community gardens are replacing traditional grocery stores", "Metropolitan areas lack sufficient green spaces"],
+      "explanation": "The passage discusses multiple benefits of urban gardens: fresh produce (nutritional) and social interaction, civic engagement, and lower crime (social benefits). The main idea encompasses both aspects. The other options focus too narrowly or make claims not supported by the text."
+    }
+  ]
+}

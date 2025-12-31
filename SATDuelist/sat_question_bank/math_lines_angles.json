@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Lines and Angles",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_la_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Apply properties of parallel lines and transversals",
+      "question": "Two parallel lines are cut by a transversal. One of the angles formed measures 65°. What is the measure of its corresponding angle?",
+      "correct_answer": "65°",
+      "wrong_answers": ["115°", "25°", "90°"],
+      "explanation": "When parallel lines are cut by a transversal, corresponding angles are equal. Therefore, the corresponding angle also measures 65°. Supplementary angles would be 115°, which is a common distractor."
+    }
+  ]
+}

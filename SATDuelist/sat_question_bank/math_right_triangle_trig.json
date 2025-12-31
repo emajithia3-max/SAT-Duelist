@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Right Triangle Trigonometry",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_rtt_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Apply trigonometric ratios to find missing sides",
+      "question": "In a right triangle, one of the acute angles measures 30°. If the side opposite this angle has length 5, what is the length of the hypotenuse?",
+      "correct_answer": "10",
+      "wrong_answers": ["5√3", "5/2", "2.5"],
+      "explanation": "Using sin(30°) = opposite/hypotenuse: sin(30°) = 5/hypotenuse. Since sin(30°) = 1/2, we have 1/2 = 5/hypotenuse, so hypotenuse = 10."
+    }
+  ]
+}

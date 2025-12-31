@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Form, Structure, and Sense",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_fss_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Ensure subject-verb agreement in complex sentences",
+      "question": "The collection of rare manuscripts, along with several first-edition books, _______ recently been acquired by the university library.\n\nWhich choice completes the text so that it conforms to the conventions of Standard English?",
+      "correct_answer": "has",
+      "wrong_answers": ["have", "are having", "were"],
+      "explanation": "The subject is 'collection' (singular), not 'manuscripts' or 'books.' The phrase 'along with several first-edition books' is a parenthetical addition and does not change the number of the subject. A singular subject requires a singular verb: 'has.'"
+    }
+  ]
+}

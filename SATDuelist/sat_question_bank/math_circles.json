@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Circles",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_cir_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Apply properties of circles to find arc length or area",
+      "question": "A circle has a radius of 6. What is the area of a sector with a central angle of 60°?",
+      "correct_answer": "6π",
+      "wrong_answers": ["36π", "12π", "2π"],
+      "explanation": "Sector area = (θ/360°) × πr² = (60/360) × π(6)² = (1/6) × 36π = 6π. The sector is 1/6 of the full circle since 60° is 1/6 of 360°."
+    }
+  ]
+}

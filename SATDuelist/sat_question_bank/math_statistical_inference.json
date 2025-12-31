@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Statistical Inference",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_si_001",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Draw conclusions from sample data about a population",
+      "question": "A researcher surveys 500 randomly selected voters in a city and finds that 280 support a new policy. Which of the following is the best estimate of the percentage of all voters in the city who support the policy?",
+      "correct_answer": "56%",
+      "wrong_answers": ["28%", "50%", "72%"],
+      "explanation": "The sample proportion is 280/500 = 0.56 = 56%. Since the sample is random, this proportion is the best estimate of the population proportion. The key is recognizing that random sampling allows inference to the population."
+    }
+  ]
+}

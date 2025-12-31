@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Reading and Writing",
+  "topic": "Transitions",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "rw_tr_001",
+      "question_type": "multiple_choice",
+      "difficulty": "easy",
+      "skill": "Select appropriate transitions between sentences",
+      "question": "The new software promised to increase efficiency by automating routine tasks. _______, many employees found that they spent more time troubleshooting errors than they had saved.\n\nWhich choice completes the text with the most logical transition?",
+      "correct_answer": "However",
+      "wrong_answers": ["Therefore", "Similarly", "Furthermore"],
+      "explanation": "The second sentence presents a contrasting outcome to the promise in the first sentence. 'However' signals contrast. 'Therefore' implies causation, 'Similarly' implies comparison of like things, and 'Furthermore' implies addition of supporting information—none fit the contrasting relationship."
+    }
+  ]
+}

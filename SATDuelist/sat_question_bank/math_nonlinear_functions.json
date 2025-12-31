@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Nonlinear Functions",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_nlf_001",
+      "question_type": "multiple_choice",
+      "difficulty": "medium",
+      "skill": "Identify properties of quadratic functions from their graphs or equations",
+      "question": "The function f(x) = (x - 4)² - 9 is graphed in the xy-plane. What is the minimum value of f(x)?",
+      "correct_answer": "-9",
+      "wrong_answers": ["4", "9", "-4"],
+      "explanation": "The function is in vertex form f(x) = (x - h)² + k, where the vertex is (h, k). Here, the vertex is (4, -9). Since the coefficient of (x - 4)² is positive, the parabola opens upward, so the minimum value is -9."
+    }
+  ]
+}

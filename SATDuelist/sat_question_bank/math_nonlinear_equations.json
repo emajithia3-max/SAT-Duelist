@@ -1,0 +1,19 @@
+{
+  "_meta": "SAT Question Bank | Digital SAT 2026",
+  "section": "Math",
+  "topic": "Nonlinear Equations",
+  "exam": "SAT",
+  "year": 2026,
+  "questions": [
+    {
+      "id": "math_ne_001",
+      "question_type": "multiple_choice",
+      "difficulty": "hard",
+      "skill": "Solve quadratic equations by factoring",
+      "question": "What are all values of x that satisfy x² - 5x - 14 = 0?",
+      "correct_answer": "x = 7 and x = -2",
+      "wrong_answers": ["x = 7 and x = 2", "x = -7 and x = 2", "x = -7 and x = -2"],
+      "explanation": "Factor the quadratic: x² - 5x - 14 = (x - 7)(x + 2) = 0. Set each factor to zero: x - 7 = 0 gives x = 7, and x + 2 = 0 gives x = -2. Verify: 7² - 5(7) - 14 = 49 - 35 - 14 = 0 ✓"
+    }
+  ]
+}
